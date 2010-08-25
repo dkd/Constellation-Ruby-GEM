@@ -30,7 +30,7 @@ describe Constellation::Runner do
   describe "#start" do
     it "should load the config defined at the ConstellationFile"
     it "should establish a connection to the given data store"
-    
+
     context "given a successful data store connection" do
       it "should start the web application"
     end
