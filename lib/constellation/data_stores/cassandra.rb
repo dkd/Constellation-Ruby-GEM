@@ -2,7 +2,7 @@ module Constellation
 
   module DataStores
 
-    class Cassandra
+    class Cassandra < ::Constellation::DataStore
     end
 
   end
