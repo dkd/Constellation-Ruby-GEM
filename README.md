@@ -2,6 +2,8 @@
 
 Description goes here.
 
+== Usage
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
