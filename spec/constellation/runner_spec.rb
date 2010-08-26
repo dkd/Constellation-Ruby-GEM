@@ -35,15 +35,6 @@ describe Constellation::Runner do
     end
   end
 
-  describe "#restart" do
-    it "should call #stop"
-    it "should call #start"
-  end
-
-  describe "#stop" do
-    it "should close the connection"
-  end
-
   describe "#version" do
     it "should put the current version on the command line" do
       @runner.stub!(:puts)
