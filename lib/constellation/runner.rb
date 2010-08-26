@@ -7,11 +7,22 @@ module Constellation
 
     @@config = Config.new
 
-    class << self
+    def initialize(*)
+      super
+    end
 
-      def run!
-      end
+    desc "init", "Generates a ConstellationFile and initializes the application"
+    def init
+      puts "Initializing new application"
+    end
 
+    def start
+    end
+
+    def stop
+    end
+
+    def restart
     end
   end
 
