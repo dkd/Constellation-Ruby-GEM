@@ -27,6 +27,11 @@ module Constellation
     desc "restart", "Restarts watching for log entries"
     def restart
     end
+
+    desc "version", "Show constellation's version"
+    def version
+      puts ::Constellation::VERSION
+    end
   end
 
 end
