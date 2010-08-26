@@ -1,4 +1,11 @@
-require "bundler/setup"
+# By default Rubygems are used as source,
+# but you are free to choose your own provider
+begin
+  require "bundler/setup"
+rescue LoadError
+  require "rubygems"
+  require "bundler/setup"
+end
 require "constellation/version"
 
 module Constellation
