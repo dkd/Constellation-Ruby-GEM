@@ -5,10 +5,9 @@ module Constellation
   class Runner < Thor
     include Thor::Actions
 
-    @@config = Config.new
-
     def initialize(*)
       super
+      @config = Config.new
     end
 
     desc "init", "Generates a ConstellationFile and initializes the application"
