@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::Runner do
 
-  describe "#initialize" do
+  describe "#run!" do
   end
 
   describe "#init" do

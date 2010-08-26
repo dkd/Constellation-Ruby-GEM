@@ -7,18 +7,36 @@ describe Constellation::Config do
   end
 
   describe "#watch" do
+    before(:each) do
+      @file_name = "LogFile.txt"
+      File.open(@file_name, 'w') {|f| f.write("") }
+    end
+    after(:each) do
+      File.delete(@file_name)
+    end
+
     context "given a file, that does exist" do
       it "should add the file to the list of watched files" do
+        @config.watch(@file_name)
+        @config.instance_variable_get("@watched_files").should include(@file_name)
+      end
+    end
 
+    context "given a file, that has added twice to the watched files list" do
+      it "should raise an error" do
+        lambda {
+          @config.watch(@file_name)
+          @config.watch(@file_name)
+        }.should raise_exception
       end
     end
 
     context "given a file, that does not exist" do
-      it "should throw an error"
-    end
-
-    context "given a file, that does not fit the neccessary permissions" do
-      it "should throw an error"
+      it "should raise an error" do
+        lambda {
+          @config.watch("DummyLogFile.txt")
+        }.should raise_exception
+      end
     end
   end
 

@@ -1,12 +1,16 @@
-$:.unshift File.join(File.dirname(__FILE__),'vendor','thor')
-require 'thor'
-require 'thor/actions'
-require 'rubygems/config_file'
-
 module Constellation
 
-  class Runner < Thor
-    include Thor::Actions
+  class Runner# < Thor
+    #include Thor::Actions
+
+    @@config = Config.new
+
+    class << self
+
+      def run!
+      end
+
+    end
   end
 
 end
