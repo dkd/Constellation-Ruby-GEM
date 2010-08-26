@@ -1,3 +1,5 @@
+require "fssm"
+
 module Constellation
 
   class Reader

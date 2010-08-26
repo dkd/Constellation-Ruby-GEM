@@ -1,7 +1,9 @@
+require "thor"
+
 module Constellation
 
-  class Runner# < Thor
-    #include Thor::Actions
+  class Runner < Thor
+    include Thor::Actions
 
     @@config = Config.new
 
