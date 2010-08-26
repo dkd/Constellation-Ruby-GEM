@@ -28,10 +28,24 @@ module Constellation
     def restart
     end
 
-    desc "version", "Show constellation's version"
+    desc "version", "Shows the version of the currently installed Constellation gem"
     def version
       puts ::Constellation::VERSION
     end
+    map %w(-v --version) => :version
+
+    desc "help", "Shows the example usage of all available command line options"
+    def help
+      puts "Available command line options:"
+      puts ""
+      puts "constellation init        Generates a ConstellationFile and initializes the application"
+      puts "constellation start       Starts watching for log entries"
+      puts "constellation stop        Stops watching for log entries"
+      puts "constellation restart     Restarts watching for log entries"
+      puts "constellation version     Shows the version of the currently installed Constellation gem"
+      puts "constellation help        Shows the example usage of all available command line options"
+    end
+    map %w(--help) => :help
   end
 
 end
