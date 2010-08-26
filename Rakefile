@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "constellation"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Observes log files of all of your servers.}
+    gem.description = %Q{Observes log files of all of your servers.}
     gem.email = "stefan.sprenger@dkd.de"
     gem.homepage = "http://github.com/dkd/constellation"
     gem.authors = ["Stefan Sprenger"]
