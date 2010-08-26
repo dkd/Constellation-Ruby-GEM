@@ -3,20 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::Runner do
 
   describe "#initialize" do
-    it "should call #parse_options"
-    it "should call the action depending on the given command line option"
-  end
-
-  describe "#parse_options" do
-    it "should load an option parser"
-
-    context "given a false usage of options" do
-      it "should throw an error"
-    end
-  end
-
-  describe "#exec" do
-    it "should call the given action"
   end
 
   describe "#init" do

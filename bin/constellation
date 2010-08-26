@@ -1,3 +1,10 @@
 #!/usr/bin/env ruby
 
 require "constellation"
+
+begin
+  Constellation::Runner.run!
+rescue Constellation::ConstellationError => e
+  puts e.message
+  exit 1
+end
