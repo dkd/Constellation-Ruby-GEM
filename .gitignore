@@ -21,6 +21,7 @@ pkg
 ## PROJECT::SPECIFIC
 .idea
 .document
+Gemfile
 
 ## metric_fu
 scratch_directory
