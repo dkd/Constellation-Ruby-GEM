@@ -21,3 +21,7 @@ pkg
 ## PROJECT::SPECIFIC
 .idea
 .document
+
+## metric_fu
+scratch_directory
+tmp
