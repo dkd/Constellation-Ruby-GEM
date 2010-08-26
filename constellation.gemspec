@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.authors = ["Stefan Sprenger"]
   s.date = %q{2010-08-26}
   s.default_executable = %q{constellation}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
   s.executables = ["constellation"]
   s.extra_rdoc_files = [
@@ -22,11 +22,14 @@ Gem::Specification.new do |s|
     ".document",
      ".gitignore",
      "CHANGELOG.md",
+     "Gemfile",
+     "Gemfile.lock",
      "LICENSE",
      "README.md",
      "Rakefile",
      "VERSION",
      "bin/constellation",
+     "constellation.gemspec",
      "lib/constellation.rb",
      "lib/constellation/config.rb",
      "lib/constellation/data_store.rb",
@@ -49,7 +52,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Observes log files of all of your servers.}
   s.test_files = [
     "spec/constellation/config_spec.rb",
      "spec/constellation/data_store_spec.rb",
