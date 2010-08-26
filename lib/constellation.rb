@@ -10,6 +10,8 @@ require "constellation/version"
 
 module Constellation
 
+  REPOSITORY            = "ssh://root@git.dkd.de/var/cache/constellation-app.git"
+
   autoload :Config,       "constellation/config"
   autoload :DataStore,    "constellation/data_store"
   autoload :DataStores,   "constellation/data_stores"
