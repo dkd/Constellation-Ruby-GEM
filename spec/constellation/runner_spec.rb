@@ -14,6 +14,14 @@ describe Constellation::Runner do
     end
   end
 
+  describe "#help" do
+    it "should put some help to the command line" do
+      @runner.stub!(:puts)
+      @runner.should_receive(:puts)
+      @runner.help
+    end
+  end
+
   describe "#start" do
     it "should load the config defined at the ConstellationFile"
     it "should establish a connection to the given data store"
