@@ -16,12 +16,15 @@ module Constellation
       puts "Initializing new application"
     end
 
+    desc "start", "Starts watching for log entries"
     def start
     end
 
+    desc "stop", "Stops watching for log entries"
     def stop
     end
 
+    desc "restart", "Restarts watching for log entries"
     def restart
     end
   end
