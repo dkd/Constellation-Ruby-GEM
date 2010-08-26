@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::Runner do
 
-  describe "#run!" do
+  before(:each) do
+    @runner = Constellation::Runner.new
   end
 
   describe "#init" do
@@ -36,7 +37,11 @@ describe Constellation::Runner do
   end
 
   describe "#version" do
-    it "should put the current version on the command line"
+    it "should put the current version on the command line" do
+      @runner.stub!(:puts)
+      @runner.should_receive(:puts).with(Constellation::VERSION)
+      @runner.version
+    end
   end
 
 end
