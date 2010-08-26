@@ -43,23 +43,43 @@ describe Constellation::Config do
   describe "#data_store" do
 
     describe "#adapter=" do
-      it "should set the used data_store adapter"
+      it "should set the used data_store adapter" do
+        @config.data_store.adapter = :cassandra
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store[:adapter].should eql("cassandra")
+      end
     end
 
     describe "#host=" do
-      it "should set the used data_store host"
+      it "should set the used data_store host" do
+        @config.data_store.host = :localhost
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store[:host].should eql("localhost")
+      end
     end
 
     describe "#namespace=" do
-      it "should set the used data_store namespace"
+      it "should set the used data_store namespace" do
+        @config.data_store.namespace = :constellation
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store[:namespace].should eql("constellation")
+      end
     end
 
     describe "#user=" do
-      it "should set the used data_store user"
+      it "should set the used data_store user" do
+        @config.data_store.username = "admin"
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store[:username].should eql("admin")
+      end
     end
 
     describe "#password=" do
-      it "should set the used data_store password"
+      it "should set the used data_store password" do
+        @config.data_store.password = "secret"
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store[:password].should eql("secret")
+      end
     end
 
   end
