@@ -7,4 +7,13 @@ module Constellation
   autoload :DataStores,   "constellation/data_stores"
   autoload :Runner,       "constellation/runner"
 
+  class ConstellationError < StandardError
+  end
+
+  class ConstellationFileNotFoundError  < ConstellationError;   end
+  class LogFileNotFoundError            < ConstellationError;   end
+  class InvalidCommandLineOptionError   < ConstellationError;   end
+  class InvalidConstellationFileError   < ConstellationError;   end
+  class InvalidLogFormatError           < ConstellationError;   end
+
 end

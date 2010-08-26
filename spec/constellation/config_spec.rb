@@ -2,9 +2,15 @@ require "spec_helper"
 
 describe Constellation::Config do
 
+  before(:each) do
+    @config = Constellation::Config.new
+  end
+
   describe "#watch" do
     context "given a file, that does exist" do
-      it "should add the file to the list of watched files"
+      it "should add the file to the list of watched files" do
+
+      end
     end
 
     context "given a file, that does not exist" do
