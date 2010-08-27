@@ -2,6 +2,10 @@ require "thor"
 
 module Constellation
 
+  #
+  # Constellation::Runner handles several commands, initializes a new project, starts a project or prints the currently installed
+  # Constellation version
+  #
   class Runner < Thor
     include Thor::Actions
 
