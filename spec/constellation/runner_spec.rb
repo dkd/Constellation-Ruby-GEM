@@ -7,6 +7,7 @@ describe Constellation::Runner do
   end
 
   describe "#init" do
+
     context "a ConstellationFile already exists" do
       it "should raise an error" do
         File.open("ConstellationFile", 'w') {|f| f.write("") }
@@ -16,6 +17,7 @@ describe Constellation::Runner do
         File.delete("ConstellationFile")
       end
     end
+
     it "should load the application from the Git repository given by Constellation::REPOSITORY tagged by Constellation::VERSION"
 
     context "given an error while loading the application" do
