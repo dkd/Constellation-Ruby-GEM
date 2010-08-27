@@ -5,7 +5,7 @@ module Constellation
 
     class Cassandra < ::Constellation::DataStore
       def establish_connection
-        @server = Cassandra.new(@namespace, @host)
+        @server = ::Cassandra.new(@namespace, @host)
         @server.login!(@username, @password) if @username && @password
       end
     end
