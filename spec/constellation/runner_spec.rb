@@ -50,20 +50,32 @@ describe Constellation::Runner do
         FileHelpers::destroy_file("logs.txt")
       end
 
-      it "should load the config defined at the ConstellationFile" do
-        File.should_receive(:read).and_return("watch 'logs.txt'")
-        @runner.start
+      context "valid ConstellationFile" do
+
+        it "should load the config defined at the ConstellationFile" do
+          File.should_receive(:read).and_return("watch 'logs.txt'")
+          @runner.start
+        end
+
+        it "should establish a connection to the given data store"
+
+        context "given a successful data store connection" do
+          it "should start the web application"
+        end
+
+        context "given a failed data store connection" do
+          it "should throw an error"
+        end
+
       end
 
-      it "should establish a connection to the given data store"
-
-      context "given a successful data store connection" do
-        it "should start the web application"
+      context "invalid ConstellationFile" do
+        it "should raise an error" do
+          FileHelpers::create_file("ConstellationFile","watch 'logs.txt")
+          lambda { @runner.start }.should raise_error
+        end
       end
 
-      context "given a failed data store connection" do
-        it "should throw an error"
-      end
     end
   end
 
