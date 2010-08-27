@@ -42,21 +42,12 @@ describe Constellation::Config do
 
   describe "#freeze!" do
     it "should initialize a new DataStore object" do
-      @config.data_store.adapter = :cassandra
       @config.freeze!
-      @config.instance_variable_get("@data_store").should be_a(Constellation::DataStores::Cassandra)
+      @config.instance_variable_get("@data_store").should be_a(Constellation::DataStore)
     end
   end
 
   describe "#data_store" do
-
-    describe "#adapter=" do
-      it "should set the used data_store adapter" do
-        @config.data_store.adapter = :cassandra
-        @data_store = @config.instance_variable_get("@data_store")
-        @data_store[:adapter].should eql("cassandra")
-      end
-    end
 
     describe "#host=" do
       it "should set the used data_store host" do
@@ -66,11 +57,11 @@ describe Constellation::Config do
       end
     end
 
-    describe "#namespace=" do
-      it "should set the used data_store namespace" do
-        @config.data_store.namespace = :constellation
+    describe "#keyspace=" do
+      it "should set the used data_store keyspace" do
+        @config.data_store.keyspace = :constellation
         @data_store = @config.instance_variable_get("@data_store")
-        @data_store[:namespace].should eql("constellation")
+        @data_store[:keyspace].should eql("constellation")
       end
     end
 

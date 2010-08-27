@@ -10,7 +10,7 @@ module Constellation
       # Insert a file in this list by using Config.watch
       @watched_files = []
       # Default values for the data store
-      @data_store    = {:adapter => "cassandra", :username => nil, :password => nil, :namespace => "constellation", :host => "localhost"}
+      @data_store    = {:username => nil, :password => nil, :keyspace => "constellation", :host => "localhost"}
     end
 
     # Adds a new log file to the watched files list, that gets observer for changes.
@@ -63,25 +63,23 @@ module Constellation
       @data_store[:password] = password
     end
 
-    # Defines the used namespace
+    # Defines the used keyspace
     #
-    # Example usage:    data_store.namespace = :my_app
+    # Example usage:    data_store.keyspace = :my_app
     #
-    def namespace=(namespace)
-      @data_store[:namespace] = namespace.to_s
+    def keyspace=(keyspace)
+      @data_store[:keyspace] = keyspace.to_s
     end
 
     #
     # Freezes the current config setup and creates a new DataStore object using the informations of the @data_store Hash
     #
     def freeze!
-      klass       = "Constellation::DataStores::#{@data_store[:adapter].capitalize}".split("::").inject(Kernel) {|scope, const_name| scope.const_get(const_name)}
-      data_store  = klass.new
+      data_store  = DataStore.new
       data_store.host       = @data_store[:host]
-      data_store.adapter    = @data_store[:adapter]
       data_store.username   = @data_store[:username]
       data_store.password   = @data_store[:password]
-      data_store.namespace  = @data_store[:namespace]
+      data_store.keyspace  = @data_store[:keyspace]
       @data_store = data_store
     end
 
