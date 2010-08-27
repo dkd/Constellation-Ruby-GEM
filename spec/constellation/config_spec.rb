@@ -40,6 +40,10 @@ describe Constellation::Config do
     end
   end
 
+  describe "#freeze!" do
+    it "should initialize a new DataStore object"
+  end
+
   describe "#data_store" do
 
     describe "#adapter=" do

@@ -9,7 +9,8 @@ module Constellation
       # Includes each file, that should be watched by Constellation
       # Insert a file in this list by using Config.watch
       @watched_files = []
-      @data_store    = {}
+      # Default values for the data store
+      @data_store    = {:adapter => "cassandra", :username => "admin", :password => "secret", :namespace => "constellation", :host => "localhost"}
     end
 
     # Adds a new log file to the watched files list, that gets observer for changes.
@@ -17,8 +18,8 @@ module Constellation
     # Example usage:    watch "logs._txt"
     #
     def watch(file_name)
-      raise LogFileNotFoundError unless File::exists?(file_name)
-      raise LogFileAlreadyIncluded if @watched_files.include?(file_name)
+      raise LogFileNotFoundError    unless File::exists?(file_name)
+      raise LogFileAlreadyIncluded  if @watched_files.include?(file_name)
       @watched_files << file_name
     end
 
@@ -68,6 +69,19 @@ module Constellation
     #
     def namespace=(namespace)
       @data_store[:namespace] = namespace.to_s
+    end
+
+    #
+    # Freezes the current config setup and creates a new DataStore object using the informations of the @data_store Hash
+    #
+    def freeze!
+      klass       = "Constellation::DataStores::#{@data_store[:adapter].capitalize}".split("::").inject(Kernel) {|scope, const_name| scope.const_get(const_name)}
+      data_store  = klass.new
+      data_store.host       = @data_store[:host]
+      data_store.adapter    = @data_store[:adapter]
+      data_store.username   = @data_store[:username]
+      data_store.password   = @data_store[:password]
+      data_store.namespace  = @data_store[:namespace]
     end
 
   end

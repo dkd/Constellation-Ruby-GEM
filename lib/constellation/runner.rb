@@ -21,11 +21,13 @@ module Constellation
     def start
       raise ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
 
-      begin
+#      begin
         @config.instance_eval(File.read("ConstellationFile"))
-      rescue Exception => e
-        raise InvalidConstellationFileError
-      end
+        @config.freeze!
+#      rescue Exception => e
+#        raise InvalidConstellationFileError
+#      end
+
     end
     map %w(-s) => :start
 
