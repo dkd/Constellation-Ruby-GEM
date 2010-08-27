@@ -31,14 +31,6 @@ module Constellation
       @data_store.is_a?(Hash) ? self : @data_store
     end
 
-    # Defines the used database adapter
-    #
-    # Example usage:    data_store.adapter = :cassandra
-    #
-    def adapter=(adapter)
-      @data_store[:adapter] = adapter.to_s
-    end
-
     # Defines the used database host
     #
     # Example usage:    data_store.host = "127.0.0.1"

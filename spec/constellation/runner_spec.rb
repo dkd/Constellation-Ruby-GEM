@@ -17,10 +17,6 @@ describe Constellation::Runner do
     end
 
     it "should load the application from the Git repository given by Constellation::REPOSITORY tagged by Constellation::VERSION"
-
-    context "given an error while loading the application" do
-      it "should throw an error"
-    end
   end
 
   describe "#help" do
