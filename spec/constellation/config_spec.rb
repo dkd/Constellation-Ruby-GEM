@@ -9,10 +9,10 @@ describe Constellation::Config do
   describe "#watch" do
     before(:each) do
       @file_name = "LogFile.txt"
-      File.open(@file_name, 'w') {|f| f.write("") }
+      FileHelpers::create_file(@file_name)
     end
     after(:each) do
-      File.delete(@file_name)
+      FileHelpers::destroy_file(@file_name)
     end
 
     context "given a file, that does exist" do

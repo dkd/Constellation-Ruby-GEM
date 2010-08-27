@@ -19,6 +19,13 @@ module Constellation
 
     desc "start", "Starts watching for log entries"
     def start
+      raise ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
+
+      begin
+        @config.instance_eval(File.read("ConstellationFile"))
+      rescue Exception => e
+        raise InvalidConstellationFileError
+      end
     end
     map %w(-s) => :start
 
