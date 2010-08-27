@@ -8,6 +8,13 @@ rescue LoadError
 end
 require "constellation/version"
 
+#
+# Constellation is a modern, scalable solution for managing your log files
+# across several servers and by many users.
+#
+# It uses the well-known key-value store Cassandra for saving log entries and provides an
+# easy-to-use web application, written in Ruby on Rails, for monitoring and controlling.
+#
 module Constellation
 
   REPOSITORY            = "ssh://root@git.dkd.de/var/cache/constellation-app.git".freeze
