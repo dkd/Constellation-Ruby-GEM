@@ -9,6 +9,10 @@ describe Constellation::DataStores::Cassandra do
     it "should insert the given data into Cassandra"
   end
 
+  describe "#get" do
+    it "should return the requested data"
+  end
+
   describe "#establish_connection" do
     it "should establish the connection"
   end

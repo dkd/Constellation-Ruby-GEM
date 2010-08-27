@@ -10,7 +10,7 @@ module Constellation
       # Insert a file in this list by using Config.watch
       @watched_files = []
       # Default values for the data store
-      @data_store    = {:adapter => "cassandra", :username => "admin", :password => "secret", :namespace => "constellation", :host => "localhost"}
+      @data_store    = {:adapter => "cassandra", :username => nil, :password => nil, :namespace => "constellation", :host => "localhost"}
     end
 
     # Adds a new log file to the watched files list, that gets observer for changes.
