@@ -12,6 +12,7 @@ module Constellation
 
     desc "init", "Generates a ConstellationFile and initializes the application"
     def init
+      raise ConstellationFileAlreadyExists if File.exists?("ConstellationFile")
       puts "Initializing new application"
     end
 
