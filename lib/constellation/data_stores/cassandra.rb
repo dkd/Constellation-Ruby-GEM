@@ -1,3 +1,5 @@
+require "cassandra"
+
 module Constellation
   module DataStores
 
