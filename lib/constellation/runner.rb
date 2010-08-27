@@ -15,10 +15,12 @@ module Constellation
       raise ConstellationFileAlreadyExists if File.exists?("ConstellationFile")
       puts "Initializing new application"
     end
+    map %w(-i) => :start
 
     desc "start", "Starts watching for log entries"
     def start
     end
+    map %w(-s) => :start
 
     desc "version", "Shows the version of the currently installed Constellation gem"
     def version
