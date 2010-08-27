@@ -28,7 +28,7 @@ module Constellation
     # Example usage:    data_store.adapter = :cassandra
     #
     def data_store
-      self
+      @data_store.is_a?(Hash) ? self : @data_store
     end
 
     # Defines the used database adapter
@@ -82,6 +82,7 @@ module Constellation
       data_store.username   = @data_store[:username]
       data_store.password   = @data_store[:password]
       data_store.namespace  = @data_store[:namespace]
+      @data_store = data_store
     end
 
   end

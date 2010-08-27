@@ -41,7 +41,7 @@ describe Constellation::Runner do
     context "ConstellationFile does exist" do
 
       before(:each) do
-        FileHelpers::create_file("ConstellationFile","watch 'logs.txt")
+        FileHelpers::create_file("ConstellationFile","watch 'logs.txt'")
         FileHelpers::create_file("logs.txt")
       end
 
@@ -56,8 +56,6 @@ describe Constellation::Runner do
           File.should_receive(:read).and_return("watch 'logs.txt'")
           @runner.start
         end
-
-        it "should establish a connection to the given data store"
 
         context "given a successful data store connection" do
           it "should start the web application"

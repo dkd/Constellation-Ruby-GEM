@@ -43,14 +43,8 @@ describe Constellation::Config do
   describe "#freeze!" do
     it "should initialize a new DataStore object" do
       @config.data_store.adapter = :cassandra
-      @data_store_mock = mock(Constellation::DataStores::Cassandra)
-      @data_store_mock.stub!(:host=)
-      @data_store_mock.stub!(:username=)
-      @data_store_mock.stub!(:password=)
-      @data_store_mock.stub!(:adapter=)
-      @data_store_mock.stub!(:namespace=)
-      Constellation::DataStores::Cassandra.should_receive(:new).and_return(@data_store_mock)
       @config.freeze!
+      @config.instance_variable_get("@data_store").should be_a(Constellation::DataStores::Cassandra)
     end
   end
 
