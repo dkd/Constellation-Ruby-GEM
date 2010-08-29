@@ -15,7 +15,8 @@ module Constellation
 
     # Adds a new log file to the watched files list, that gets observer for changes.
     #
-    # Example usage:    watch "logs._txt"
+    # Example usage:
+    #   watch "logs.txt"
     #
     def watch(file_name)
       raise LogFileNotFoundError    unless File::exists?(file_name)
@@ -25,10 +26,11 @@ module Constellation
 
     # Used as wrapper for several configuration options used for setting up the data store
     #
-    # Example usage:    data_store.host     = :localhost
-    #                   data_store.username = :admin
-    #                   data_store.password = "secret"
-    #                   data_store.keyspace = :constellation
+    # Example usage:
+    #   data_store.host     = :localhost
+    #   data_store.username = :admin
+    #   data_store.password = "secret"
+    #   data_store.keyspace = :constellation
     #
     def data_store
       @data_store
