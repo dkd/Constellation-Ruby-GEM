@@ -16,6 +16,18 @@ module Constellation
       @server = Cassandra.new(@keyspace, @host)
       @server.login!(@username, @password) if @username && @password
     end
+
+    def host=(host)
+      @host = host.to_s
+    end
+
+    def keyspace=(keyspace)
+      @keyspace = keyspace.to_s
+    end
+
+    def username=(username)
+      @username = username.to_s
+    end
   end
 
 end
