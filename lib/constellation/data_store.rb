@@ -16,6 +16,7 @@ module Constellation
       @host     ||= "127.0.0.1"
       @port     ||= 9160
       @keyspace ||= "Constellation"
+
       @server = Cassandra.new(@keyspace, "#{host}:#{port.to_s}")
       @server.login!(@username, @password) if @username && @password
     end
