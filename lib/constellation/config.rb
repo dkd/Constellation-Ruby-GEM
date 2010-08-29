@@ -25,7 +25,10 @@ module Constellation
 
     # Used as wrapper for several configuration options used for setting up the data store
     #
-    # Example usage:    data_store.host = :localhost
+    # Example usage:    data_store.host     = :localhost
+    #                   data_store.username = :admin
+    #                   data_store.password = "secret"
+    #                   data_store.keyspace = :constellation
     #
     def data_store
       @data_store
