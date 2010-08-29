@@ -28,6 +28,7 @@ module Constellation
     #
     # Example usage:
     #   data_store.host     = :localhost
+    #   data_store.port     = 9160
     #   data_store.username = :admin
     #   data_store.password = "secret"
     #   data_store.keyspace = :constellation

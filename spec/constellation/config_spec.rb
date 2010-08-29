@@ -74,5 +74,13 @@ describe Constellation::Config do
       end
     end
 
+    describe "#port=" do
+      it "should set the used data_store port" do
+        @config.data_store.port = 9160
+        @data_store = @config.instance_variable_get("@data_store")
+        @data_store.port.should eql(9160)
+      end
+    end
+
   end
 end
