@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Sprenger"]
-  s.date = %q{2010-08-26}
+  s.date = %q{2010-08-31}
   s.default_executable = %q{constellation}
   s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
@@ -33,18 +33,16 @@ Gem::Specification.new do |s|
      "lib/constellation.rb",
      "lib/constellation/config.rb",
      "lib/constellation/data_store.rb",
-     "lib/constellation/data_stores.rb",
-     "lib/constellation/data_stores/cassandra.rb",
      "lib/constellation/reader.rb",
      "lib/constellation/runner.rb",
      "lib/constellation/version.rb",
      "spec/constellation/config_spec.rb",
      "spec/constellation/data_store_spec.rb",
-     "spec/constellation/data_stores/cassandra_spec.rb",
      "spec/constellation/reader_spec.rb",
      "spec/constellation/runner_spec.rb",
      "spec/constellation/version_spec.rb",
      "spec/constellation_spec.rb",
+     "spec/helpers/file_helper.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
@@ -56,11 +54,11 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/constellation/config_spec.rb",
      "spec/constellation/data_store_spec.rb",
-     "spec/constellation/data_stores/cassandra_spec.rb",
      "spec/constellation/reader_spec.rb",
      "spec/constellation/runner_spec.rb",
      "spec/constellation/version_spec.rb",
      "spec/constellation_spec.rb",
+     "spec/helpers/file_helper.rb",
      "spec/spec_helper.rb"
   ]
 
