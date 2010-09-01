@@ -1,4 +1,4 @@
-require "cassandra/0.7"
+require 'cassandra/0.7'
 
 module Constellation
 
@@ -6,19 +6,30 @@ module Constellation
   # Constellation::DataStore is used for saving the read log entries
   #
   class DataStore
-    attr_accessor :host, :username, :password, :keyspace, :port
+    attr_accessor :host, :username, :password, :keyspace, :port, :replication_factor
 
     #
     # Establishes a new connection to the given Cassandra store.
     # The Cassandra store gets defined by ConstellationFile.
     #
     def establish_connection
-      @host     ||= "127.0.0.1"
-      @port     ||= 9160
-      @keyspace ||= "Constellation"
+      @host               ||= "127.0.0.1"
+      @port               ||= 9160
+      @keyspace           ||= "Constellation"
+      @replication_factor ||= 1
 
       @server = Cassandra.new(@keyspace, "#{host}:#{port.to_s}")
       @server.login!(@username, @password) if @username && @password
+      begin
+        @server.keyspace = @keyspace
+      rescue Cassandra::AccessError
+        keyspace = Cassandra::Keyspace.new
+        keyspace.name                 = @keyspace
+        keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
+        keyspace.replication_factor   = 1
+        keyspace.cf_def               =
+        @server.add_keyspace(keyspace)
+      end
     end
 
     def host=(host)

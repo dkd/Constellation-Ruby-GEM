@@ -13,8 +13,6 @@ describe Constellation::DataStore do
       @data_store.establish_connection
     end
 
-    it "should check if the given keyspace exists"
-
     context "given keyspace exists" do
     end
 
