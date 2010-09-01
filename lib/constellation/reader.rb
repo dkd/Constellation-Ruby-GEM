@@ -1,4 +1,4 @@
-require "fssm"
+require 'fssm'
 
 module Constellation
 

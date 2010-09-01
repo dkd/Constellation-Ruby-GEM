@@ -18,7 +18,7 @@ module Constellation
       @keyspace           ||= "Constellation"
       @replication_factor ||= 1
 
-      @server = Cassandra.new("system", "#{host}:#{port.to_s}")
+      @server = Cassandra.new("system", "#{@host}:#{@port.to_s}")
       @server.login!(@username, @password) if @username && @password
       begin
         @server.keyspace = @keyspace

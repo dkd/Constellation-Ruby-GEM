@@ -1,12 +1,11 @@
-# By default Rubygems are used as source,
-# but you are free to choose your own provider
+require "constellation/version"
+
 begin
   require "bundler/setup"
 rescue LoadError
   require "rubygems"
   require "bundler/setup"
 end
-require "constellation/version"
 
 #
 # Constellation is a modern, scalable solution for managing your log files

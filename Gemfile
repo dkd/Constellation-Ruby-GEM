@@ -6,4 +6,4 @@ gemspec
 # Gem dependencies
 gem "thor"
 gem "fssm"
-gem "cassandra", :git => "http://github.com/fauna/cassandra.git"
+gem "cassandra", :require => "cassandra/0.7"
