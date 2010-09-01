@@ -8,7 +8,7 @@ describe Constellation::DataStore do
     end
 
     it "should create a new Cassandra instance" do
-      @data_store.keyspace  = "constellation"
+      @data_store.keyspace  = "Constellation"
       @data_store.host      = "127.0.0.1:9160"
       @data_store.establish_connection
     end
