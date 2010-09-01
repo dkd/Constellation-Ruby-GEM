@@ -12,6 +12,15 @@ describe Constellation::DataStore do
       @data_store.host      = "127.0.0.1:9160"
       @data_store.establish_connection
     end
+
+    it "should check if the given keyspace exists"
+
+    context "given keyspace exists" do
+    end
+
+    context "given keyspace does not exist" do
+      it "should create the keyspace"
+    end
   end
 
 end
