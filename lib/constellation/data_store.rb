@@ -26,8 +26,8 @@ module Constellation
         keyspace = Cassandra::Keyspace.new
         keyspace.name                 = @keyspace
         keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
-        keyspace.replication_factor   = 1
-        keyspace.cf_def               =
+        keyspace.replication_factor   = @replication_factor
+        keyspace.cf_def               = []
         @server.add_keyspace(keyspace)
       end
     end
