@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
      "lib/constellation/version.rb",
      "spec/constellation/config_spec.rb",
      "spec/constellation/data_store_spec.rb",
-     "spec/constellation/log_entry.rb",
+     "spec/constellation/log_entry_spec.rb",
      "spec/constellation/reader_spec.rb",
      "spec/constellation/runner_spec.rb",
      "spec/constellation/version_spec.rb",
@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/constellation/config_spec.rb",
      "spec/constellation/data_store_spec.rb",
-     "spec/constellation/log_entry.rb",
+     "spec/constellation/log_entry_spec.rb",
      "spec/constellation/reader_spec.rb",
      "spec/constellation/runner_spec.rb",
      "spec/constellation/version_spec.rb",

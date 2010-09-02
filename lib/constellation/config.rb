@@ -37,6 +37,10 @@ module Constellation
       @data_store
     end
 
+    def watched_files
+      @watched_files
+    end
+
   end
 
 end

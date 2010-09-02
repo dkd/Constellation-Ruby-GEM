@@ -12,6 +12,7 @@ module Constellation
     def initialize(*)
       super
       @config = Config.new
+      @reader = Reader.new(@config)
     end
 
     desc "init", "Generates a ConstellationFile and initializes the application"
@@ -27,6 +28,8 @@ module Constellation
 
       @config.instance_eval(File.read("ConstellationFile"))
       @config.data_store.establish_connection
+
+      @reader.start
     end
     map %w(-s) => :start
 

@@ -28,6 +28,11 @@ describe Constellation::Runner do
   end
 
   describe "#start" do
+    before(:each) do
+      # don't wait for file changes
+      @runner.instance_variable_get("@reader").instance_variable_get("@monitor").stub!(:run)
+    end
+
     context "ConstellationFile does not exist" do
       it "should raise an error" do
         lambda { @runner.start }.should raise_error
