@@ -28,5 +28,6 @@ DEPENDENCIES
   cassandra
   constellation!
   fssm
+  json
   rspec (>= 1.2.9)
   thor
