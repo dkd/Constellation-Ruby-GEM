@@ -51,10 +51,10 @@ module Constellation
 
     def create_column_families
       families = []
-      column_family                 = Cassandra::ColumnFamily.new
-      column_family.table           = @keyspace
-      column_family.name            = "logs"
-      families                      << column_family
+      log_family                 = Cassandra::ColumnFamily.new
+      log_family.table           = @keyspace
+      log_family.name            = "logs"
+      families                   << log_family
       families
     end
   end
