@@ -1,3 +1,5 @@
+require 'uuid'
+
 module Constellation
 
   #
@@ -13,6 +15,7 @@ module Constellation
 
     def to_json
       {
+        :uuid         => UUID.new.generate,
         :machine      => @machine,
         :application  => @application,
         :message      => @message,
