@@ -30,12 +30,15 @@ describe Constellation::DataStore do
       it "should create a new keyspace" do
         server = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
         Cassandra.stub!(:new).and_return(server)
-        server.should_receive(:drop_keyspace)
+        server.should_receive(:add_keyspace)
         @data_store.establish_connection
       end
 
       it "should create a new column family" do
-        @data_store.should_receive(:create_column_family)
+        column_family       = Cassandra::ColumnFamily.new
+        column_family.table = @data_store.keyspace
+        column_family.name  = "logs"
+        @data_store.should_receive(:create_column_family).and_return(column_family)
         @data_store.establish_connection
       end
     end
