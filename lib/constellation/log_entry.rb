@@ -13,6 +13,13 @@ module Constellation
   class LogEntry
     attr_accessor :machine, :application, :message, :timestamp
 
+    #
+    # Parses a given line of a log file and initializes a new
+    # LogEntry object
+    #
+    def initialize(line_of_log_file)
+    end
+
     def to_json
       {
         :uuid         => UUID.new.generate,
