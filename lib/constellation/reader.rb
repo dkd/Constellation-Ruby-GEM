@@ -15,7 +15,7 @@ module Constellation
     end
 
     #
-    # Starts observing the given files for changes
+    # Starts observing the given files for changes using the FSSM gem.
     #
     def start
       @config.watched_files.each { |file|
