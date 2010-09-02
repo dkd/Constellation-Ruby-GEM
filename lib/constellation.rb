@@ -20,6 +20,7 @@ module Constellation
 
   autoload :Config,       "constellation/config"
   autoload :DataStore,    "constellation/data_store"
+  autoload :LogEntry,     "constellation/log_entry"
   autoload :Reader,       "constellation/reader"
   autoload :Runner,       "constellation/runner"
 
