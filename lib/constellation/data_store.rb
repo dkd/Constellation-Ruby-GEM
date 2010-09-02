@@ -35,6 +35,7 @@ module Constellation
         keyspace.cf_defs              = create_column_families
         @server.add_keyspace(keyspace)
       end
+      puts "Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established."
     end
 
     def host=(host)
