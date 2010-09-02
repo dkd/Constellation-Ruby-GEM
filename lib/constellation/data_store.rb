@@ -13,7 +13,9 @@ module Constellation
     # The Cassandra store gets defined by ConstellationFile.
     #
     # If the given keyspace doesn't exist, a new keyspace including the necessary
-    # column families will be created
+    # column families will be created.
+    # It is recommended to use a not existing keyspace in order to make sure that the data model
+    # is set up correctly.
     #
     def establish_connection
       @host               ||= "127.0.0.1"
@@ -49,6 +51,10 @@ module Constellation
 
     protected
 
+    #
+    # Creates the necessary column families:
+    # * logs
+    #
     def create_column_families
       families = []
       log_family                 = Cassandra::ColumnFamily.new
