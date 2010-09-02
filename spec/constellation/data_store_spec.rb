@@ -17,7 +17,19 @@ describe Constellation::DataStore do
     end
 
     context "given keyspace does not exist" do
-      it "should create the keyspace"
+      before(:each) do
+        @keyspace_name = "TemporaryKeyspace"
+      end
+      after(:each) do
+        CassandraHelpers::drop_keyspace(@keyspace_name)
+      end
+
+      it "should create a new keyspace" do
+        @data_store.host      = "127.0.0.1"
+        @data_store.port      = 9160
+        @data_store.keyspace  = "TemporaryKeyspace"
+        @data_store.establish_connection
+      end
     end
   end
 

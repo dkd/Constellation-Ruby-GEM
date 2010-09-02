@@ -23,11 +23,11 @@ module Constellation
       begin
         @server.keyspace = @keyspace
       rescue Cassandra::AccessError
-        keyspace = Cassandra::Keyspace.new
+        keyspace                      = Cassandra::Keyspace.new
         keyspace.name                 = @keyspace
         keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
         keyspace.replication_factor   = @replication_factor
-        keyspace.cf_def               = []
+        keyspace.cf_defs              = []
         @server.add_keyspace(keyspace)
       end
     end
