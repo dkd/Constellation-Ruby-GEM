@@ -28,6 +28,9 @@ describe Constellation::DataStore do
         @data_store.host      = "127.0.0.1"
         @data_store.port      = 9160
         @data_store.keyspace  = "TemporaryKeyspace"
+        server                = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
+        Cassandra.stub!(:new).and_return(server)
+        server.should_receive(:drop_keyspace)
         @data_store.establish_connection
       end
     end
