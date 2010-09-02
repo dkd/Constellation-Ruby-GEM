@@ -12,6 +12,9 @@ module Constellation
     # Establishes a new connection to the given Cassandra store.
     # The Cassandra store gets defined by ConstellationFile.
     #
+    # If the given keyspace doesn't exist, a new keyspace including the necessary
+    # column families will be created
+    #
     def establish_connection
       @host               ||= "127.0.0.1"
       @port               ||= 9160
@@ -27,7 +30,7 @@ module Constellation
         keyspace.name                 = @keyspace
         keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
         keyspace.replication_factor   = @replication_factor
-        keyspace.cf_defs              = [create_column_family]
+        keyspace.cf_defs              = create_column_families
         @server.add_keyspace(keyspace)
       end
     end
@@ -46,11 +49,13 @@ module Constellation
 
     protected
 
-    def create_column_family
-      column_family       = Cassandra::ColumnFamily.new
-      column_family.table = @keyspace
-      column_family.name  = "logs"
-      column_family
+    def create_column_families
+      families = []
+      column_family                 = Cassandra::ColumnFamily.new
+      column_family.table           = @keyspace
+      column_family.name            = "logs"
+      families                      << column_family
+      families
     end
   end
 

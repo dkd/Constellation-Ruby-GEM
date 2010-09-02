@@ -38,7 +38,7 @@ describe Constellation::DataStore do
         column_family       = Cassandra::ColumnFamily.new
         column_family.table = @data_store.keyspace
         column_family.name  = "logs"
-        @data_store.should_receive(:create_column_family).and_return(column_family)
+        @data_store.should_receive(:create_column_families).and_return([column_family])
         @data_store.establish_connection
       end
     end
