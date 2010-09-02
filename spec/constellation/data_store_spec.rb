@@ -18,19 +18,24 @@ describe Constellation::DataStore do
 
     context "given keyspace does not exist" do
       before(:each) do
-        @keyspace_name = "TemporaryKeyspace"
+        @keyspace_name        = "TemporaryKeyspace"
+        @data_store.host      = "127.0.0.1"
+        @data_store.port      = 9160
+        @data_store.keyspace  = @keyspace_name
       end
       after(:each) do
         CassandraHelpers::drop_keyspace(@keyspace_name)
       end
 
       it "should create a new keyspace" do
-        @data_store.host      = "127.0.0.1"
-        @data_store.port      = 9160
-        @data_store.keyspace  = "TemporaryKeyspace"
-        server                = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
+        server = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
         Cassandra.stub!(:new).and_return(server)
         server.should_receive(:drop_keyspace)
+        @data_store.establish_connection
+      end
+
+      it "should create a new column family" do
+        @data_store.should_receive(:create_column_family)
         @data_store.establish_connection
       end
     end

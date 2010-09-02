@@ -27,7 +27,7 @@ module Constellation
         keyspace.name                 = @keyspace
         keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
         keyspace.replication_factor   = @replication_factor
-        keyspace.cf_defs              = []
+        keyspace.cf_defs              = [create_column_family]
         @server.add_keyspace(keyspace)
       end
     end
@@ -42,6 +42,15 @@ module Constellation
 
     def username=(username)
       @username = username.to_s
+    end
+
+    protected
+
+    def create_column_family
+      column_family       = Cassandra::ColumnFamily.new
+      column_family.table = @keyspace
+      column_family.name  = "logs"
+      column_family
     end
   end
 
