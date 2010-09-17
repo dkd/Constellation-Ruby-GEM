@@ -39,6 +39,7 @@ module Constellation
       !@machine.empty? && !@application.empty? && !@message.empty? && @timestamp > 0
     end
 
+    # returns a valid JSON object of the current log entry
     def to_json
       {
         :uuid         => UUID.new.generate,
