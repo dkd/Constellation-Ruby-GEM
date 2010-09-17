@@ -2,15 +2,55 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::LogEntry do
 
-  before(:each) do
-    @log_entry = Constellation::LogEntry.new
-    @log_entry.machine      = "www1"
-    @log_entry.application  = "php5"
-    @log_entry.message      = "I failed"
-    @log_entry.timestamp    = Time.now.to_i
+  describe "#initialize" do
+
+    context "valid line of log file" do
+      before(:each) do
+        @time         = "Sep 17 17:02:02"
+        @machine      = "www1"
+        @application  = "php5"
+        @message  = "I fail!"
+        @log_entry    = Constellation::LogEntry.new("#{@time} #{@machine} #{@application}: #{@message}")
+      end
+
+      it "should parse the machine correctly" do
+        @log_entry.machine.should eql(@machine)
+      end
+
+      it "should parse the time correctly" do
+        @log_entry.timestamp.should eql(Time.parse(@time).to_i)
+      end
+
+      it "should parse the application correctly" do
+        @log_entry.application.should eql(@application)
+      end
+
+      it "should parse the message correctly" do
+        @log_entry.message.should eql(@message)
+      end
+
+      it "should be valid" do
+        @log_entry.should be_valid
+      end
+    end
+
+    context "invalid line of log file" do
+      before(:each) do
+        @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 php5: Fail.")
+      end
+
+      it "should not be valid" do
+        @log_entry.should_not be_valid
+      end
+    end
+
   end
 
   describe "#to_json" do
+    before(:each) do
+      @log_entry = Constellation::LogEntry.new("#{Time.now} www1 php5: I failed.")
+    end
+
     it "should create valid json" do
       lambda { JSON.parse(@log_entry.to_json) }.should_not raise_error
     end
