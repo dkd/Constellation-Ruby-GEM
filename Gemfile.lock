@@ -1,13 +1,3 @@
-GIT
-  remote: http://github.com/fauna/cassandra.git
-  revision: 265d99d1f4e534125f81f60b789fb04959880f41
-  specs:
-    cassandra (0.10.0)
-      json
-      rake
-      simple_uuid (>= 0.1.0)
-      thrift_client (>= 0.4.0)
-
 PATH
   remote: .
   specs:
@@ -16,6 +6,11 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    cassandra (0.9.0)
+      json
+      rake
+      simple_uuid (>= 0.1.0)
+      thrift_client (>= 0.4.0)
     fssm (0.1.4)
     json (1.4.6)
     macaddr (1.0.0)
@@ -33,7 +28,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cassandra!
+  cassandra
   constellation!
   fssm
   json
