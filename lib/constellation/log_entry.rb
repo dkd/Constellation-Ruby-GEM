@@ -34,6 +34,7 @@ module Constellation
       @message          = line_of_log_file[@application.length+2..line_of_log_file.length-1]
     end
 
+    # check, if all required log entry fields are given
     def valid?
       !@machine.nil? && !@application.nil? && !@message.nil? && !@timestamp.nil? &&
       !@machine.empty? && !@application.empty? && !@message.empty? && @timestamp > 0
