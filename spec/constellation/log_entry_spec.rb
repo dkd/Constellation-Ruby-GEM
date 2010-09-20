@@ -9,7 +9,7 @@ describe Constellation::LogEntry do
         @time         = "Sep 17 17:02:02"
         @machine      = "www1"
         @application  = "php5"
-        @message  = "I fail!"
+        @message      = "I fail!"
         @log_entry    = Constellation::LogEntry.new("#{@time} #{@machine} #{@application}: #{@message}")
       end
 
@@ -48,7 +48,7 @@ describe Constellation::LogEntry do
 
   describe "#to_json" do
     before(:each) do
-      @log_entry = Constellation::LogEntry.new("#{Time.now} www1 php5: I failed.")
+      @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
     end
 
     it "should create valid json" do

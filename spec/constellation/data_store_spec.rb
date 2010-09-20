@@ -2,10 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::DataStore do
 
+  before(:each) do
+    @data_store = Constellation::DataStore.new
+  end
+
   describe "#establish_connection" do
-    before(:each) do
-      @data_store = Constellation::DataStore.new
-    end
 
     it "should create a new Cassandra instance" do
       @data_store.host    = "127.0.0.1"
@@ -40,6 +41,30 @@ describe Constellation::DataStore do
         column_family.name  = "logs"
         @data_store.should_receive(:create_column_families).and_return([column_family])
         @data_store.establish_connection
+      end
+    end
+  end
+
+  describe "#insert" do
+
+    context "given log entry is valid" do
+      before(:each) do
+        @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
+      end
+
+      it "should insert the log entry into the database"
+    end
+
+    context "given log entry is not valid" do
+      before(:each) do
+        @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 php5: Fail.")
+      end
+
+      it "should raise an error" do
+        lambda {
+          @data_store.establish_connection
+          @data_store.insert(@log_entry)
+        }.should raise_error
       end
     end
   end
