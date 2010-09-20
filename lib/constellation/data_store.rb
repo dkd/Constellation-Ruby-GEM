@@ -38,6 +38,9 @@ module Constellation
       puts "Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established."
     end
 
+    #
+    # Inserts the given log entry into the database.
+    #
     def insert(log_entry)
       raise InvalidLogFormatError unless log_entry.valid?
     end
