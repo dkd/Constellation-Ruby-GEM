@@ -46,13 +46,13 @@ describe Constellation::LogEntry do
 
   end
 
-  describe "#to_json" do
+  describe "#to_h" do
     before(:each) do
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
     end
 
     it "should create valid json" do
-      lambda { JSON.parse(@log_entry.to_json) }.should_not raise_error
+      @log_entry.to_h.should be_an(Hash)
     end
   end
 

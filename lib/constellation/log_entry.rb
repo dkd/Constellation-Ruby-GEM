@@ -40,15 +40,15 @@ module Constellation
       !@machine.empty? && !@application.empty? && !@message.empty? && @timestamp > 0
     end
 
-    # returns a valid JSON object of the current log entry
-    def to_json
+    # returns a Hash that gets stored in the database
+    def to_h
       {
         :uuid         => UUID.new.generate,
         :machine      => @machine,
         :application  => @application,
         :message      => @message,
         :timestamp    => @timestamp
-      }.to_json
+      }
     end
   end
 
