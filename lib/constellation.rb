@@ -1,5 +1,8 @@
 require "constellation/version"
 
+#
+# Avoid requiring rubygems by default. This would suck.
+#
 begin
   require "bundler/setup"
 rescue LoadError
