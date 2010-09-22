@@ -1,7 +1,7 @@
 require "constellation/version"
 
 #
-# Avoid requiring rubygems by default. This would suck.
+# Avoid requiring rubygems by default. This would suck because you have no freedom.
 #
 begin
   require "bundler/setup"
