@@ -52,7 +52,9 @@ describe Constellation::DataStore do
         @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
       end
 
-      it "should insert the log entry into the database"
+      it "should insert the log entry into the database" do
+        @data_store.insert(@log_entry)
+      end
     end
 
     context "given log entry is not valid" do

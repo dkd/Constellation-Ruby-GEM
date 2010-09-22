@@ -22,6 +22,8 @@ module Constellation
     # e.g.: Sep  2 17:20:01 www1 ruby: Ruby really rocks!
     #
     def initialize(line_of_log_file)
+      @uuid             = UUID.new.generate
+
       # The first 15 characters of a log entry describe the time.
       @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
       line_of_log_file  = line_of_log_file[16..line_of_log_file.length-1]
@@ -43,7 +45,7 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
-        :uuid         => UUID.new.generate,
+        :uuid         => @uuid,
         :machine      => @machine,
         :application  => @application,
         :message      => @message,
