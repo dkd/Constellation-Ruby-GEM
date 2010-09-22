@@ -12,7 +12,6 @@ module Constellation
   class Reader
 
     def initialize(config)
-      @files      = []
       @monitor    = FSSM::Monitor.new
       @config     = config
     end
