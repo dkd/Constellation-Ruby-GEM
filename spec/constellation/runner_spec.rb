@@ -16,7 +16,10 @@ describe Constellation::Runner do
       end
     end
 
-    it "should load the application from the Git repository given by Constellation::REPOSITORY tagged by Constellation::VERSION"
+    context "ConstellationFile does not exist" do
+      it "should load the application from the Git repository given by Constellation::REPOSITORY tagged by Constellation::VERSION"
+    end
+
   end
 
   describe "#help" do
