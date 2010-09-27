@@ -47,6 +47,10 @@ describe Constellation::DataStore do
 
   describe "#insert" do
 
+    before(:each) do
+      @data_store.establish_connection
+    end
+
     context "given log entry is valid" do
       before(:each) do
         @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
@@ -54,6 +58,7 @@ describe Constellation::DataStore do
 
       it "should insert the log entry into the database" do
         @data_store.insert(@log_entry)
+        @data_store.instance_variable_get("@server").get(:log, @log_entry[:uuid]).should_not be_nil
       end
     end
 
