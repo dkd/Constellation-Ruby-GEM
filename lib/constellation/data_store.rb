@@ -23,7 +23,7 @@ module Constellation
       @keyspace           ||= "Constellation"
       @replication_factor ||= 1
 
-      # connect to the system keyspace initially
+      # connect to the system keyspace initially in order to establish a working connection
       @server = Cassandra.new("system", "#{@host}:#{@port.to_s}")
       @server.login!(@username, @password) if @username && @password
       begin
