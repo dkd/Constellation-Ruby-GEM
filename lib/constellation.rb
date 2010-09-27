@@ -11,6 +11,8 @@ rescue LoadError
 end
 
 #
+# == Constellation
+#
 # Constellation is a modern, scalable solution for managing your log files
 # across several servers and by many users.
 #
