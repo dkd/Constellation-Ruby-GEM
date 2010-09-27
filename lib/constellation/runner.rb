@@ -18,7 +18,9 @@ module Constellation
     desc "init", "Generates a ConstellationFile and initializes the application"
     def init
       raise ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
-      puts "Initializing new application"
+      puts "Initializing new application.."
+      puts ""
+      puts "The configuration can be found in ConstellationFile"
       create_example_constellation_file
     end
     map %w(-i) => :start
