@@ -19,6 +19,7 @@ module Constellation
     def init
       raise ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
       puts "Initializing new application"
+      create_example_constellation_file
     end
     map %w(-i) => :start
 
@@ -49,6 +50,28 @@ module Constellation
       puts "constellation help        Shows the example usage of all available command line options"
     end
     map %w(--help) => :help
+
+    no_tasks{
+      #
+      # Creates a new ConstellationFile and fills it with example configuration.
+      #
+      def create_example_constellation_file
+        File.open("ConstellationFile", 'w') {|f|
+          f.write <<-END.gsub(/^ {10}/, '')
+          # Adds the file 'logs' to the list of watched log files
+          watch "logs"
+
+          # Define the connection to the Cassandra server
+          data_store.host     = :localhost
+          data_store.port     = 9160
+          data_store.keyspace = :constellation
+          # Set username and password, if needed
+          data_store.username = :admin
+          data_store.password = "secret"
+          END
+        }
+      end
+    }
   end
 
 end

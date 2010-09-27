@@ -17,7 +17,11 @@ describe Constellation::Runner do
     end
 
     context "ConstellationFile does not exist" do
-      it "should load the application from the Git repository given by Constellation::REPOSITORY tagged by Constellation::VERSION"
+      it "should create a new ConstellationFile" do
+        @runner.init
+        File.should exist("ConstellationFile")
+        File.delete("ConstellationFile")
+      end
     end
 
   end
