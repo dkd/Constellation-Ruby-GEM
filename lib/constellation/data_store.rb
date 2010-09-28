@@ -5,6 +5,13 @@ module Constellation
   #
   # Constellation::DataStore is used for saving the read log entries
   #
+  # == Default configuration
+  #
+  # * Host                = 127.0.0.1
+  # * Port                = 9160
+  # * Keyspace            = Constellation
+  # * Replication Factor  = 1
+  #
   class DataStore
     attr_accessor :host, :username, :password, :keyspace, :port, :replication_factor
 
