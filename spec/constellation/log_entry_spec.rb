@@ -54,6 +54,12 @@ describe Constellation::LogEntry do
     it "should create valid json" do
       @log_entry.to_h.should be_an(Hash)
     end
+
+    describe ":uuid" do
+      it "should be a String" do
+        @log_entry.to_h['uuid'].should be_a(String)
+      end
+    end
   end
 
 end
