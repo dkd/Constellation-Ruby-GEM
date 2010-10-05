@@ -45,11 +45,11 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
-        'uuid'         => @uuid,
-        'machine'      => @machine,
-        'application'  => @application,
-        'message'      => @message,
-        'timestamp'    => @timestamp
+        'uuid'         => @uuid.to_s,
+        'machine'      => @machine.to_s,
+        'application'  => @application.to_s,
+        'message'      => @message.to_s,
+        'timestamp'    => @timestamp.to_s
       }
     end
   end
