@@ -38,7 +38,7 @@ module Constellation
       rescue Cassandra::AccessError
         keyspace                      = Cassandra::Keyspace.new
         keyspace.name                 = @keyspace
-        keyspace.strategy_class       = "org.apache.cassandra.locator.RackUnawareStrategy"
+        keyspace.strategy_class       = "org.apache.cassandra.locator.SimpleStrategy"
         keyspace.replication_factor   = @replication_factor
         keyspace.cf_defs              = create_column_families
         @server.add_keyspace(keyspace)
@@ -74,10 +74,10 @@ module Constellation
     #
     def create_column_families
       families = []
-      log_family        = Cassandra::ColumnFamily.new
-      log_family.table  = @keyspace
-      log_family.name   = "logs"
-      families          << log_family
+      log_family            = Cassandra::ColumnFamily.new
+      log_family.keyspace   = @keyspace
+      log_family.name       = "logs"
+      families              << log_family
       families
     end
   end

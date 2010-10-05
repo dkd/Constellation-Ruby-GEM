@@ -6,7 +6,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    cassandra (0.9.0)
+    cassandra (0.10.0)
       json
       rake
       simple_uuid (>= 0.1.0)
@@ -17,11 +17,11 @@ GEM
     rake (0.8.7)
     rspec (1.3.0)
     simple_uuid (0.1.1)
-    thor (0.14.0)
+    thor (0.14.2)
     thrift (0.2.0.4)
-    thrift_client (0.4.6)
-      thrift
-    uuid (2.2.0)
+    thrift_client (0.5.0)
+      thrift (~> 0.2.0)
+    uuid (2.3.1)
       macaddr (~> 1.0)
 
 PLATFORMS
