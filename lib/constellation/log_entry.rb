@@ -26,14 +26,14 @@ module Constellation
 
       # The first 15 characters of a log entry describe the time.
       @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
-      line_of_log_file  = line_of_log_file[16..line_of_log_file.length-1]
+      line_of_log_file  = slice_line_from(line_of_log_file, 16)
       # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
       @machine          = line_of_log_file.scan(/[a-zA-Z0-9]+/).first
-      line_of_log_file  = line_of_log_file[@machine.length+1..line_of_log_file.length-1]
+      line_of_log_file  = slice_line_from(line_of_log_file, @machine.length+1)
       # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
       @application      = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
       # The rest of the log entry is the message itself.
-      @message          = line_of_log_file[@application.length+2..line_of_log_file.length-1]
+      @message          = slice_line_from(line_of_log_file, @application.length+2)
     end
 
     # check, if all required log entry fields are given
@@ -51,6 +51,13 @@ module Constellation
         'message'      => @message.to_s,
         'timestamp'    => @timestamp.to_s
       }
+    end
+
+    protected
+
+    # return a substring starting from the position given in from
+    def slice_line_from(line, from)
+      line[from..line.length-1]
     end
   end
 
