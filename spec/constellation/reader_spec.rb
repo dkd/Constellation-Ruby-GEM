@@ -3,7 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::Reader do
 
   before(:each) do
-    @reader = Constellation::Reader.new(Constellation::Config.new)
+    Constellation::Config.reset_instance
+    @reader = Constellation::Reader.new(Constellation::Config.instance)
     @reader.instance_variable_get("@monitor").stub!(:run)
   end
 

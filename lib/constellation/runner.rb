@@ -11,7 +11,7 @@ module Constellation
 
     def initialize(*)
       super
-      @config = Config.new
+      @config = Config.instance
       @reader = Reader.new(@config)
     end
 

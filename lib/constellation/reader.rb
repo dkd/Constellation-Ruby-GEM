@@ -25,8 +25,7 @@ module Constellation
         @monitor.path(Dir.pwd, file) do
           # open the file in read-only-mode pointing
           @file = File.open(file, (::File::RDONLY|::File::TRUNC))
-          @config = ::Constellation::Config.new
-          @config.data_store.establish_connection
+          @config = ::Constellation::Config.instance
           # read new log entries everytime the file gets updated
           # and insert them into the data store
           update { |base, relative|

@@ -1,9 +1,12 @@
+require 'singleton'
+
 module Constellation
 
   #
   # Constellation::Config is used for evaluating the ConstellationFile
   #
   class Config
+    include ::Singleton
 
     def initialize
       # Includes each file, that should be watched by Constellation

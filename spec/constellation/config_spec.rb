@@ -3,7 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::Config do
 
   before(:each) do
-    @config = Constellation::Config.new
+    Constellation::Config.reset_instance
+    @config = Constellation::Config.instance
   end
 
   describe "#watch" do
