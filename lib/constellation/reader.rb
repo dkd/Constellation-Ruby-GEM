@@ -25,15 +25,22 @@ module Constellation
         @monitor.path(Dir.pwd, file) do
           # open the file in read-only-mode pointing
           @file = File.open(file, (::File::RDONLY|::File::TRUNC))
-
+          @config = ::Constellation::Config.new
+          @config.data_store.establish_connection
           # read new log entries everytime the file gets updated
           # and insert them into the data store
           update { |base, relative|
             begin
               while(line = @file.readline)
-                log_entry = LogEntry.new(line)
+                log_entry = ::Constellation::LogEntry.new(line)
+                @config.data_store.insert(log_entry)
+                puts "Log-Eintrag #{log_entry.to_h['uuid']} wurde eingefuegt"
               end
+            # rescue from several errors that may occur due to invalid log format
+            # but should not appear in order to avoid performance issues
             rescue FSSM::CallbackError
+            rescue EOFError
+            rescue ::Constellation::InvalidLogFormatError
             end
           }
 

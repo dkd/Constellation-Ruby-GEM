@@ -28,12 +28,16 @@ module Constellation
       @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
       line_of_log_file  = slice_line_from(line_of_log_file, 16)
       # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
-      @machine          = line_of_log_file.scan(/[a-zA-Z0-9]+/).first
-      line_of_log_file  = slice_line_from(line_of_log_file, @machine.length+1)
+      unless line_of_log_file.nil?
+        @machine          = line_of_log_file.scan(/[a-zA-Z0-9]+/).first
+        line_of_log_file  = slice_line_from(line_of_log_file, @machine.length+1)
+      end
       # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
-      @application      = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
-      # The rest of the log entry is the message itself.
-      @message          = slice_line_from(line_of_log_file, @application.length+2)
+      unless line_of_log_file.nil?
+        @application      = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
+        # The rest of the log entry is the message itself.
+        @message          = slice_line_from(line_of_log_file, @application.length+2)
+      end
     end
 
     # check, if all required log entry fields are given
