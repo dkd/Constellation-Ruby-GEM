@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Sprenger"]
-  s.date = %q{2010-10-04}
+  s.date = %q{2010-10-05}
   s.default_executable = %q{constellation}
   s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
@@ -48,14 +48,17 @@ Gem::Specification.new do |s|
      "spec/helpers/file_helper.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "vendor/cache/cassandra-0.9.0.gem",
+     "vendor/cache/cassandra-0.10.0.gem",
      "vendor/cache/fssm-0.1.4.gem",
      "vendor/cache/json-1.4.6.gem",
      "vendor/cache/macaddr-1.0.0.gem",
      "vendor/cache/rake-0.8.7.gem",
      "vendor/cache/rspec-1.3.0.gem",
      "vendor/cache/simple_uuid-0.1.1.gem",
-     "vendor/cache/thrift-0.2.0.4.gem"
+     "vendor/cache/thor-0.14.2.gem",
+     "vendor/cache/thrift-0.2.0.4.gem",
+     "vendor/cache/thrift_client-0.5.0.gem",
+     "vendor/cache/uuid-2.3.1.gem"
   ]
   s.homepage = %q{http://github.com/dkd/constellation}
   s.rdoc_options = ["--charset=UTF-8"]

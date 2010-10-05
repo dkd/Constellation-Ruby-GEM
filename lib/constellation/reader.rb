@@ -23,9 +23,20 @@ module Constellation
       @config.watched_files.each { |file|
         puts "Watching for changes of #{file}"
         @monitor.path(Dir.pwd, file) do
+          # open the file in read-only-mode pointing
+          @file = File.open(file, (::File::RDONLY|::File::TRUNC))
+
+          # read new log entries everytime the file gets updated
+          # and insert them into the data store
           update { |base, relative|
-            puts "Change detected (#{file}): Base: #{base} Relative:#{relative}"
+            begin
+              while(line = @file.readline)
+                log_entry = LogEntry.new(line)
+              end
+            rescue FSSM::CallbackError
+            end
           }
+
         end
       }
 
