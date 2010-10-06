@@ -38,7 +38,7 @@ module Constellation
 
     desc "version", "Shows the version of the currently installed Constellation gem"
     def version
-      puts ::Constellation::VERSION
+      puts VERSION
     end
     map %w(-v --version) => :version
 

@@ -22,8 +22,9 @@ module Constellation
     # A line of a log file has to fit the following order: Date Machine Application: Message
     # e.g.: Sep  2 17:20:01 www1 ruby: Ruby really rocks!
     #
-    def initialize(line_of_log_file)
+    def initialize(line_of_log_file=nil)
       @uuid             = UUID.new.generate
+      return if line_of_log_file.nil?
 
       # The first 15 characters of a log entry describe the time.
       @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
