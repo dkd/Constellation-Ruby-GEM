@@ -29,18 +29,7 @@ module Constellation
           # read new log entries everytime the file gets updated
           # and insert them into the data store
           update { |base, relative|
-            begin
-              while(line = @file.readline)
-                log_entry = ::Constellation::LogEntry.new(line)
-                @config.data_store.insert(log_entry)
-                puts "Log-Eintrag #{log_entry.to_h['uuid']} wurde eingefuegt"
-              end
-            # rescue from several errors that may occur due to an invalid log format
-            # but should not appear in order to avoid performance issues
-            rescue FSSM::CallbackError
-            rescue EOFError
-            rescue ::Constellation::InvalidLogFormatError
-            end
+            ::Constellation::Reader::read_log_entries(@config, @file)
           }
 
         end
@@ -50,6 +39,26 @@ module Constellation
       puts ">> Starting file observation"
       @monitor.run
     end
+
+    class << self
+
+      def read_log_entries(config, file)
+        begin
+          while(line = file.readline)
+            log_entry = ::Constellation::LogEntry.new(line)
+            config.data_store.insert(log_entry)
+            puts "Log-Eintrag #{log_entry.to_h['uuid']} wurde eingefuegt"
+          end
+        # rescue from several errors that may occur due to an invalid log format
+        # but should not appear in order to avoid performance issues
+        rescue FSSM::CallbackError
+        rescue EOFError
+        rescue ::Constellation::InvalidLogFormatError
+        end
+      end
+
+    end
+
   end
 
 end
