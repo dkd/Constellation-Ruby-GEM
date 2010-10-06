@@ -47,7 +47,6 @@ module Constellation
           while(line = file.readline)
             log_entry = ::Constellation::LogEntry.new(line)
             config.data_store.insert(log_entry)
-            puts "Log-Eintrag #{log_entry.to_h['uuid']} wurde eingefuegt"
           end
         # rescue from several errors that may occur due to an invalid log format
         # but should not appear in order to avoid performance issues
