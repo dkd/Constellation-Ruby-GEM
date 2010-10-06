@@ -63,6 +63,7 @@ module Constellation
         log_entry             = Constellation::LogEntry.new
         log_entry.machine     = "system"
         log_entry.application = "Constellation"
+        log_entry.timestamp   = Time.now.to_i
         log_entry.message     = "A new exception got raised: #{exception.inspect}"
         config.data_store.insert(log_entry)
       end
