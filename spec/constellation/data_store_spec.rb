@@ -23,6 +23,7 @@ describe Constellation::DataStore do
         @data_store.host      = "127.0.0.1"
         @data_store.port      = 9160
         @data_store.keyspace  = @keyspace_name
+        CassandraHelpers::drop_keyspace(@keyspace_name)
       end
       after(:each) do
         CassandraHelpers::drop_keyspace(@keyspace_name)
