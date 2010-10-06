@@ -3,14 +3,22 @@ require 'cassandra/0.7'
 module Constellation
 
   #
-  # Constellation::DataStore is used for saving the read log entries
+  # Constellation::DataStore is used for saving the read log entries in Cassandra.
   #
   # == Default configuration
   #
-  # * Host                = 127.0.0.1
-  # * Port                = 9160
-  # * Keyspace            = Constellation
-  # * Replication Factor  = 1
+  #   Host                = 127.0.0.1
+  #   Port                = 9160
+  #   Keyspace            = Constellation
+  #   Replication Factor  = 1
+  #
+  #
+  #
+  # Constellation uses some keyspaces by default.
+  #
+  # == Default keyspaces
+  #
+  #   logs
   #
   class DataStore
     attr_accessor :host, :username, :password, :keyspace, :port, :replication_factor
@@ -66,10 +74,9 @@ module Constellation
       @username = username.to_s
     end
 
-    protected
-
     #
     # Creates the necessary column families:
+    #
     # * logs
     #
     def create_column_families

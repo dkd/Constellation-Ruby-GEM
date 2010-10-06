@@ -5,6 +5,7 @@ module Constellation
 
   #
   # Represents a log entry having the following attributes:
+  #
   # * uuid (key)
   # * machine
   # * application
@@ -56,8 +57,6 @@ module Constellation
         'timestamp'    => @timestamp.to_s
       }
     end
-
-    protected
 
     # return a substring starting from the position given in from
     def slice_line_from(line, from)
