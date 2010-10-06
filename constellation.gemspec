@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Sprenger"]
-  s.date = %q{2010-10-05}
+  s.date = %q{2010-10-06}
   s.default_executable = %q{constellation}
   s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
@@ -46,6 +46,7 @@ Gem::Specification.new do |s|
      "spec/constellation_spec.rb",
      "spec/helpers/cassandra_helper.rb",
      "spec/helpers/file_helper.rb",
+     "spec/helpers/singleton_helper.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "vendor/cache/cassandra-0.10.0.gem",
@@ -75,6 +76,7 @@ Gem::Specification.new do |s|
      "spec/constellation_spec.rb",
      "spec/helpers/cassandra_helper.rb",
      "spec/helpers/file_helper.rb",
+     "spec/helpers/singleton_helper.rb",
      "spec/spec_helper.rb"
   ]
 
