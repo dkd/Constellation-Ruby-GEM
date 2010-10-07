@@ -32,12 +32,13 @@ module Constellation
   class ConstellationError < StandardError
   end
 
-  class ConstellationFileNotFoundError      < ConstellationError;   end
+  class ConnectionFailedError               < ConstellationError;   end
   class ConstellationFileAlreadyExistsError < ConstellationError;   end
-  class LogFileNotFoundError                < ConstellationError;   end
-  class LogFileAlreadyIncludedError         < ConstellationError;   end
+  class ConstellationFileNotFoundError      < ConstellationError;   end
   class InvalidCommandLineOptionError       < ConstellationError;   end
   class InvalidConstellationFileError       < ConstellationError;   end
   class InvalidLogFormatError               < ConstellationError;   end
+  class LogFileAlreadyIncludedError         < ConstellationError;   end
+  class LogFileNotFoundError                < ConstellationError;   end
 
 end

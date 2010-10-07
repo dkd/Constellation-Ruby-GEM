@@ -9,17 +9,24 @@ describe Constellation do
     end
   end
 
+  describe Constellation::ConnectionFailedError do
+    it "should be a kind of ConstellationError" do
+      @connection_failed_error = Constellation::ConnectionFailedError.new
+      @connection_failed_error.should be_a_kind_of(Constellation::ConstellationError)
+    end
+  end
+
+  describe Constellation::ConstellationFileAlreadyExistsError do
+    it "should be a kind of ConstellationError" do
+      @constellation_file_already_exists_error = Constellation::ConstellationFileAlreadyExistsError.new
+      @constellation_file_already_exists_error.should be_a_kind_of(Constellation::ConstellationError)
+    end
+  end
+
   describe Constellation::ConstellationFileNotFoundError do
     it "should be a kind of ConstellationError" do
       @file_not_found_error = Constellation::ConstellationFileNotFoundError.new
       @file_not_found_error.should be_a_kind_of(Constellation::ConstellationError)
-    end
-  end
-
-  describe Constellation::LogFileNotFoundError do
-    it "should be a kind of ConstellationError" do
-      @log_file_not_found_error = Constellation::LogFileNotFoundError.new
-      @log_file_not_found_error.should be_a_kind_of(Constellation::ConstellationError)
     end
   end
 
@@ -41,6 +48,20 @@ describe Constellation do
     it "should be a kind of ConstellationError" do
       @invalid_log_format_error = Constellation::InvalidLogFormatError.new
       @invalid_log_format_error.should be_a_kind_of(Constellation::ConstellationError)
+    end
+  end
+
+  describe Constellation::LogFileAlreadyIncludedError do
+    it "should be a kind of ConstellationError" do
+      @log_file_already_included_error = Constellation::LogFileAlreadyIncludedError.new
+      @log_file_already_included_error.should be_a_kind_of(Constellation::ConstellationError)
+    end
+  end
+
+  describe Constellation::LogFileNotFoundError do
+    it "should be a kind of ConstellationError" do
+      @log_file_not_found_error = Constellation::LogFileNotFoundError.new
+      @log_file_not_found_error.should be_a_kind_of(Constellation::ConstellationError)
     end
   end
 
