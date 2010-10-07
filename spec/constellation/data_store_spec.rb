@@ -14,9 +14,6 @@ describe Constellation::DataStore do
       @data_store.establish_connection
     end
 
-    context "given keyspace exists" do
-    end
-
     context "given keyspace does not exist" do
       before(:each) do
         @keyspace_name        = "TemporaryKeyspace"
@@ -68,11 +65,11 @@ describe Constellation::DataStore do
         @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 php5: Fail.")
       end
 
-      it "should raise an error" do
+      it "should raise an InvalidLogFormatError" do
         lambda {
           @data_store.establish_connection
           @data_store.insert(@log_entry)
-        }.should raise_error
+        }.should raise_error(Constellation::InvalidLogFormatError)
       end
     end
   end

@@ -41,8 +41,8 @@ describe Constellation::Runner do
     end
 
     context "ConstellationFile does not exist" do
-      it "should raise an error" do
-        lambda { @runner.start }.should raise_error
+      it "should raise an ConstellationFileNotFoundError" do
+        lambda { @runner.start }.should raise_error(Constellation::ConstellationFileNotFoundError)
       end
     end
 
@@ -70,15 +70,18 @@ describe Constellation::Runner do
         end
 
         context "given a failed data store connection" do
-          it "should throw an error"
+          it "should throw an ConnectionFailedError" do
+            File.should_receive(:read).and_return("data_store.host = :localhost")
+            lambda { @runner.start }.should raise_error(Constellation::ConnectionFailedError)
+          end
         end
 
       end
 
       context "invalid ConstellationFile" do
-        it "should raise an error" do
+        it "should raise an InvalidConstellationFileError" do
           FileHelpers::create_file("ConstellationFile","watch 'logs.txt")
-          lambda { @runner.start }.should raise_error
+          lambda { @runner.start }.should raise_error(Constellation::InvalidConstellationFileError)
         end
       end
 

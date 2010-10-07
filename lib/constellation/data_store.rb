@@ -50,6 +50,8 @@ module Constellation
         keyspace.replication_factor   = @replication_factor
         keyspace.cf_defs              = create_column_families
         @server.add_keyspace(keyspace)
+      rescue CassandraThrift::Cassandra::Client::TransportException
+        raise Constellation::ConnectionFailedError
       end
       puts "Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established."
     end

@@ -29,7 +29,11 @@ module Constellation
     def start
       raise ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
 
-      @config.instance_eval(File.read("ConstellationFile"))
+      begin
+        @config.instance_eval(File.read("ConstellationFile"))
+      rescue SyntaxError
+        raise Constellation::InvalidConstellationFileError
+      end
       @config.data_store.establish_connection
 
       @reader.start
@@ -64,7 +68,7 @@ module Constellation
           watch "logs"
 
           # Define the connection to the Cassandra server
-          data_store.host     = :localhost
+          data_store.host     = "127.0.0.1"
           data_store.port     = 9160
           data_store.keyspace = :constellation
           # Set username and password, if needed
