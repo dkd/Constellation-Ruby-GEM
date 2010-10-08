@@ -4,9 +4,6 @@ module Constellation
   # Constellation::Reader observes the given log files for changes and inserts new entries
   # into the data store.
   #
-  # It is recommended that you have installed rb-inotify >= 0.5.1 in order to avoid that polling
-  # is getting used by FSSM.
-  #
   class Reader
     def initialize(config)
       @config     = config
@@ -41,7 +38,7 @@ module Constellation
           new_system_error(config, e)
         end
 
-        sleep(2)
+        sleep(TIME_TO_WAIT)
       end
     end
 
