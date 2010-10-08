@@ -7,7 +7,7 @@ module FileHelpers
     end
 
     def destroy_file(filename="ConstellationFile")
-      File.delete(filename)
+      File.delete(filename) if File.exists?(filename)
     end
 
   end
