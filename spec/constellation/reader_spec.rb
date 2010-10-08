@@ -23,7 +23,7 @@ describe Constellation::Reader do
       @config = ::Constellation::Config.instance
       @config.data_store.stub!(:insert)
       Constellation::LogEntry.stub!(:new)
-      Constellation::Reader.stub!(:new_system_exception)
+      Constellation::Reader.stub!(:new_system_error)
     end
 
     after(:each) do
@@ -41,7 +41,7 @@ describe Constellation::Reader do
     end
   end
 
-  describe ".new_system_exception" do
+  describe ".new_system_error" do
     before(:each) do
       @config = Constellation::Config.instance
       @config.data_store.stub!(:insert)
@@ -51,12 +51,12 @@ describe Constellation::Reader do
       @log_entry = Constellation::LogEntry.new
       Constellation::LogEntry.stub!(:new).and_return(@log_entry)
       @log_entry.should_receive(:machine=)
-      Constellation::Reader.new_system_exception(@config, Constellation::ConstellationError)
+      Constellation::Reader.new_system_error(@config, Constellation::ConstellationError)
     end
 
     it "should insert a new log entry" do
       @config.data_store.should_receive(:insert)
-      Constellation::Reader.new_system_exception(@config, Constellation::ConstellationError)
+      Constellation::Reader.new_system_error(@config, Constellation::ConstellationError)
     end
   end
 

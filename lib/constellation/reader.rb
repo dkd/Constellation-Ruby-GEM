@@ -24,7 +24,7 @@ module Constellation
         puts "Watching for changes of #{file}"
         @monitor.path(Dir.pwd, file) do
           # open the file in read-only-mode pointing
-          @file = File.open(file, (::File::RDONLY|::File::TRUNC))
+          @file = File.open(file, "a+")
           @config = Config.instance
           # read new log entries everytime the file gets updated
           # and insert them into the data store
@@ -51,20 +51,23 @@ module Constellation
         # rescue from several errors that may occur due to an invalid log format
         # but should not appear in order to avoid performance issues
         rescue FSSM::CallbackError => e
-          new_system_exception(config, e)
+          new_system_error(config, e)
         rescue EOFError => e
-          new_system_exception(config, e)
+          new_system_error(config, e)
         rescue Constellation::InvalidLogFormatError => e
-          new_system_exception(config, e)
+          new_system_error(config, e)
         end
       end
 
-      def new_system_exception(config, exception)
+      #
+      # Log errors that get raised while reading the log file
+      #
+      def new_system_error(config, error)
         log_entry             = Constellation::LogEntry.new
         log_entry.machine     = "system"
         log_entry.application = "Constellation"
         log_entry.timestamp   = Time.now.to_i
-        log_entry.message     = "A new exception got raised: #{exception.inspect}"
+        log_entry.message     = "A new exception got raised: #{error.inspect}"
         config.data_store.insert(log_entry)
       end
 
