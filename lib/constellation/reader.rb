@@ -46,15 +46,16 @@ module Constellation
         begin
           while(line = file.readline)
             log_entry = LogEntry.new(line)
-            config.data_store.insert(log_entry)
+            begin
+              config.data_store.insert(log_entry)
+            rescue Constellation::InvalidLogFormatError => e
+              new_system_error(config, e)
+            end
           end
         # rescue from several errors that may occur due to an invalid log format
         # but should not appear in order to avoid performance issues
-        rescue FSSM::CallbackError => e
-          new_system_error(config, e)
         rescue EOFError => e
-          new_system_error(config, e)
-        rescue Constellation::InvalidLogFormatError => e
+        rescue FSSM::CallbackError => e
           new_system_error(config, e)
         end
       end
