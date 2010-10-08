@@ -1,0 +1,7 @@
+# Adds the file 'logs' to the list of watched log files
+watch "logs"
+
+# Define the connection to the Cassandra server
+data_store.host     = "127.0.0.1"
+data_store.port     = 9160
+data_store.keyspace = :constellation
