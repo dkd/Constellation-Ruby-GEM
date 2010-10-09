@@ -5,7 +5,6 @@ gemspec
 
 # Gem dependencies
 gem "thor"
-gem "fssm"
 gem "cassandra", :require => "cassandra/0.7"
 gem "json"
 gem "uuid"

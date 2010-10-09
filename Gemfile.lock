@@ -11,7 +11,6 @@ GEM
       rake
       simple_uuid (>= 0.1.0)
       thrift_client (>= 0.4.0)
-    fssm (0.1.4)
     json (1.4.6)
     macaddr (1.0.0)
     rake (0.8.7)
@@ -30,7 +29,6 @@ PLATFORMS
 DEPENDENCIES
   cassandra
   constellation!
-  fssm
   json
   rspec (>= 1.2.9)
   thor
