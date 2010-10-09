@@ -67,10 +67,6 @@ describe Constellation::Runner do
           @runner.start
         end
 
-        context "given a successful data store connection" do
-          it "should start the web application"
-        end
-
         context "given a failed data store connection" do
           it "should throw an ConnectionFailedError" do
             File.should_receive(:read).and_return("data_store.host = :localhost")

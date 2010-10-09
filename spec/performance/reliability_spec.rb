@@ -98,9 +98,6 @@ describe "Constellation reliability tests" do
     end
 
     context "within 5 seconds" do
-      before(:each) do
-        pending
-      end
       it "should handle 5 actions" do
         create_log_entries(@log_file_name, 5, 1)
         @server.count_range(:logs).should == 5
@@ -149,6 +146,17 @@ describe "Constellation reliability tests" do
       it "should handle 3000 actions" do
         create_log_entries(@log_file_name, 3000, 0.00167)
         @server.count_range(:logs, { :count => 3000 }).should == 3000
+      end
+
+      it "should handle 10000 actions" do
+        create_log_entries(@log_file_name, 10000, 0.0005)
+        @server.count_range(:logs, { :count => 10000 }).should == 10000
+      end
+
+      it "should handle 20000 actions" do
+        pending
+        create_log_entries(@log_file_name, 20000, 0.00025)
+        @server.count_range(:logs, { :count => 20000 }).should == 20000
       end
     end
 

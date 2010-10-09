@@ -74,7 +74,6 @@ module Constellation
       rescue Interrupt
         puts ""
         puts "Quitting constellation.."
-        exit
       end
     end
   end

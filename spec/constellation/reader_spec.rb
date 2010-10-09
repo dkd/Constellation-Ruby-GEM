@@ -23,7 +23,7 @@ describe Constellation::Reader do
     end
   end
 
-  describe ".read_log_entries" do
+  describe "#read_log_entries" do
     before(:each) do
       @file_name = "logs"
       FileHelpers::create_file(@file_name,"Sep 17 17:02:02 www1 php5: I failed.")
@@ -51,7 +51,7 @@ describe Constellation::Reader do
     end
   end
 
-  describe ".new_system_error" do
+  describe "#new_system_error" do
     before(:each) do
       @config = Constellation::Config.instance
       @config.data_store.stub!(:insert)
@@ -67,6 +67,18 @@ describe Constellation::Reader do
     it "should insert a new log entry" do
       @config.data_store.should_receive(:insert)
       @reader.new_system_error(Constellation::ConstellationError)
+    end
+  end
+
+  describe "#wait_for_quit" do
+    context "receiving a Interrupt" do
+      it "should exit" do
+        thread = Thread.new {
+          @reader.wait_for_quit
+        }
+        thread.raise("Interrupt")
+        thread.should_not be_alive
+      end
     end
   end
 
