@@ -7,6 +7,7 @@ module Constellation
   class Reader
     def initialize(config)
       @config     = config
+      @running    = true
     end
 
     #
@@ -19,8 +20,11 @@ module Constellation
       read_log_entries(@config, File.open("logs", "a+"))
     end
 
+    #
+    # Read the defined log file every TIME_TO_WAIT seconds
+    #
     def read_log_entries(config, file)
-      while(true)
+      while(@running)
 
         begin
           while(line = file.readline)
@@ -38,7 +42,7 @@ module Constellation
           new_system_error(config, e)
         end
 
-        sleep(TIME_TO_WAIT)
+        sleep(@config.reading_buffer)
       end
     end
 

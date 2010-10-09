@@ -67,13 +67,16 @@ module Constellation
           # Adds the file 'logs' to the list of watched log files
           watch "logs"
 
+          # Wait 2 seconds between scanning the log file for new log entries
+          reading_buffer = 2
+
           # Define the connection to the Cassandra server
           data_store.host     = "127.0.0.1"
           data_store.port     = 9160
           data_store.keyspace = :constellation
           # Set username and password, if needed
-          data_store.username = :admin
-          data_store.password = "secret"
+          # data_store.username = :admin
+          # data_store.password = "secret"
           END
         }
       end
