@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Sprenger"]
-  s.date = %q{2010-10-08}
+  s.date = %q{2010-10-09}
   s.default_executable = %q{constellation}
   s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
@@ -53,7 +53,6 @@ Gem::Specification.new do |s|
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "vendor/cache/cassandra-0.10.0.gem",
-     "vendor/cache/fssm-0.1.4.gem",
      "vendor/cache/json-1.4.6.gem",
      "vendor/cache/macaddr-1.0.0.gem",
      "vendor/cache/rake-0.8.7.gem",

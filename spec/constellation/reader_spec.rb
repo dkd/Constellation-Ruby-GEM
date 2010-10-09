@@ -5,39 +5,49 @@ describe Constellation::Reader do
   before(:each) do
     Constellation::Config.reset_instance
     @reader = Constellation::Reader.new(Constellation::Config.instance)
-    @reader.instance_variable_get("@monitor").stub!(:run)
+    @reader.instance_variable_set("@running", false)
   end
 
   describe "#start" do
     it "should run file observation" do
-      @reader.instance_variable_get("@monitor").should_receive(:run)
+      @reader.instance_variable_get("@config").instance_variable_set("@watched_files", ["logs"])
+      @reader.stub!(:wait_for_quit)
+      @reader.should_receive(:read_log_entries)
+      @reader.start
+    end
+
+    it "should wait for quitting" do
+      @reader.stub!(:read_log_entries)
+      @reader.should_receive(:wait_for_quit)
       @reader.start
     end
   end
 
   describe ".read_log_entries" do
     before(:each) do
-      file_name = "logs"
-      FileHelpers::create_file("logs","Sep 17 17:02:02 www1 php5: I failed.")
-      @file = File.open(file_name, (::File::RDONLY))
-      @config = ::Constellation::Config.instance
-      @config.data_store.stub!(:insert)
-      Constellation::LogEntry.stub!(:new)
-      Constellation::Reader.stub!(:new_system_error)
+      @file_name = "logs"
+      FileHelpers::create_file(@file_name,"Sep 17 17:02:02 www1 php5: I failed.")
+      @file = File.open(@file_name, (::File::RDONLY))
+      @reader.stub!(:new_system_error)
     end
 
     after(:each) do
-      FileHelpers::destroy_file("logs")
+      @reader.instance_variable_set("@running", true)
+      thread = Thread.new {
+        @reader.read_log_entries(@file)
+      }
+      sleep(0.1)
+      thread.kill!
+      FileHelpers::destroy_file(@file_name)
     end
 
     it "should create a new log entry" do
       Constellation::LogEntry.should_receive(:new)
-      Constellation::Reader::read_log_entries(@config, @file)
     end
 
     it "should insert the log entry into the data store" do
+      @config = Constellation::Config.instance
       @config.data_store.should_receive(:insert)
-      Constellation::Reader::read_log_entries(@config, @file)
     end
   end
 
@@ -51,12 +61,12 @@ describe Constellation::Reader do
       @log_entry = Constellation::LogEntry.new
       Constellation::LogEntry.stub!(:new).and_return(@log_entry)
       @log_entry.should_receive(:machine=)
-      Constellation::Reader.new_system_error(@config, Constellation::ConstellationError)
+      @reader.new_system_error(Constellation::ConstellationError)
     end
 
     it "should insert a new log entry" do
       @config.data_store.should_receive(:insert)
-      Constellation::Reader.new_system_error(@config, Constellation::ConstellationError)
+      @reader.new_system_error(Constellation::ConstellationError)
     end
   end
 

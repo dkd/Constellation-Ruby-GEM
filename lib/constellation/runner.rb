@@ -36,6 +36,7 @@ module Constellation
       end
       @config.data_store.establish_connection
 
+      # start the log file watching threads in the background
       @reader.start
     end
     map %w(-s) => :start
