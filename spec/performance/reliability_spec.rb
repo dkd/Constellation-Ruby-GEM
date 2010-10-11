@@ -45,7 +45,7 @@ describe "Constellation reliability tests" do
 
     before(:each) do
       begin
-        @server.clear_keyspace! if @server.count_range(:logs) > 0
+        @server.clear_keyspace!
       rescue
       end
     end
@@ -89,11 +89,6 @@ describe "Constellation reliability tests" do
       it "should handle 1000 actions" do
         create_log_entries(@log_file_name, 1000, 0.0001)
         @server.count_range(:logs, { :count => 1000 }).should == 1000
-      end
-
-      it "should handle 2000 actions" do
-        create_log_entries(@log_file_name, 2000, 0.00005)
-        @server.count_range(:logs, { :count => 2000 }).should == 2000
       end
     end
 
@@ -148,22 +143,13 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs, { :count => 3000 }).should == 3000
       end
 
-      it "should handle 10000 actions" do
-        create_log_entries(@log_file_name, 10000, 0.0005)
-        @server.count_range(:logs, { :count => 10000 }).should == 10000
-      end
-
-      it "should handle 20000 actions" do
-        pending
-        create_log_entries(@log_file_name, 20000, 0.00025)
-        @server.count_range(:logs, { :count => 20000 }).should == 20000
+      it "should handle 5000 actions" do
+        create_log_entries(@log_file_name, 5000, 0.001)
+        @server.count_range(:logs, { :count => 5000 }).should == 5000
       end
     end
 
     context "within 10 seconds" do
-      before(:each) do
-        pending
-      end
       it "should handle 10 actions" do
         create_log_entries(@log_file_name, 10, 1)
         @server.count_range(:logs).should == 10
@@ -174,26 +160,74 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs).should == 20
       end
 
-      it "should handle 40 actions" do
-        create_log_entries(@log_file_name, 40, 0.25)
-        @server.count_range(:logs).should == 40
-      end
-
-      it "should handle 100 actions" do
-        create_log_entries(@log_file_name, 100, 0.1)
-        @server.count_range(:logs).should == 100
-      end
-
       it "should handle 200 actions" do
         create_log_entries(@log_file_name, 200, 0.05)
         @server.count_range(:logs, { :count => 200 }).should == 200
       end
+
+      it "should handle 2000 actions" do
+        create_log_entries(@log_file_name, 2000, 0.005)
+        @server.count_range(:logs, { :count => 2000 }).should == 2000
+      end
+
+      it "should handle 10000 actions" do
+        create_log_entries(@log_file_name, 10000, 0.001)
+        @server.count_range(:logs, { :count => 10000 }).should == 10000
+      end
     end
 
     context "within 30 seconds" do
+      it "should handle 30 actions" do
+        create_log_entries(@log_file_name, 30, 1)
+        @server.count_range(:logs).should == 30
+      end
+
+      it "should handle 60 actions" do
+        create_log_entries(@log_file_name, 60, 0.5)
+        @server.count_range(:logs).should == 60
+      end
+
+      it "should handle 300 actions" do
+        create_log_entries(@log_file_name, 300, 0.1)
+        @server.count_range(:logs, { :count => 300 }).should == 300
+      end
+
+      it "should handle 3000 actions" do
+        create_log_entries(@log_file_name, 3000, 0.01)
+        @server.count_range(:logs, { :count => 3000 }).should == 3000
+      end
+
+      it "should handle 30000 actions" do
+        create_log_entries(@log_file_name, 30000, 0.001)
+        @server.count_range(:logs, { :count => 30000 }).should == 30000
+      end
     end
 
     context "within 1 minute" do
+      it "should handle 60 actions" do
+        create_log_entries(@log_file_name, 60, 1)
+        @server.count_range(:logs).should == 60
+      end
+
+      it "should handle 120 actions" do
+        create_log_entries(@log_file_name, 120, 0.5)
+        @server.count_range(:logs).should == 120
+      end
+
+      it "should handle 1200 actions" do
+        create_log_entries(@log_file_name, 1200, 0.05)
+        @server.count_range(:logs, { :count => 1200 }).should == 1200
+      end
+
+      it "should handle 12000 actions" do
+        create_log_entries(@log_file_name, 12000, 0.005)
+        @server.count_range(:logs, { :count => 12000 }).should == 12000
+      end
+
+      it "should handle 60000 actions" do
+        create_log_entries(@log_file_name, 60000, 0.001)
+        @server.count_range(:logs, { :count => 60000 }).should == 60000
+      end
     end
 
   end
