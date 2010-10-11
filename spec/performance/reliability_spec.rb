@@ -25,6 +25,7 @@ LOG_MESSAGE = "Sep 17 17:02:02 www1 php5: I failed.\n"
 
 describe "Constellation reliability tests" do
 
+  # creates one log entry
   def create_log_entries(log_file_name, iterations, seconds)
     iterations.times {
       file = File.open(log_file_name, "a") { |f| f.write(LOG_MESSAGE) }
@@ -33,23 +34,25 @@ describe "Constellation reliability tests" do
     sleep(BUFFER_TIME)
   end
 
+  # creates three log entries
+  def create_multiple_log_entries(log_file_name, iterations, seconds)
+    iterations.times {
+      file = File.open(log_file_name, "a") { |f| f.write(LOG_MESSAGE*3) }
+      sleep(seconds)
+    }
+    sleep(BUFFER_TIME)
+  end
+
   before(:each) do
     @server = Cassandra.new("constellation")
     @log_file_name = "logs"
-  end
-
-  after(:each) do
+    begin
+      @server.clear_keyspace!
+    rescue
+    end
   end
 
   context "one log entry per write action" do
-
-    before(:each) do
-      begin
-        @server.clear_keyspace!
-      rescue
-      end
-    end
-
     context "within 1 second" do
       it "should handle 5 actions" do
         create_log_entries(@log_file_name, 5, 0.2)
@@ -86,9 +89,9 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs, { :count => 400 }).should == 400
       end
 
-      it "should handle 1000 actions" do
-        create_log_entries(@log_file_name, 1000, 0.0001)
-        @server.count_range(:logs, { :count => 1000 }).should == 1000
+      it "should handle 500 actions" do
+        create_log_entries(@log_file_name, 500, 0.0002)
+        @server.count_range(:logs, { :count => 500 }).should == 500
       end
     end
 
@@ -142,11 +145,6 @@ describe "Constellation reliability tests" do
         create_log_entries(@log_file_name, 3000, 0.00167)
         @server.count_range(:logs, { :count => 3000 }).should == 3000
       end
-
-      it "should handle 5000 actions" do
-        create_log_entries(@log_file_name, 5000, 0.001)
-        @server.count_range(:logs, { :count => 5000 }).should == 5000
-      end
     end
 
     context "within 10 seconds" do
@@ -170,9 +168,9 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs, { :count => 2000 }).should == 2000
       end
 
-      it "should handle 10000 actions" do
-        create_log_entries(@log_file_name, 10000, 0.001)
-        @server.count_range(:logs, { :count => 10000 }).should == 10000
+      it "should handle 5000 actions" do
+        create_log_entries(@log_file_name, 10000, 0.002)
+        @server.count_range(:logs, { :count => 5000 }).should == 5000
       end
     end
 
@@ -197,9 +195,9 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs, { :count => 3000 }).should == 3000
       end
 
-      it "should handle 30000 actions" do
-        create_log_entries(@log_file_name, 30000, 0.001)
-        @server.count_range(:logs, { :count => 30000 }).should == 30000
+      it "should handle 15000 actions" do
+        create_log_entries(@log_file_name, 15000, 0.002)
+        @server.count_range(:logs, { :count => 15000 }).should == 15000
       end
     end
 
@@ -224,15 +222,82 @@ describe "Constellation reliability tests" do
         @server.count_range(:logs, { :count => 12000 }).should == 12000
       end
 
-      it "should handle 60000 actions" do
-        create_log_entries(@log_file_name, 60000, 0.001)
-        @server.count_range(:logs, { :count => 60000 }).should == 60000
+      it "should handle 30000 actions" do
+        create_log_entries(@log_file_name, 30000, 0.002)
+        @server.count_range(:logs, { :count => 30000 }).should == 30000
       end
     end
-
   end
 
   context "multiple log entries per write action" do
-  end
+    context "within 1 second" do
+      it "should handle 15 actions" do
+        create_multiple_log_entries(@log_file_name, 5, 0.2)
+        @server.count_range(:logs).should == 15
+      end
 
+      it "should handle 30 actions" do
+        create_multiple_log_entries(@log_file_name, 10, 0.1)
+        @server.count_range(:logs).should == 30
+      end
+
+      it "should handle 60 actions" do
+        create_multiple_log_entries(@log_file_name, 20, 0.05)
+        @server.count_range(:logs).should == 60
+      end
+
+      it "should handle 150 actions" do
+        create_multiple_log_entries(@log_file_name, 50, 0.002)
+        @server.count_range(:logs, { :count => 150 }).should == 150
+      end
+
+      it "should handle 300 actions" do
+        create_multiple_log_entries(@log_file_name, 100, 0.001)
+        @server.count_range(:logs, { :count => 300 }).should == 300
+      end
+
+      it "should handle 600 actions" do
+        create_multiple_log_entries(@log_file_name, 200, 0.0005)
+        @server.count_range(:logs, { :count => 600 }).should == 600
+      end
+
+      it "should handle 1200 actions" do
+        create_multiple_log_entries(@log_file_name, 400, 0.00025)
+        @server.count_range(:logs, { :count => 1200 }).should == 1200
+      end
+
+      it "should handle 1500 actions" do
+        create_multiple_log_entries(@log_file_name, 500, 0.0001)
+        @server.count_range(:logs, { :count => 1500 }).should == 1500
+      end
+    end
+
+    context "within 30 seconds" do
+
+      it "should handle 90 actions" do
+        create_multiple_log_entries(@log_file_name, 30, 1)
+        @server.count_range(:logs).should == 90
+      end
+
+      it "should handle 180 actions" do
+        create_multiple_log_entries(@log_file_name, 60, 0.5)
+        @server.count_range(:logs, { :count => 180 }).should == 180
+      end
+
+      it "should handle 900 actions" do
+        create_multiple_log_entries(@log_file_name, 300, 0.1)
+        @server.count_range(:logs, { :count => 900 }).should == 900
+      end
+
+      it "should handle 3000 actions" do
+        create_multiple_log_entries(@log_file_name, 1000, 0.01)
+        @server.count_range(:logs, { :count => 3000 }).should == 3000
+      end
+
+      it "should handle 9000 actions" do
+        create_multiple_log_entries(@log_file_name, 3000, 0.001)
+        @server.count_range(:logs, { :count => 9000 }).should == 9000
+      end
+    end
+  end
 end
