@@ -37,7 +37,7 @@ describe Constellation::Reader do
         @reader.read_log_entries(@file)
       }
       sleep(0.1)
-      thread.kill!
+      thread.kill
       FileHelpers::destroy_file(@file_name)
     end
 
