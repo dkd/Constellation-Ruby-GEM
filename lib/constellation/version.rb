@@ -1,5 +1,5 @@
 module Constellation
 
-  VERSION = "0.0.0" unless defined?(::Constellation::VERSION)
+  VERSION = "0.0.1" unless defined?(::Constellation::VERSION)
 
 end
