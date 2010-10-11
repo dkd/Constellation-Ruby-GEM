@@ -8,17 +8,6 @@ module Constellation
   class Config
     include ::Singleton
 
-    # Used as wrapper for several configuration options used for setting up the data store
-    #
-    # Example usage:
-    #   data_store.host     = :localhost
-    #   data_store.port     = 9160
-    #   data_store.username = :admin
-    #   data_store.password = "secret"
-    #   data_store.keyspace = :constellation
-    #
-    attr_reader   :data_store
-    attr_reader   :watched_files
     # Defines the number of seconds that are waited until the log file gets scanned for new log files again.
     # As bigger _reading buffer_ is as better might be the performance.
     attr_accessor :reading_buffer
@@ -41,6 +30,23 @@ module Constellation
     def watch(file_name)
       raise LogFileNotFoundError          unless File::exists?(file_name)
       @watched_file = file_name
+    end
+
+    # Used as wrapper for several configuration options used for setting up the data store
+    #
+    # Example usage:
+    #   data_store.host     = :localhost
+    #   data_store.port     = 9160
+    #   data_store.username = :admin
+    #   data_store.password = "secret"
+    #   data_store.keyspace = :constellation
+    #
+    def data_store
+      @data_store
+    end
+
+    def watched_files
+      @watched_files
     end
 
   end
