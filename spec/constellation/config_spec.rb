@@ -19,16 +19,7 @@ describe Constellation::Config do
     context "given a file, that does exist" do
       it "should add the file to the list of watched files" do
         @config.watch(@file_name)
-        @config.instance_variable_get("@watched_files").should include(@file_name)
-      end
-    end
-
-    context "given a file, that has added twice to the watched files list" do
-      it "should raise an LogFileAlreadyIncludedError" do
-        lambda {
-          @config.watch(@file_name)
-          @config.watch(@file_name)
-        }.should raise_error(Constellation::LogFileAlreadyIncludedError)
+        @config.instance_variable_get("@watched_file").should eql(@file_name)
       end
     end
 
