@@ -65,8 +65,8 @@ module Constellation
       def create_example_constellation_file
         File.open("ConstellationFile", 'w') {|f|
           f.write <<-END.gsub(/^ {10}/, '')
-          # Adds the file 'logs' to the list of watched log files
-          watch "logs"
+          # Adds the file 'syslog' to the list of watched log files
+          watch "/var/log/syslog"
 
           # Wait 2 seconds between scanning the log file for new log entries
           reading_buffer = 2
