@@ -5,6 +5,5 @@ require "constellation"
 begin
   Constellation::Runner.start
 rescue Constellation::ConstellationError => e
-  puts e.message
-  exit 1
+  puts(e.message)
 end
