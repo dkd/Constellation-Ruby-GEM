@@ -64,7 +64,7 @@ MetricFu::Configuration.run do |config|
                       :error_cyclo => "7",
                       :formater => "text"} #this needs to be set to "text"
   config.churn    = { :start_date => "1 year ago", :minimum_churn_count => 10}
-  config.rcov     = { :test_files => ["spec/**/*_spec.rb"],
+  config.rcov     = { :test_files => ["spec/constellation/*_spec.rb", "spec/constellation_spec.rb"],
                       :rcov_opts => ["--sort coverage",
                                      "--no-html",
                                      "--text-coverage",
