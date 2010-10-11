@@ -29,7 +29,8 @@ module Constellation
     #
     def watch(file_name)
       raise LogFileNotFoundError          unless File::exists?(file_name)
-      @watched_file = file_name
+      raise LogFileAlreadyIncludedError   if @watched_files.include?(file_name)
+      @watched_files << file_name
     end
 
     # Used as wrapper for several configuration options used for setting up the data store

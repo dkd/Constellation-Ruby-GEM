@@ -51,6 +51,13 @@ describe Constellation do
     end
   end
 
+  describe Constellation::LogFileAlreadyIncludedError do
+    it "should be a kind of ConstellationError" do
+      @log_file_already_included_error = Constellation::LogFileAlreadyIncludedError.new
+      @log_file_already_included_error.should be_a_kind_of(Constellation::ConstellationError)
+    end
+  end
+
   describe Constellation::LogFileNotFoundError do
     it "should be a kind of ConstellationError" do
       @log_file_not_found_error = Constellation::LogFileNotFoundError.new

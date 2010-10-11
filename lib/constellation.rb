@@ -38,6 +38,7 @@ module Constellation
   class InvalidCommandLineOptionError       < ConstellationError;   end
   class InvalidConstellationFileError       < ConstellationError;   end
   class InvalidLogFormatError               < ConstellationError;   end
+  class LogFileAlreadyIncludedError         < ConstellationError;   end
   class LogFileNotFoundError                < ConstellationError;   end
 
 end
