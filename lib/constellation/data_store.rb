@@ -24,6 +24,16 @@ module Constellation
     attr_accessor :host, :username, :password, :keyspace, :port, :replication_factor
 
     #
+    # Loads the default configuration
+    #
+    def default_configuration
+      @host               ||= "127.0.0.1"
+      @port               ||= 9160
+      @keyspace           ||= "Constellation"
+      @replication_factor ||= 1
+    end
+
+    #
     # Establishes a new connection to the given Cassandra store.
     # The Cassandra store gets defined by ConstellationFile.
     #
@@ -33,10 +43,7 @@ module Constellation
     # is set up correctly.
     #
     def establish_connection
-      @host               ||= "127.0.0.1"
-      @port               ||= 9160
-      @keyspace           ||= "Constellation"
-      @replication_factor ||= 1
+      default_configuration
 
       # connect to the system keyspace initially in order to establish a working connection
       @server = Cassandra.new("system", "#{@host}:#{@port.to_s}")
@@ -44,12 +51,7 @@ module Constellation
       begin
         @server.keyspace = @keyspace
       rescue Cassandra::AccessError
-        keyspace                      = Cassandra::Keyspace.new
-        keyspace.name                 = @keyspace
-        keyspace.strategy_class       = "org.apache.cassandra.locator.SimpleStrategy"
-        keyspace.replication_factor   = @replication_factor
-        keyspace.cf_defs              = create_column_families
-        @server.add_keyspace(keyspace)
+        @server.add_keyspace(create_keyspace)
       rescue CassandraThrift::Cassandra::Client::TransportException
         raise Constellation::ConnectionFailedError
       end
@@ -77,6 +79,18 @@ module Constellation
     end
 
     #
+    # Creates the Cassandra keyspace
+    #
+    def create_keyspace
+      keyspace                      = Cassandra::Keyspace.new
+      keyspace.name                 = @keyspace
+      keyspace.strategy_class       = "org.apache.cassandra.locator.SimpleStrategy"
+      keyspace.replication_factor   = @replication_factor
+      keyspace.cf_defs              = create_column_families
+      keyspace
+    end
+
+    #
     # Creates the necessary column families:
     #
     # * logs
@@ -89,6 +103,7 @@ module Constellation
       families              << log_family
       families
     end
+
   end
 
 end
