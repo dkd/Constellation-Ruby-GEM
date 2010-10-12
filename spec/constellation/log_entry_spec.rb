@@ -3,14 +3,23 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::LogEntry do
 
   describe "#initialize" do
+    it "should generate a new UUID" do
+      @uuid = mock(:UUID)
+      UUID.stub!(:new).and_return(@uuid)
+      @uuid.should_receive(:generate)
+      Constellation::LogEntry.new
+    end
+  end
 
+  describe "#parse" do
     context "valid line of log file" do
       before(:each) do
         @time         = "Sep 17 17:02:02"
         @machine      = "www1"
         @application  = "php5"
         @message      = "I fail!"
-        @log_entry    = Constellation::LogEntry.new("#{@time} #{@machine} #{@application}: #{@message}")
+        @log_entry    = Constellation::LogEntry.new
+        @log_entry.parse("#{@time} #{@machine} #{@application}: #{@message}")
       end
 
       it "should parse the machine correctly" do
@@ -36,14 +45,21 @@ describe Constellation::LogEntry do
 
     context "invalid line of log file" do
       before(:each) do
-        @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 php5: Fail.")
+        @log_entry = Constellation::LogEntry.new
+        @log_entry.parse("Sep 17 17:02:02 php5: Fail.")
       end
 
       it "should not be valid" do
         @log_entry.should_not be_valid
       end
     end
+  end
 
+  describe "#slice_line_from" do
+    it "should return the substring beginning at the given position" do
+      @log_entry = Constellation::LogEntry.new
+      @log_entry.slice_line_from("Just a test", 5).should eql("a test")
+    end
   end
 
   describe "#to_h" do

@@ -68,8 +68,8 @@ module Constellation
           # Adds the file 'syslog' to the list of watched log files
           watch "/var/log/syslog"
 
-          # Wait 2 seconds between scanning the log file for new log entries
-          reading_buffer = 2
+          # Wait 1 seconds between scanning the log file for new log entries
+          reading_buffer = 1
 
           # Define the connection to the Cassandra server
           data_store.host     = "127.0.0.1"

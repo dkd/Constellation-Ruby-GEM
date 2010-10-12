@@ -2,9 +2,7 @@ require 'singleton'
 
 module Constellation
 
-  #
   # Constellation::Config is used for evaluating the ConstellationFile
-  #
   class Config
     include ::Singleton
 
@@ -30,7 +28,7 @@ module Constellation
       # Default values for the data store
       @data_store     = DataStore.new
       # Wait 2 seconds between scanning the log file for new log entries
-      @reading_buffer = 2
+      @reading_buffer = 1
     end
 
     # Adds a new log file to the watched files list, that gets observer for changes.

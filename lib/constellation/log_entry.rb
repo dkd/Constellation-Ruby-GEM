@@ -15,17 +15,18 @@ module Constellation
   class LogEntry
     attr_accessor :machine, :application, :message, :timestamp
 
-    #
+    # Initializes a new log entry by generating a UUID
+    def initialize(line_of_log_file=nil)
+      @uuid = UUID.new.generate
+      parse(line_of_log_file) unless line_of_log_file.nil?
+    end
+
     # Parses a given line of a log file and initializes a new
     # LogEntry object.
     #
     # A line of a log file has to fit the following order: Date Machine Application: Message
     # e.g.: Sep  2 17:20:01 www1 ruby: Ruby really rocks!
-    #
-    def initialize(line_of_log_file=nil)
-      @uuid             = UUID.new.generate
-      return if line_of_log_file.nil?
-
+    def parse(line_of_log_file)
       # The first 15 characters of a log entry describe the time.
       @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
       line_of_log_file  = slice_line_from(line_of_log_file, 16)
@@ -40,6 +41,11 @@ module Constellation
         # The rest of the log entry is the message itself.
         @message          = slice_line_from(line_of_log_file, @application.length+2)
       end
+    end
+
+    # return a substring starting from the position given in from
+    def slice_line_from(line, from)
+      line[from..line.length-1]
     end
 
     # check, if all required log entry fields are given
@@ -57,11 +63,6 @@ module Constellation
         'message'      => @message.to_s,
         'timestamp'    => @timestamp.to_s
       }
-    end
-
-    # return a substring starting from the position given in from
-    def slice_line_from(line, from)
-      line[from..line.length-1]
     end
   end
 

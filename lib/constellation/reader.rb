@@ -71,16 +71,15 @@ module Constellation
     # Wait until the user quits Constellation
     #
     def wait_for_quit
-      begin
-        while(true)
-          sleep(100)
-        end
-      rescue Interrupt
-        @running = false
-        @threads.each { |t| t.kill }
-        puts ""
-        puts "Quitting constellation.."
+      while(true)
+        sleep(100)
       end
+    rescue Interrupt
+      @running = false
+      # wait until all threads are terminated
+      @threads.each { |t| t.join }
+      puts ""
+      puts "Quitting constellation.."
     end
   end
 
