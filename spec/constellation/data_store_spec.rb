@@ -8,7 +8,6 @@ describe Constellation::DataStore do
   end
 
   describe "#establish_connection" do
-
     it "should create a new Cassandra instance" do
       @data_store.host    = "127.0.0.1"
       @data_store.port    = 9160
@@ -45,7 +44,6 @@ describe Constellation::DataStore do
   end
 
   describe "#insert" do
-
     before(:each) do
       @data_store.establish_connection
     end
@@ -72,6 +70,20 @@ describe Constellation::DataStore do
           @data_store.insert(@log_entry)
         }.should raise_error(Constellation::InvalidLogFormatError)
       end
+    end
+  end
+
+  describe "#get" do
+    it "should delegate the method call to @server" do
+      @data_store.instance_variable_get("@server").should_receive(:get)
+      @data_store.get('123abc-321def-576awe')
+    end
+  end
+
+  describe "#get_range" do
+    it "should delegate the method call to @server" do
+      @data_store.instance_variable_get("@server").should_receive(:get_range)
+      @data_store.get_range
     end
   end
 

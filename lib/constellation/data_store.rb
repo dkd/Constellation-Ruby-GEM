@@ -67,6 +67,20 @@ module Constellation
       @server.insert(:logs, log_entry.to_h['uuid'], log_entry.to_h)
     end
 
+    #
+    # Get one single value
+    #
+    def get(uuid)
+      @server.get(:logs, uuid)
+    end
+
+    #
+    # Get multiple key-value-pairs
+    #
+    def get_range(options = {})
+      @server.get_range(:logs, options)
+    end
+
     def host=(host)
       @host = host.to_s
     end
