@@ -26,7 +26,7 @@ module Constellation
       # Insert a file in this list by using Config.watch
       @watched_files  = []
       # Default values for the data store
-      @data_store     = DataStore.new
+      @data_store     = DataStore.instance
       # Wait 2 seconds between scanning the log file for new log entries
       @reading_buffer = 1
     end

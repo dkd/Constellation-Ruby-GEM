@@ -3,7 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::DataStore do
 
   before(:each) do
-    @data_store = Constellation::DataStore.new
+    Constellation::DataStore.reset_instance
+    @data_store = Constellation::DataStore.instance
   end
 
   describe "#establish_connection" do

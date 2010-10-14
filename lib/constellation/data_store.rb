@@ -21,6 +21,7 @@ module Constellation
   #   logs
   #
   class DataStore
+    include ::Singleton
     attr_accessor :host, :username, :password, :keyspace, :port, :replication_factor
 
     #

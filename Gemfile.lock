@@ -6,11 +6,18 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    activemodel (3.0.0)
+      activesupport (= 3.0.0)
+      builder (~> 2.1.2)
+      i18n (~> 0.4.1)
+    activesupport (3.0.0)
+    builder (2.1.2)
     cassandra (0.10.0)
       json
       rake
       simple_uuid (>= 0.1.0)
       thrift_client (>= 0.4.0)
+    i18n (0.4.1)
     json (1.4.6)
     macaddr (1.0.0)
     rake (0.8.7)
@@ -27,6 +34,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activemodel
   cassandra
   constellation!
   json

@@ -1,5 +1,6 @@
 require 'uuid'
 require 'json'
+require 'active_model'
 
 module Constellation
 
@@ -13,7 +14,12 @@ module Constellation
   # * timestamp
   #
   class LogEntry
+    include ::ActiveModel::Serialization
+    include ::ActiveModel::Validations
+
     attr_accessor :machine, :application, :message, :timestamp
+
+    validates_presence_of :machine, :application, :message, :timestamp
 
     # Initializes a new log entry by generating a UUID
     def initialize(line_of_log_file=nil)
@@ -46,12 +52,6 @@ module Constellation
     # return a substring starting from the position given in from
     def slice_line_from(line, from)
       line[from..line.length-1]
-    end
-
-    # check, if all required log entry fields are given
-    def valid?
-      !@machine.nil? && !@application.nil? && !@message.nil? && !@timestamp.nil? &&
-      !@machine.empty? && !@application.empty? && !@message.empty? && @timestamp > 0
     end
 
     # returns a Hash that gets stored in the database
