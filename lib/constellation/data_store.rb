@@ -63,6 +63,7 @@ module Constellation
     # Inserts the given log entry into the database.
     #
     def insert(log_entry)
+      puts log_entry.to_h.to_json
       raise InvalidLogFormatError unless log_entry.valid?
       @server.insert(:logs, log_entry.to_h['uuid'], log_entry.to_h)
     end

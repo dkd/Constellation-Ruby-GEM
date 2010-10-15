@@ -38,7 +38,7 @@ module Constellation
       line_of_log_file  = slice_line_from(line_of_log_file, 16)
       # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
       unless line_of_log_file.nil?
-        @machine          = line_of_log_file.scan(/[a-zA-Z0-9]+/).first
+        @machine          = line_of_log_file.scan(/[a-zA-Z0-9\-\_]+/).first
         line_of_log_file  = slice_line_from(line_of_log_file, @machine.length+1)
       end
       # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
