@@ -62,6 +62,16 @@ describe Constellation::LogEntry do
     end
   end
 
+  describe "#key" do
+    before(:each) do
+      @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
+    end
+
+    it "should be parsed from its time" do
+      @log_entry.key.should eql("#{Time.now.year}/9/17")
+    end
+  end
+
   describe "#to_h" do
     before(:each) do
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
@@ -71,15 +81,9 @@ describe Constellation::LogEntry do
       @log_entry.to_h.should be_an(Hash)
     end
 
-    describe ":key" do
-      it "should be parsed from its time" do
-        @log_entry.to_h['key'].should eql("#{Time.now.year}/9/17")
-      end
-    end
-
     describe ":uuid" do
-      it "should be a String" do
-        @log_entry.to_h['uuid'].should be_a(String)
+      it "should be a Hash" do
+        @log_entry.to_h[@log_entry.instance_variable_get("@uuid")].should be_a(Hash)
       end
     end
   end

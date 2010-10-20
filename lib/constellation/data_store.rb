@@ -64,7 +64,7 @@ module Constellation
     #
     def insert(log_entry)
       raise InvalidLogFormatError unless log_entry.valid?
-      @server.insert(:logs, log_entry.to_h['uuid'], log_entry.to_h)
+      @server.insert(:logs, log_entry.key, log_entry.to_h)
     end
 
     #

@@ -17,9 +17,9 @@ module Constellation
     include ::ActiveModel::Serialization
     include ::ActiveModel::Validations
 
-    attr_accessor :machine, :application, :message, :time
+    attr_accessor :machine, :application, :message, :time, :key
 
-    validates_presence_of :machine, :application, :message, :time
+    validates_presence_of :machine, :application, :message, :time, :key
 
     # Initializes a new log entry by generating a UUID
     def initialize(line_of_log_file=nil)
@@ -47,6 +47,7 @@ module Constellation
         # The rest of the log entry is the message itself.
         @message          = slice_line_from(line_of_log_file, @application.length+2)
       end
+      @key              = "#{@time.year}/#{@time.month}/#{@time.day}"
     end
 
     # return a substring starting from the position given in from
@@ -57,12 +58,12 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
-        'key'          => "#{@time.year}/#{@time.month}/#{@time.day}",
-        'uuid'         => @uuid.to_s,
-        'machine'      => @machine.to_s,
-        'application'  => @application.to_s,
-        'message'      => @message.to_s,
-        'timestamp'    => @time.to_i.to_s
+        @uuid.to_s => {
+          'machine'      => @machine.to_s,
+          'application'  => @application.to_s,
+          'message'      => @message.to_s,
+          'timestamp'    => @time.to_i.to_s
+        }
       }
     end
   end

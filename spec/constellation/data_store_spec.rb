@@ -55,7 +55,7 @@ describe Constellation::DataStore do
 
       it "should insert the log entry into the database" do
         @data_store.insert(@log_entry)
-        @data_store.instance_variable_get("@server").get(:logs, @log_entry.to_h['uuid']).should_not be_nil
+        @data_store.instance_variable_get("@server").get(:logs, @log_entry.key).should_not be_nil
       end
     end
 
