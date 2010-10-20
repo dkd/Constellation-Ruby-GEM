@@ -57,6 +57,7 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
+        'key'          => "#{@time.year}/#{@time.month}/#{@time.day}",
         'uuid'         => @uuid.to_s,
         'machine'      => @machine.to_s,
         'application'  => @application.to_s,

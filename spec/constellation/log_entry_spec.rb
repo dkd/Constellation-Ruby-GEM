@@ -56,7 +56,7 @@ describe Constellation::LogEntry do
   end
 
   describe "#slice_line_from" do
-    it "should return the substring beginning at the given position" do
+    it "should return the substring starting at the given position" do
       @log_entry = Constellation::LogEntry.new
       @log_entry.slice_line_from("Just a test", 5).should eql("a test")
     end
@@ -69,6 +69,12 @@ describe Constellation::LogEntry do
 
     it "should create valid json" do
       @log_entry.to_h.should be_an(Hash)
+    end
+
+    describe ":key" do
+      it "should be parsed from its time" do
+        @log_entry.to_h['key'].should eql("#{Time.now.year}/9/17")
+      end
     end
 
     describe ":uuid" do
