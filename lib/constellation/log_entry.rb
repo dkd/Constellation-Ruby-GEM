@@ -17,9 +17,9 @@ module Constellation
     include ::ActiveModel::Serialization
     include ::ActiveModel::Validations
 
-    attr_accessor :machine, :application, :message, :timestamp
+    attr_accessor :machine, :application, :message, :time
 
-    validates_presence_of :machine, :application, :message, :timestamp
+    validates_presence_of :machine, :application, :message, :time
 
     # Initializes a new log entry by generating a UUID
     def initialize(line_of_log_file=nil)
@@ -34,7 +34,7 @@ module Constellation
     # e.g.: Sep  2 17:20:01 www1 ruby: Ruby really rocks!
     def parse(line_of_log_file)
       # The first 15 characters of a log entry describe the time.
-      @timestamp        = Time.parse(line_of_log_file[0..14]).to_i
+      @time             = Time.parse(line_of_log_file[0..14])
       line_of_log_file  = slice_line_from(line_of_log_file, 16)
       # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
       unless line_of_log_file.nil?
@@ -61,7 +61,7 @@ module Constellation
         'machine'      => @machine.to_s,
         'application'  => @application.to_s,
         'message'      => @message.to_s,
-        'timestamp'    => @timestamp.to_s
+        'timestamp'    => @time.to_i.to_s
       }
     end
   end

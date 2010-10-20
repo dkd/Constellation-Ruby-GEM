@@ -109,13 +109,16 @@ module Constellation
     # Creates the necessary column families:
     #
     # * logs
+    # * logs_ordered_by_timestamp
     #
     def create_column_families
       families = []
-      log_family            = Cassandra::ColumnFamily.new
-      log_family.keyspace   = @keyspace
-      log_family.name       = "logs"
-      families              << log_family
+      log_family                  = Cassandra::ColumnFamily.new
+      log_family.keyspace         = @keyspace
+      log_family.column_type      = "Super"
+      log_family.comparator_type  = "UTF8Type"
+      log_family.name             = "logs"
+      families                    << log_family
       families
     end
 

@@ -27,7 +27,7 @@ describe Constellation::LogEntry do
       end
 
       it "should parse the time correctly" do
-        @log_entry.timestamp.should eql(Time.parse(@time).to_i)
+        @log_entry.time.should eql(Time.parse(@time))
       end
 
       it "should parse the application correctly" do

@@ -33,7 +33,7 @@ describe Constellation::DataStore do
         @data_store.establish_connection
       end
 
-      it "should create a new column family" do
+      it "should create new column families" do
         column_family           = Cassandra::ColumnFamily.new
         column_family.keyspace  = @data_store.keyspace
         column_family.name      = "logs"
