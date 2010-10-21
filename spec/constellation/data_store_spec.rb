@@ -30,7 +30,11 @@ describe Constellation::DataStore do
         server = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
         Cassandra.stub!(:new).and_return(server)
         server.should_receive(:add_keyspace)
-        @data_store.establish_connection
+        begin
+          @data_store.establish_connection
+        # There gets actually no keyspace created
+        rescue Cassandra::AccessError
+        end
       end
 
       it "should create new column families" do
@@ -45,6 +49,7 @@ describe Constellation::DataStore do
 
   describe "#insert" do
     before(:each) do
+      CassandraHelpers::drop_keyspace("Constellation")
       @data_store.establish_connection
     end
 

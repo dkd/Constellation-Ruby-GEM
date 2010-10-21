@@ -1,4 +1,4 @@
-require 'uuid'
+require 'simple_uuid'
 require 'json'
 require 'active_model'
 
@@ -23,7 +23,6 @@ module Constellation
 
     # Initializes a new log entry by generating a UUID
     def initialize(line_of_log_file=nil)
-      @uuid = UUID.new.generate
       parse(line_of_log_file) unless line_of_log_file.nil?
     end
 
@@ -58,7 +57,7 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
-        @uuid.to_s => {
+        SimpleUUID::UUID.new => {
           'machine'      => @machine.to_s,
           'application'  => @application.to_s,
           'message'      => @message.to_s,

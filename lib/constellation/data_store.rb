@@ -1,4 +1,5 @@
 require 'cassandra/0.7'
+require 'singleton'
 
 module Constellation
 
@@ -53,6 +54,7 @@ module Constellation
         @server.keyspace = @keyspace
       rescue Cassandra::AccessError
         @server.add_keyspace(create_keyspace)
+        @server.keyspace = @keyspace
       rescue CassandraThrift::Cassandra::Client::TransportException
         raise Constellation::ConnectionFailedError
       end
@@ -63,7 +65,7 @@ module Constellation
     # Inserts the given log entry into the database.
     #
     def insert(log_entry)
-      raise InvalidLogFormatError unless log_entry.valid?
+      raise Constellation::InvalidLogFormatError unless log_entry.valid?
       @server.insert(:logs, log_entry.key, log_entry.to_h)
     end
 
@@ -109,16 +111,15 @@ module Constellation
     # Creates the necessary column families:
     #
     # * logs
-    # * logs_ordered_by_timestamp
     #
     def create_column_families
       families = []
-      log_family                  = Cassandra::ColumnFamily.new
-      log_family.keyspace         = @keyspace
-      log_family.column_type      = "Super"
-      log_family.comparator_type  = "UTF8Type"
-      log_family.name             = "logs"
-      families                    << log_family
+      log_family                    = Cassandra::ColumnFamily.new
+      log_family.name               = "logs"
+      log_family.keyspace           = @keyspace
+      log_family.column_type        = "Super"
+      log_family.comparator_type    = "TimeUUIDType"
+      families                      << log_family
       families
     end
 

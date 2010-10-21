@@ -12,7 +12,7 @@ module Constellation
     end
 
     #
-    # Starts observing the given files for changes using the FSSM gem.
+    # Starts observing the given files
     #
     def start
       puts ""
@@ -47,8 +47,6 @@ module Constellation
         # rescue from several errors that may occur due to an invalid log format
         # but should not appear in order to avoid performance issues
         rescue EOFError => e
-        rescue FSSM::CallbackError => e
-          new_system_error(e)
         end
 
         sleep(@config.reading_buffer)
