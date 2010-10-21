@@ -7,5 +7,5 @@ gemspec
 gem "thor"
 gem "cassandra", :require => "cassandra/0.7"
 gem "json"
-gem "uuid"
+gem "simple_uuid"
 gem "activemodel"
