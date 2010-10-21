@@ -67,8 +67,8 @@ describe Constellation::LogEntry do
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
     end
 
-    it "should be parsed from its time" do
-      @log_entry.key.should eql("#{Time.now.year}/9/17")
+    it "should be parsed from its time using the format year/month/day/hour" do
+      @log_entry.key.should eql("#{Time.now.year}/9/17/17")
     end
   end
 
