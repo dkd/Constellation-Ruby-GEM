@@ -72,8 +72,8 @@ module Constellation
     #
     # Get one single value
     #
-    def get(uuid)
-      @server.get(:logs, uuid)
+    def get(key, options= {})
+      @server.get(:logs, key, options)
     end
 
     #

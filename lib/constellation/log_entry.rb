@@ -17,12 +17,13 @@ module Constellation
     include ::ActiveModel::Serialization
     include ::ActiveModel::Validations
 
-    attr_accessor :machine, :application, :message, :time, :key
+    attr_accessor :machine, :application, :message, :time, :key, :uuid
 
     validates_presence_of :machine, :application, :message, :time, :key
 
     # Initializes a new log entry by generating a UUID
     def initialize(line_of_log_file=nil)
+      @uuid = SimpleUUID::UUID.new
       parse(line_of_log_file) unless line_of_log_file.nil?
     end
 
@@ -57,7 +58,7 @@ module Constellation
     # returns a Hash that gets stored in the database
     def to_h
       {
-        SimpleUUID::UUID.new => {
+        @uuid => {
           'machine'      => @machine.to_s,
           'application'  => @application.to_s,
           'message'      => @message.to_s,

@@ -1,6 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::LogEntry do
+  describe "#initialize" do
+    it "should generate a new UUID" do
+      SimpleUUID::UUID.should_receive(:new)
+      Constellation::LogEntry.new
+    end
+  end
 
   describe "#parse" do
     context "valid line of log file" do
@@ -66,11 +72,6 @@ describe Constellation::LogEntry do
   describe "#to_h" do
     before(:each) do
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
-    end
-
-    it "should generate a new UUID" do
-      SimpleUUID::UUID.should_receive(:new)
-      @log_entry.to_h
     end
 
     it "should create valid json" do
