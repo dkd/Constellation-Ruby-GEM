@@ -27,7 +27,7 @@ module Constellation
       @watched_files  = []
       # Default values for the data store
       @data_store     = DataStore.instance
-      # Wait 2 seconds between scanning the log file for new log entries
+      # Wait 1 second between scanning the log file for new log entries
       @reading_buffer = 1
     end
 

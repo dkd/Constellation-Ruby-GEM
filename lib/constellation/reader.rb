@@ -20,19 +20,27 @@ module Constellation
 
       @config.watched_files.each { |file|
         @threads << Thread.new {
-          read_log_entries(File.open(file, "a+"))
+          read_log_entries(file)
         }
       }
 
       puts ""
       puts "Enter CTRL+c to quit Constellation"
-      wait_for_quit
+      wait_for_interrupt
     end
 
     #
-    # Read the defined log file every TIME_TO_WAIT seconds
+    # Read the given log file every TIME_TO_WAIT seconds
     #
     def read_log_entries(file)
+      begin
+        file = File.open(file, "a+")
+      rescue Errno::EACCES
+        puts ""
+        puts "Permission denied: Please check the access permissions of #{file}"
+        quit_application
+      end
+
       while(@running)
 
         begin
@@ -68,16 +76,24 @@ module Constellation
     #
     # Wait until the user quits Constellation
     #
-    def wait_for_quit
+    def wait_for_interrupt
       while(true)
         sleep(100)
       end
     rescue Interrupt
       @running = false
       # wait until all threads are terminated
+      quit_application
+    end
+
+    #
+    # Quit the application by killing all opened threads and the process itself
+    #
+    def quit_application
       @threads.each { |t| t.join }
       puts ""
       puts "Quitting constellation.."
+      Kernel.exit(1)
     end
   end
 

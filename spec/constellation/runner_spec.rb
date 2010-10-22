@@ -38,6 +38,7 @@ describe Constellation::Runner do
     before(:each) do
       # don't wait for file changes
       @reader = @runner.instance_variable_get("@reader")
+      @reader.stub!(:start)
       @reader.stub!(:wait_for_quit)
       Thread.stub!(:new)
     end

@@ -11,14 +11,14 @@ describe Constellation::Reader do
   describe "#start" do
     it "should run file observation" do
       @reader.instance_variable_get("@config").instance_variable_set("@watched_files", ["logs"])
-      @reader.stub!(:wait_for_quit)
+      @reader.stub!(:wait_for_interrupt)
       @reader.should_receive(:read_log_entries)
       @reader.start
     end
 
     it "should wait for quitting" do
       @reader.stub!(:read_log_entries)
-      @reader.should_receive(:wait_for_quit)
+      @reader.should_receive(:wait_for_interrupt)
       @reader.start
     end
   end
@@ -27,16 +27,18 @@ describe Constellation::Reader do
     before(:each) do
       @file_name = "logs"
       FileHelpers::create_file(@file_name,"Sep 17 17:02:02 www1 php5: I failed.")
-      @file = File.open(@file_name, (::File::RDONLY))
       @reader.stub!(:new_system_error)
     end
 
     after(:each) do
       @reader.instance_variable_set("@running", true)
       thread = Thread.new {
-        @reader.read_log_entries(@file)
+        @reader.read_log_entries(@file_name)
       }
-      sleep(0.1)
+      # write a new log entry
+      File.open(@file_name, "a+") { |f| f.write("Sep 17 17:02:02 www1 php5: I failed.") }
+      # sleep until the reading buffer is over
+      sleep(@reader.instance_variable_get("@config").reading_buffer)
       thread.kill
       FileHelpers::destroy_file(@file_name)
     end
@@ -70,11 +72,11 @@ describe Constellation::Reader do
     end
   end
 
-  describe "#wait_for_quit" do
+  describe "#wait_for_interrupt" do
     context "receiving a Interrupt" do
       it "should exit" do
         thread = Thread.new {
-          @reader.wait_for_quit
+          @reader.wait_for_interrupt
         }
         thread.raise("Interrupt")
         thread.should_not be_alive
