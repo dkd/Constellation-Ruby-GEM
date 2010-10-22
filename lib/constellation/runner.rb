@@ -15,12 +15,12 @@ module Constellation
       @reader = Reader.new(@config)
     end
 
-    desc "init", "Generates a ConstellationFile and initializes the application"
+    desc "init", "Generates a ConstellationFile containing initial configuration"
     def init
       raise ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
       puts "Initializing new application.."
       puts ""
-      puts "The configuration can be found in ConstellationFile"
+      puts "The configuration can be found in `ConstellationFile`"
       create_example_constellation_file
     end
     map %w(-i) => :start
@@ -51,7 +51,7 @@ module Constellation
     def help
       puts "Available command line options:"
       puts ""
-      puts "constellation init        Generates a ConstellationFile and initializes the application"
+      puts "constellation init        Generates a ConstellationFile containing initial configuration"
       puts "constellation start       Starts watching for log entries"
       puts "constellation version     Shows the version of the currently installed Constellation gem"
       puts "constellation help        Shows the example usage of all available command line options"
@@ -65,7 +65,7 @@ module Constellation
       def create_example_constellation_file
         File.open("ConstellationFile", 'w') {|f|
           f.write <<-END.gsub(/^ {10}/, '')
-          # Adds the file 'syslog' to the list of watched log files
+          # Adds the file '/var/log/syslog' to the list of watched log files
           watch "/var/log/syslog"
 
           # Wait 1 seconds between scanning the log file for new log entries

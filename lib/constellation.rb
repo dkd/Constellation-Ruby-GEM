@@ -19,8 +19,6 @@ end
 #
 module Constellation
 
-  REPOSITORY            = "ssh://root@git.dkd.de/var/cache/constellation-app.git".freeze
-
   autoload :Config,       "constellation/config"
   autoload :DataStore,    "constellation/data_store"
   autoload :LogEntry,     "constellation/log_entry"
