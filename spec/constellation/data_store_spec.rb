@@ -70,10 +70,10 @@ describe Constellation::DataStore do
       end
 
       it "should raise an InvalidLogFormatError" do
-        lambda {
+        expect {
           @data_store.establish_connection
           @data_store.insert(@log_entry)
-        }.should raise_error(Constellation::InvalidLogFormatError)
+        }.to raise_error(Constellation::InvalidLogFormatError)
       end
     end
   end

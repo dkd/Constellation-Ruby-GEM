@@ -36,21 +36,33 @@ describe Constellation::Reader do
         @reader.read_log_entries(@file_name)
       }
       # write a new log entry
-      File.open(@file_name, "a+") { |f| f.write("Sep 17 17:02:02 www1 php5: I failed.") }
+      File.open(@file_name, "a+") { |f| f.write(@log_message) }
       # sleep until the reading buffer is over
-      sleep(@reader.instance_variable_get("@config").reading_buffer)
+      sleep(@reader.instance_variable_get("@config").reading_buffer+0.1)
       thread.kill
       FileHelpers::destroy_file(@file_name)
     end
 
-    it "should create a new log entry" do
-      Constellation::LogEntry.should_receive(:new)
+    context "given a valid log entry" do
+      it "should create a new log entry" do
+        Constellation::LogEntry.should_receive(:new)
+        @log_message = "Sep 17 17:02:02 www1 php5: I failed."
+      end
+
+      it "should insert the log entry into the data store" do
+        @config = Constellation::Config.instance
+        @config.data_store.should_receive(:insert)
+        @log_message = "Sep 17 17:02:02 www1 php5: I failed."
+      end
     end
 
-    it "should insert the log entry into the data store" do
-      @config = Constellation::Config.instance
-      @config.data_store.should_receive(:insert)
+    context "given an invalid log entry" do
+      it "should insert a new system error" do
+        @reader.should_receive(:new_system_error)
+        @log_message = "Sep 17 17:02:02"
+      end
     end
+
   end
 
   describe "#new_system_error" do

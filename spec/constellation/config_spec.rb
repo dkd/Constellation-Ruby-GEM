@@ -25,18 +25,16 @@ describe Constellation::Config do
 
     context "given a file, that has added twice to the watched files list" do
       it "should raise an LogFileAlreadyIncludedError" do
-        lambda {
+        expect {
           @config.watch(@file_name)
           @config.watch(@file_name)
-        }.should raise_error(Constellation::LogFileAlreadyIncludedError)
+        }.to raise_error(Constellation::LogFileAlreadyIncludedError)
       end
     end
 
     context "given a file, that does not exist" do
       it "should raise an LogFileNotFoundError" do
-        lambda {
-          @config.watch("DummyLogFile.txt")
-        }.should raise_error(Constellation::LogFileNotFoundError)
+        expect { @config.watch("DummyLogFile.txt") }.to raise_error(Constellation::LogFileNotFoundError)
       end
     end
   end
