@@ -96,4 +96,11 @@ describe Constellation::Reader do
     end
   end
 
+  describe "#quit_application" do
+    it "should kill the current process" do
+      Kernel.should_receive(:exit)
+      @reader.quit_application
+    end
+  end
+
 end
