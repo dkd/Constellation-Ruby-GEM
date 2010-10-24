@@ -18,12 +18,12 @@ end
 # easy-to-use web application, written in Ruby on Rails, for monitoring and controlling.
 #
 module Constellation
-
-  autoload :Config,       "constellation/config"
-  autoload :DataStore,    "constellation/data_store"
-  autoload :LogEntry,     "constellation/log_entry"
-  autoload :Reader,       "constellation/reader"
-  autoload :Runner,       "constellation/runner"
+  autoload :Config,         "constellation/config"
+  autoload :DataStore,      "constellation/data_store"
+  autoload :LogEntry,       "constellation/log_entry"
+  autoload :Reader,         "constellation/reader"
+  autoload :Runner,         "constellation/runner"
+  autoload :UserInterface,  "constellation/user_interface"
 
   class ConstellationError < StandardError
   end
@@ -36,5 +36,4 @@ module Constellation
   class InvalidLogFormatError               < ConstellationError;   end
   class LogFileAlreadyIncludedError         < ConstellationError;   end
   class LogFileNotFoundError                < ConstellationError;   end
-
 end
