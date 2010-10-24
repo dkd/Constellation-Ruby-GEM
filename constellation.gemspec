@@ -5,21 +5,22 @@
 
 Gem::Specification.new do |s|
   s.name = %q{constellation}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Stefan Sprenger"]
-  s.date = %q{2010-10-22}
+  s.date = %q{2010-10-24}
   s.default_executable = %q{constellation}
   s.description = %q{Observes log files of all of your servers.}
   s.email = %q{stefan.sprenger@dkd.de}
   s.executables = ["constellation"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.md"
+    "README.md"
   ]
   s.files = [
-    ".document",
+     ".bundle/config",
+     ".document",
      ".gitignore",
      "CHANGELOG.md",
      "Gemfile",
@@ -36,36 +37,8 @@ Gem::Specification.new do |s|
      "lib/constellation/log_entry.rb",
      "lib/constellation/reader.rb",
      "lib/constellation/runner.rb",
-     "lib/constellation/version.rb",
-     "spec/constellation/config_spec.rb",
-     "spec/constellation/data_store_spec.rb",
-     "spec/constellation/log_entry_spec.rb",
-     "spec/constellation/reader_spec.rb",
-     "spec/constellation/runner_spec.rb",
-     "spec/constellation/version_spec.rb",
-     "spec/constellation_spec.rb",
-     "spec/helpers/cassandra_helper.rb",
-     "spec/helpers/file_helper.rb",
-     "spec/helpers/singleton_helper.rb",
-     "spec/performance/ConstellationFile",
-     "spec/performance/logs",
-     "spec/performance/reliability_spec.rb",
-     "spec/spec.opts",
-     "spec/spec_helper.rb",
-     "vendor/cache/activemodel-3.0.0.gem",
-     "vendor/cache/activesupport-3.0.0.gem",
-     "vendor/cache/builder-2.1.2.gem",
-     "vendor/cache/cassandra-0.10.0.gem",
-     "vendor/cache/i18n-0.4.1.gem",
-     "vendor/cache/json-1.4.6.gem",
-     "vendor/cache/macaddr-1.0.0.gem",
-     "vendor/cache/rake-0.8.7.gem",
-     "vendor/cache/rspec-1.3.0.gem",
-     "vendor/cache/simple_uuid-0.1.1.gem",
-     "vendor/cache/thor-0.14.2.gem",
-     "vendor/cache/thrift-0.2.0.4.gem",
-     "vendor/cache/thrift_client-0.5.0.gem",
-     "vendor/cache/uuid-2.3.1.gem"
+     "lib/constellation/user_interface.rb",
+     "lib/constellation/version.rb"
   ]
   s.homepage = %q{http://github.com/dkd/constellation}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -78,6 +51,7 @@ Gem::Specification.new do |s|
      "spec/constellation/log_entry_spec.rb",
      "spec/constellation/reader_spec.rb",
      "spec/constellation/runner_spec.rb",
+     "spec/constellation/user_interface_spec.rb",
      "spec/constellation/version_spec.rb",
      "spec/constellation_spec.rb",
      "spec/helpers/cassandra_helper.rb",

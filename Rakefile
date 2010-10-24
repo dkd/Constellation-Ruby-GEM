@@ -1,24 +1,6 @@
 require 'rubygems'
 require 'rake'
 
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gem|
-    gem.name = "constellation"
-    gem.summary = %Q{Observes log files of all of your servers.}
-    gem.description = %Q{Observes log files of all of your servers.}
-    gem.email = "stefan.sprenger@dkd.de"
-    gem.homepage = "http://github.com/dkd/constellation"
-    gem.authors = ["Stefan Sprenger"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
-    gem.executables = ['constellation']
-    # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
-end
-
 require 'spec/rake/spectask'
 Spec::Rake::SpecTask.new(:spec) do |spec|
   spec.libs << 'lib' << 'spec'
