@@ -1,5 +1,4 @@
 module Constellation
-
   #
   # Constellation::Reader observes the given log files for changes and inserts new entries
   # into the data store.
@@ -15,17 +14,13 @@ module Constellation
     # Starts observing the given files
     #
     def start
-      puts ""
-      puts ">> Starting file observation"
+      Constellation::UserInterface.inform(">> Starting file observation", :prepend_newline => true)
 
       @config.watched_files.each { |file|
-        @threads << Thread.new {
-          read_log_entries(file)
-        }
+        @threads << Thread.new { read_log_entries(file) }
       }
 
-      puts ""
-      puts "Enter CTRL+c to quit Constellation"
+      Constellation::UserInterface.inform("Enter CTRL+c to quit Constellation", :prepend_newline => true)
       wait_for_interrupt
     end
 
@@ -36,8 +31,7 @@ module Constellation
       begin
         file = File.open(file, "a+")
       rescue Errno::EACCES
-        puts ""
-        puts "Permission denied: Please check the access permissions of #{file}"
+        Constellation::UserInterface.error("Permission denied: Please check the access permissions of #{file}", :prepend_newline => true)
         quit_application
       end
 
@@ -91,10 +85,8 @@ module Constellation
     #
     def quit_application
       @threads.each { |t| t.join }
-      puts ""
-      puts "Quitting constellation.."
+      Constellation::UserInterface.confirm("Quitting constellation..", :prepend_newline => true)
       Kernel.exit(1)
     end
   end
-
 end

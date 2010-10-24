@@ -1,7 +1,6 @@
-require 'thor'
+require "thor"
 
 module Constellation
-
   #
   # Constellation::Runner handles several commands, initializes a new project, starts a project or prints the currently installed
   # Constellation version
@@ -18,9 +17,8 @@ module Constellation
     desc "init", "Generates a ConstellationFile containing initial configuration"
     def init
       raise ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
-      puts "Initializing new application.."
-      puts ""
-      puts "The configuration can be found in `ConstellationFile`"
+      Constellation::UserInterface.inform("Initializing new application..")
+      Constellation::UserInterface.inform("The configuration can be found in `ConstellationFile`", :prepend_newline => true)
       create_example_constellation_file
     end
     map %w(-i) => :start
@@ -49,12 +47,11 @@ module Constellation
 
     desc "help", "Shows the example usage of all available command line options"
     def help
-      puts "Available command line options:"
-      puts ""
-      puts "constellation init        Generates a ConstellationFile containing initial configuration"
-      puts "constellation start       Starts watching for log entries"
-      puts "constellation version     Shows the version of the currently installed Constellation gem"
-      puts "constellation help        Shows the example usage of all available command line options"
+      Constellation::UserInterface.inform("Available command line options:")
+      Constellation::UserInterface.inform("constellation init        Generates a ConstellationFile containing initial configuration", :prepend_newline => true)
+      Constellation::UserInterface.inform("constellation start       Starts watching for log entries")
+      Constellation::UserInterface.inform("constellation version     Shows the version of the currently installed Constellation gem")
+      Constellation::UserInterface.inform("constellation help        Shows the example usage of all available command line options")
     end
     map %w(--help) => :help
 
@@ -83,5 +80,4 @@ module Constellation
       end
     }
   end
-
 end

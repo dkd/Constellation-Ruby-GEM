@@ -1,9 +1,8 @@
-require 'simple_uuid'
-require 'json'
-require 'active_model'
+require "simple_uuid"
+require "json"
+require "active_model"
 
 module Constellation
-
   #
   # Represents a log entry having the following attributes:
   #
@@ -67,5 +66,4 @@ module Constellation
       }
     end
   end
-
 end

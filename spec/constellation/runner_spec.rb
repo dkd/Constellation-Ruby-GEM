@@ -28,8 +28,7 @@ describe Constellation::Runner do
 
   describe "#help" do
     it "should put some help to the command line" do
-      @runner.stub!(:puts)
-      @runner.should_receive(:puts)
+      Constellation::UserInterface.should_receive(:inform).exactly(5).times
       @runner.help
     end
   end

@@ -1,8 +1,7 @@
-require 'cassandra/0.7'
-require 'singleton'
+require "cassandra/0.7"
+require "singleton"
 
 module Constellation
-
   #
   # Constellation::DataStore is used for saving the read log entries in Cassandra.
   #
@@ -58,7 +57,7 @@ module Constellation
       rescue CassandraThrift::Cassandra::Client::TransportException
         raise Constellation::ConnectionFailedError
       end
-      puts "Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established."
+      Constellation::UserInterface.confirm("Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established.")
     end
 
     #
@@ -122,7 +121,5 @@ module Constellation
       families                      << log_family
       families
     end
-
   end
-
 end

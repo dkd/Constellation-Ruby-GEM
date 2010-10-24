@@ -9,6 +9,13 @@ describe Constellation::Reader do
   end
 
   describe "#start" do
+    it "should inform about the starting process" do
+      Constellation::UserInterface.should_receive(:inform).twice
+      @reader.stub!(:wait_for_interrupt)
+      @reader.stub!(:read_log_entries)
+      @reader.start
+    end
+
     it "should run file observation" do
       @reader.instance_variable_get("@config").instance_variable_set("@watched_files", ["logs"])
       @reader.stub!(:wait_for_interrupt)
@@ -97,6 +104,12 @@ describe Constellation::Reader do
   end
 
   describe "#quit_application" do
+    it "should confirm about the quit" do
+      Kernel.stub!(:exit)
+      Constellation::UserInterface.should_receive(:confirm)
+      @reader.quit_application
+    end
+
     it "should kill the current process" do
       Kernel.should_receive(:exit)
       @reader.quit_application

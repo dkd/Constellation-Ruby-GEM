@@ -14,6 +14,11 @@ describe Constellation::DataStore do
       @data_store.establish_connection
     end
 
+    it "should confirm about the established connection" do
+      Constellation::UserInterface.should_receive(:confirm)
+      @data_store.establish_connection
+    end
+
     context "given keyspace does not exist" do
       before(:each) do
         @keyspace_name        = "TemporaryKeyspace"

@@ -1,8 +1,9 @@
-require 'singleton'
+require "singleton"
 
 module Constellation
-
+  #
   # Constellation::Config is used for evaluating the ConstellationFile
+  #
   class Config
     include ::Singleton
 
@@ -15,7 +16,7 @@ module Constellation
     #   data_store.password = "secret"
     #   data_store.keyspace = :constellation
     #
-    attr_reader   :data_store
+    attr_accessor :data_store
     attr_reader   :watched_files
     # Defines the number of seconds that are waited until the log file gets scanned for new log files again.
     # As bigger _reading buffer_ is as better might be the performance.
@@ -41,7 +42,5 @@ module Constellation
       raise LogFileAlreadyIncludedError   if @watched_files.include?(file_name)
       @watched_files << file_name
     end
-
   end
-
 end
