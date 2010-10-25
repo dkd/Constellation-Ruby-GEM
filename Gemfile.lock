@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    constellation (0.0.1)
+    constellation (0.0.2)
 
 GEM
   remote: http://rubygems.org/
