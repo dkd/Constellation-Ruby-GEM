@@ -33,8 +33,8 @@ module Constellation
     # e.g.: Sep  2 17:20:01 www1 ruby: Ruby really rocks!
     def parse(line_of_log_file)
       # The first 15 characters of a log entry describe the time.
-      @time               = Time.parse(line_of_log_file[0..14])
-      line_of_log_file    = slice_line_from(line_of_log_file, 16)
+      @time             = Time.parse(line_of_log_file[0..14])
+      line_of_log_file  = slice_line_from(line_of_log_file, 16)
       # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
       unless line_of_log_file.nil?
         @machine          = line_of_log_file.scan(/[a-zA-Z0-9\-\_]+/).first
@@ -42,11 +42,11 @@ module Constellation
       end
       # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
       unless line_of_log_file.nil?
-        @application      = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
+        @application  = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
         # The rest of the log entry is the message itself.
-        @message          = slice_line_from(line_of_log_file, @application.length+2)
+        @message      = slice_line_from(line_of_log_file, @application.length+2)
       end
-      @key                = "#{@time.year}/#{@time.month}/#{@time.day}/#{@time.hour}"
+      @key = "#{@time.year}/#{@time.month}/#{@time.day}/#{@time.hour}"
     end
 
     # return a substring starting from the position given in from
@@ -58,10 +58,10 @@ module Constellation
     def to_h
       {
         @uuid => {
-          'machine'      => @machine.to_s,
-          'application'  => @application.to_s,
-          'message'      => @message.to_s,
-          'timestamp'    => @time.to_i.to_s
+          'machine'     => @machine.to_s,
+          'application' => @application.to_s,
+          'message'     => @message.to_s,
+          'timestamp'   => @time.to_i.to_s
         }
       }
     end

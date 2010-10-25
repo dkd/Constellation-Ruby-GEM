@@ -27,7 +27,7 @@ module Constellation
       # Insert a file in this list by using Config.watch
       @watched_files  = []
       # Default values for the data store
-      @data_store     = DataStore.instance
+      @data_store     = Constellation::DataStore.instance
       # Wait 1 second between scanning the log file for new log entries
       @reading_buffer = 1
     end
@@ -38,8 +38,8 @@ module Constellation
     #   watch "logs.txt"
     #
     def watch(file_name)
-      raise LogFileNotFoundError          unless File::exists?(file_name)
-      raise LogFileAlreadyIncludedError   if @watched_files.include?(file_name)
+      raise LogFileNotFoundError        unless File::exists?(file_name)
+      raise LogFileAlreadyIncludedError if @watched_files.include?(file_name)
       @watched_files << file_name
     end
   end

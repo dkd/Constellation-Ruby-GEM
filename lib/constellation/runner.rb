@@ -10,13 +10,13 @@ module Constellation
 
     def initialize(*)
       super
-      @config = Config.instance
-      @reader = Reader.new(@config)
+      @config = Constellation::Config.instance
+      @reader = Constellation::Reader.new(@config)
     end
 
     desc "init", "Generates a ConstellationFile containing initial configuration"
     def init
-      raise ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
+      raise Constellation::ConstellationFileAlreadyExistsError if File.exists?("ConstellationFile")
       Constellation::UserInterface.inform("Initializing new application..")
       Constellation::UserInterface.inform("The configuration can be found in `ConstellationFile`", :prepend_newline => true)
       create_example_constellation_file
@@ -25,15 +25,13 @@ module Constellation
 
     desc "start", "Starts watching for log entries"
     def start
-      raise ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
-
+      raise Constellation::ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
       begin
         @config.instance_eval(File.read("ConstellationFile"))
       rescue SyntaxError
         raise Constellation::InvalidConstellationFileError
       end
       @config.data_store.establish_connection
-
       # start the log file watching threads in the background
       @reader.start
     end
@@ -41,7 +39,7 @@ module Constellation
 
     desc "version", "Shows the version of the currently installed Constellation gem"
     def version
-      puts VERSION
+      puts Constellation::VERSION
     end
     map %w(-v --version) => :version
 

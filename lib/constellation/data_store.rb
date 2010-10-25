@@ -98,11 +98,11 @@ module Constellation
     # Creates the Cassandra keyspace
     #
     def create_keyspace
-      keyspace                      = Cassandra::Keyspace.new
-      keyspace.name                 = @keyspace
-      keyspace.strategy_class       = "org.apache.cassandra.locator.SimpleStrategy"
-      keyspace.replication_factor   = @replication_factor
-      keyspace.cf_defs              = create_column_families
+      keyspace                    = Cassandra::Keyspace.new
+      keyspace.name               = @keyspace
+      keyspace.strategy_class     = "org.apache.cassandra.locator.SimpleStrategy"
+      keyspace.replication_factor = @replication_factor
+      keyspace.cf_defs            = create_column_families
       keyspace
     end
 
@@ -113,12 +113,12 @@ module Constellation
     #
     def create_column_families
       families = []
-      log_family                    = Cassandra::ColumnFamily.new
-      log_family.name               = "logs"
-      log_family.keyspace           = @keyspace
-      log_family.column_type        = "Super"
-      log_family.comparator_type    = "TimeUUIDType"
-      families                      << log_family
+      log_family                  = Cassandra::ColumnFamily.new
+      log_family.name             = "logs"
+      log_family.keyspace         = @keyspace
+      log_family.column_type      = "Super"
+      log_family.comparator_type  = "TimeUUIDType"
+      families                    << log_family
       families
     end
   end

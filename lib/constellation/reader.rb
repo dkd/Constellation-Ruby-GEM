@@ -5,9 +5,9 @@ module Constellation
   #
   class Reader
     def initialize(config)
-      @config     = config
-      @running    = true
-      @threads    = []
+      @config   = config
+      @running  = true
+      @threads  = []
     end
 
     #
@@ -36,10 +36,9 @@ module Constellation
       end
 
       while(@running)
-
         begin
           while(line = file.readline)
-            log_entry = LogEntry.new(line)
+            log_entry = Constellation::LogEntry.new(line)
             begin
               @config.data_store.insert(log_entry)
             rescue Constellation::InvalidLogFormatError => e
@@ -50,7 +49,6 @@ module Constellation
         # but should not appear in order to avoid performance issues
         rescue EOFError => e
         end
-
         sleep(@config.reading_buffer)
       end
     end
@@ -71,7 +69,7 @@ module Constellation
     # Wait until the user quits Constellation
     #
     def wait_for_interrupt
-      while(true)
+      while(@running)
         sleep(100)
       end
     rescue Interrupt
@@ -81,10 +79,11 @@ module Constellation
     end
 
     #
-    # Quit the application by killing all opened threads and the process itself
+    # Quit the application by killing all opened threads and the process itself.
     #
-    def quit_application
-      @threads.each { |t| t.join }
+    def quit_application()
+      # Kill each thread except the current thread
+      @threads.each { |t| t.kill unless t.object_id==Thread.current.object_id }
       Constellation::UserInterface.confirm("Quitting constellation..", :prepend_newline => true)
       Kernel.exit(1)
     end
