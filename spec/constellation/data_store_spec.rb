@@ -2,6 +2,15 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::DataStore do
 
+  def mock_column_family
+    @column_family = mock(Cassandra::ColumnFamily)
+    @column_family.stub!(:name=)
+    @column_family.stub!(:keyspace=)
+    @column_family.stub!(:column_type=)
+    @column_family.stub!(:comparator_type=)
+    Cassandra::ColumnFamily.stub!(:new).and_return(@column_family)
+  end
+
   before(:each) do
     Constellation::DataStore.reset_instance
     @data_store = Constellation::DataStore.instance
@@ -94,6 +103,53 @@ describe Constellation::DataStore do
     it "should delegate the method call to @server" do
       @data_store.instance_variable_get("@server").should_receive(:get_range)
       @data_store.get_range
+    end
+  end
+
+  describe "#create_column_families" do
+    before(:each) do
+      mock_column_family
+    end
+
+    it "should create a column family for logs" do
+      @column_family.should_receive(:name=).with("logs")
+      @data_store.create_column_families
+    end
+
+    it "should create a super column family" do
+      @column_family.should_receive(:column_type=).with("Super")
+      @data_store.create_column_families
+    end
+
+    it "should compare the column names by time UUID" do
+      @column_family.should_receive(:comparator_type=).with("TimeUUIDType")
+      @data_store.create_column_families
+    end
+
+    it "should call #create_sorting_column_family twice" do
+      @data_store.should_receive(:create_sorting_column_family).twice
+      @data_store.create_column_families
+    end
+  end
+
+  describe "#create_sorting_column_family" do
+    before(:each) do
+      mock_column_family
+    end
+
+    it "should create a new Cassandra column family" do
+      Cassandra::ColumnFamily.should_receive(:new)
+      @data_store.create_sorting_column_family("application")
+    end
+
+    it "should use UTF8Type as comparator" do
+      @column_family.should_receive(:comparator_type=).with("UTF8Type")
+      @data_store.create_sorting_column_family("application")
+    end
+
+    it "should set the given keyspace" do
+      @column_family.should_receive(:keyspace=).with(@data_store.keyspace)
+      @data_store.create_sorting_column_family("application")
     end
   end
 

@@ -66,6 +66,8 @@ module Constellation
     def insert(log_entry)
       raise Constellation::InvalidLogFormatError unless log_entry.valid?
       @server.insert(:logs, log_entry.key, log_entry.to_h)
+      @server.insert(:logs_by_application,  log_entry.application,  { log_entry.uuid.to_guid => log_entry.key })
+      @server.insert(:logs_by_machine,      log_entry.machine,      { log_entry.uuid.to_guid => log_entry.key })
     end
 
     #
@@ -110,6 +112,8 @@ module Constellation
     # Creates the necessary column families:
     #
     # * logs
+    # * logs_by_application
+    # * logs_by_machine
     #
     def create_column_families
       families = []
@@ -119,7 +123,20 @@ module Constellation
       log_family.column_type      = "Super"
       log_family.comparator_type  = "TimeUUIDType"
       families                    << log_family
+      families                    << create_sorting_column_family("application")
+      families                    << create_sorting_column_family("machine")
       families
+    end
+
+    #
+    # Creates a new column family that is used for sorting log entries.
+    #
+    def create_sorting_column_family(attribute)
+      log_family                  = Cassandra::ColumnFamily.new
+      log_family.name             = "logs_by_#{attribute}"
+      log_family.keyspace         = @keyspace
+      log_family.comparator_type  = "UTF8Type"
+      log_family
     end
   end
 end
