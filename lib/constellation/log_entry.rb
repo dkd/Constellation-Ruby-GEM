@@ -45,6 +45,8 @@ module Constellation
         @application  = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
         # The rest of the log entry is the message itself.
         @message      = slice_line_from(line_of_log_file, @application.length+2)
+        # remove the process id
+        @application.gsub!(/\[[0-9]+\]/, "")
       end
       @key = "#{@time.year}/#{@time.month}/#{@time.day}/#{@time.hour}"
     end

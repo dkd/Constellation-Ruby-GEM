@@ -13,7 +13,7 @@ describe Constellation::LogEntry do
       before(:each) do
         @time         = "Sep 17 17:02:02"
         @machine      = "www1"
-        @application  = "php5"
+        @application  = "php5[15420]"
         @message      = "I fail!"
         @log_entry    = Constellation::LogEntry.new
         @log_entry.parse("#{@time} #{@machine} #{@application}: #{@message}")
@@ -26,13 +26,12 @@ describe Constellation::LogEntry do
       it "should parse the time correctly" do
         @log_entry.time.should eql(Time.parse(@time))
       end
-
-      it "should parse the application correctly" do
-        @log_entry.application.should eql(@application)
-      end
-
       it "should parse the message correctly" do
         @log_entry.message.should eql(@message)
+      end
+
+      it "should remove the process id from the application" do
+        @log_entry.application.should eql("php5")
       end
 
       it "should be valid" do
