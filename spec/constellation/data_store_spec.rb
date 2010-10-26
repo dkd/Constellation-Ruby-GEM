@@ -8,6 +8,7 @@ describe Constellation::DataStore do
     @column_family.stub!(:keyspace=)
     @column_family.stub!(:column_type=)
     @column_family.stub!(:comparator_type=)
+    @column_family.stub!(:subcomparator_type=)
     Cassandra::ColumnFamily.stub!(:new).and_return(@column_family)
   end
 
@@ -73,8 +74,8 @@ describe Constellation::DataStore do
       end
 
       it "should insert the log entry into the database" do
+        @data_store.instance_variable_get("@server").should_receive(:insert).exactly(3).times
         @data_store.insert(@log_entry)
-        @data_store.instance_variable_get("@server").get(:logs, @log_entry.key).should_not be_nil
       end
     end
 
@@ -84,10 +85,7 @@ describe Constellation::DataStore do
       end
 
       it "should raise an InvalidLogFormatError" do
-        expect {
-          @data_store.establish_connection
-          @data_store.insert(@log_entry)
-        }.to raise_error(Constellation::InvalidLogFormatError)
+        expect { @data_store.insert(@log_entry) }.to raise_error(Constellation::InvalidLogFormatError)
       end
     end
   end
@@ -95,14 +93,14 @@ describe Constellation::DataStore do
   describe "#get" do
     it "should delegate the method call to @server" do
       @data_store.instance_variable_get("@server").should_receive(:get)
-      @data_store.get('123abc-321def-576awe')
+      @data_store.get(:logs, '123abc-321def-576awe')
     end
   end
 
   describe "#get_range" do
     it "should delegate the method call to @server" do
       @data_store.instance_variable_get("@server").should_receive(:get_range)
-      @data_store.get_range
+      @data_store.get_range(:logs)
     end
   end
 
@@ -142,8 +140,18 @@ describe Constellation::DataStore do
       @data_store.create_sorting_column_family("application")
     end
 
+    it "should create a super column family" do
+      @column_family.should_receive(:column_type=).with("Super")
+      @data_store.create_sorting_column_family("application")
+    end
+
     it "should use UTF8Type as comparator" do
       @column_family.should_receive(:comparator_type=).with("UTF8Type")
+      @data_store.create_sorting_column_family("application")
+    end
+
+    it "should use TimeUUIDType as subcomparator" do
+      @column_family.should_receive(:subcomparator_type=).with("TimeUUIDType")
       @data_store.create_sorting_column_family("application")
     end
 
