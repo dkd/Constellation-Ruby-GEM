@@ -66,22 +66,22 @@ module Constellation
     def insert(log_entry)
       raise Constellation::InvalidLogFormatError unless log_entry.valid?
       @server.insert(:logs, log_entry.key, log_entry.to_h)
-      @server.insert(:logs_by_application,  log_entry.application,  { log_entry.uuid.to_guid => log_entry.key })
-      @server.insert(:logs_by_machine,      log_entry.machine,      { log_entry.uuid.to_guid => log_entry.key })
+      @server.insert(:logs_by_application, log_entry.key, { log_entry.application => { log_entry.uuid => log_entry.key } })
+      @server.insert(:logs_by_machine,     log_entry.key, { log_entry.machine     => { log_entry.uuid => log_entry.key } })
     end
 
     #
     # Get one single value
     #
-    def get(key, options= {})
-      @server.get(:logs, key, options)
+    def get(column_family, key, options= {})
+      @server.get(column_family, key, options)
     end
 
     #
     # Get multiple key-value-pairs
     #
-    def get_range(options = {})
-      @server.get_range(:logs, options)
+    def get_range(column_family, options = {})
+      @server.get_range(column_family, options)
     end
 
     def host=(host)
@@ -132,10 +132,12 @@ module Constellation
     # Creates a new column family that is used for sorting log entries.
     #
     def create_sorting_column_family(attribute)
-      log_family                  = Cassandra::ColumnFamily.new
-      log_family.name             = "logs_by_#{attribute}"
-      log_family.keyspace         = @keyspace
-      log_family.comparator_type  = "UTF8Type"
+      log_family                    = Cassandra::ColumnFamily.new
+      log_family.name               = "logs_by_#{attribute}"
+      log_family.keyspace           = @keyspace
+      log_family.column_type        = "Super"
+      log_family.comparator_type    = "UTF8Type"
+      log_family.subcomparator_type = "TimeUUIDType"
       log_family
     end
   end

@@ -42,7 +42,7 @@ module Constellation
       end
       # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
       unless line_of_log_file.nil?
-        @application  = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]_-]+/).first
+        @application  = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]\._-]+/).first
         # The rest of the log entry is the message itself.
         @message      = slice_line_from(line_of_log_file, @application.length+2)
         # remove the process id
