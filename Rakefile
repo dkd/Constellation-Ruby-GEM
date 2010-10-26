@@ -26,8 +26,17 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'metric_fu'
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "constellation/version"
+task :build do
+  system "gem build constellation.gemspec"
+end
 
+task :install => :build do
+  system "sudo gem install constellation-#{Constellation::VERSION}"
+end
+
+require 'metric_fu'
 MetricFu::Configuration.run do |config|
   #define which metrics you want to use
   config.metrics  = [:churn, :saikuro, :flog, :flay, :reek, :roodi, :rcov]
