@@ -3,63 +3,32 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run the gemspec command
 # -*- encoding: utf-8 -*-
 
-Gem::Specification.new do |s|
-  s.name = %q{constellation}
-  s.version = "0.0.3"
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "constellation/version"
 
+Gem::Specification.new do |s|
+  s.name                      = %q{constellation}
+  s.version                   = Constellation::VERSION
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Stefan Sprenger"]
-  s.date = Time.now.strftime("%Y-%m-%d")
-  s.default_executable = %q{constellation}
-  s.description = %q{Observes log files of all of your servers.}
-  s.email = %q{stefan.sprenger@dkd.de}
-  s.executables = ["constellation"]
-  s.extra_rdoc_files = [
-    "LICENSE",
-    "README.md"
-  ]
-  s.files = [
-     ".bundle/config",
-     ".document",
-     ".gitignore",
-     "CHANGELOG.md",
-     "Gemfile",
-     "Gemfile.lock",
-     "LICENSE",
-     "README.md",
-     "Rakefile",
-     "VERSION",
-     "bin/constellation",
-     "constellation.gemspec",
-     "lib/constellation.rb",
-     "lib/constellation/config.rb",
-     "lib/constellation/data_store.rb",
-     "lib/constellation/log_entry.rb",
-     "lib/constellation/reader.rb",
-     "lib/constellation/runner.rb",
-     "lib/constellation/user_interface.rb",
-     "lib/constellation/version.rb"
-  ]
-  s.homepage = %q{http://github.com/dkd/constellation}
-  s.rdoc_options = ["--charset=UTF-8"]
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Observes log files of all of your servers.}
-  s.test_files = [
-    "spec/constellation/config_spec.rb",
-     "spec/constellation/data_store_spec.rb",
-     "spec/constellation/log_entry_spec.rb",
-     "spec/constellation/reader_spec.rb",
-     "spec/constellation/runner_spec.rb",
-     "spec/constellation/user_interface_spec.rb",
-     "spec/constellation/version_spec.rb",
-     "spec/constellation_spec.rb",
-     "spec/helpers/cassandra_helper.rb",
-     "spec/helpers/file_helper.rb",
-     "spec/helpers/singleton_helper.rb",
-     "spec/performance/reliability_spec.rb",
-     "spec/spec_helper.rb"
-  ]
+  s.authors                   = ["Stefan Sprenger"]
+  s.date                      = Time.now.strftime("%Y-%m-%d")
+  s.default_executable        = %q{constellation}
+  s.description               = %q{Observes log files of all of your servers.}
+  s.email                     = %q{stefan.sprenger@dkd.de}
+  s.executables               = ["constellation"]
+  s.extra_rdoc_files          = ["LICENSE", "README.md"]
+  s.files                     = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md CHANGELOG.md Gemfile Gemfile.lock VERSION)
+  s.homepage                  = %q{http://github.com/dkd/constellation}
+  s.rdoc_options              = ["--charset=UTF-8"]
+  s.require_paths             = ["lib"]
+  s.rubygems_version          = %q{1.3.7}
+  s.summary                   = %q{Observes log files of all of your servers.}
+
+  s.add_dependency("activemodel")
+  s.add_dependency("cassandra")
+  s.add_dependency("json")
+  s.add_dependency("simple_uuid")
+  s.add_dependency("thor")
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
