@@ -7,8 +7,17 @@ module Constellation
   #
   class UserInterface
     @@shell = Thor::Shell::Color.new
+    @@muted = false
 
     class << self
+      def mute!
+        @@muted = true
+      end
+
+      def unmute!
+        @@muted = false
+      end
+
       def inform(message, options={})
         put(message, nil, options)
       end
@@ -26,6 +35,7 @@ module Constellation
       end
 
       def put(message, color, options={})
+        return if @@muted
         @@shell.say("") if options[:prepend_newline]
         @@shell.say(message, color)
       end

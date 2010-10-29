@@ -4,6 +4,23 @@ describe Constellation::UserInterface do
 
   before(:each) do
     @message    = "Hi!"
+    Constellation::UserInterface.unmute!
+  end
+
+  describe ".mute!" do
+    it "should set @@muted to true" do
+      Constellation::UserInterface.__send__("class_variable_set", "@@muted", false)
+      Constellation::UserInterface.mute!
+      Constellation::UserInterface.__send__("class_variable_get", "@@muted").should be_true
+    end
+  end
+
+  describe ".unmute!" do
+    it "should set @@muted to false" do
+      Constellation::UserInterface.__send__("class_variable_set", "@@muted", true)
+      Constellation::UserInterface.unmute!
+      Constellation::UserInterface.__send__("class_variable_get", "@@muted").should be_false
+    end
   end
 
   describe ".inform" do
@@ -39,16 +56,34 @@ describe Constellation::UserInterface do
       @thor_shell = Constellation::UserInterface.__send__("class_variable_get", "@@shell")
     end
 
-    context "given a newline should get prepended" do
-      it "should put two messages" do
-        @thor_shell.should_receive(:say).twice
+    context "given the UI is muted" do
+      before(:each) do
+        Constellation::UserInterface.mute!
+      end
+
+      it "should not put anything" do
+        @thor_shell.should_not_receive(:say)
         Constellation::UserInterface.put(@message, nil, :prepend_newline => true)
       end
     end
-    context "given a newline should not get prepended" do
-      it "should put one message" do
-        @thor_shell.should_receive(:say).once
-        Constellation::UserInterface.put(@message, nil, :prepend_newline => false)
+
+    context "given the UI is not muted" do
+      before(:each) do
+        Constellation::UserInterface.unmute!
+      end
+
+      context "given a newline should get prepended" do
+        it "should put two messages" do
+          @thor_shell.should_receive(:say).twice
+          Constellation::UserInterface.put(@message, nil, :prepend_newline => true)
+        end
+      end
+
+      context "given a newline should not get prepended" do
+        it "should put one message" do
+          @thor_shell.should_receive(:say).once
+          Constellation::UserInterface.put(@message, nil, :prepend_newline => false)
+        end
       end
     end
   end
