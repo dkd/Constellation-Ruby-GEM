@@ -28,3 +28,6 @@ doc
 ## metric_fu
 scratch_directory
 tmp
+
+## Bundler
+vendor/bundle
