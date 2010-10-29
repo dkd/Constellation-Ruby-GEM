@@ -61,6 +61,15 @@ module Constellation
     end
 
     #
+    # Removes the given log entry from the database
+    #
+    def delete(log_entry)
+      @server.remove(:logs, log_entry.key, log_entry.uuid.to_guid)
+      @server.remove(:logs_by_application, log_entry.key, log_entry.application, log_entry.uuid.to_guid)
+      @server.remove(:logs_by_machine,     log_entry.key, log_entry.machine,     log_entry.uuid.to_guid)
+    end
+
+    #
     # Inserts the given log entry into the database.
     #
     def insert(log_entry)

@@ -67,6 +67,18 @@ describe Constellation::DataStore do
     end
   end
 
+  describe "#delete" do
+    before(:each) do
+      mock_server
+      @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
+    end
+
+    it "should delete the given log entry" do
+      @server.should_receive(:remove).exactly(3).times
+      @data_store.delete(@log_entry)
+    end
+  end
+
   describe "#insert" do
     before(:each) do
       mock_server
