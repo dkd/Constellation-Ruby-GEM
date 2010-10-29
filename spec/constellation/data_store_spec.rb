@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::DataStore do
 
+  def mock_server
+    @server = mock(Cassandra)
+    @data_store.instance_variable_set("@server", @server)
+  end
+
   def mock_column_family
     @column_family = mock(Cassandra::ColumnFamily)
     @column_family.stub!(:name=)
@@ -64,8 +69,7 @@ describe Constellation::DataStore do
 
   describe "#insert" do
     before(:each) do
-      CassandraHelpers::drop_keyspace("Constellation")
-      @data_store.establish_connection
+      mock_server
     end
 
     context "given log entry is valid" do
@@ -91,15 +95,23 @@ describe Constellation::DataStore do
   end
 
   describe "#get" do
+    before(:each) do
+      mock_server
+    end
+
     it "should delegate the method call to @server" do
-      @data_store.instance_variable_get("@server").should_receive(:get)
+      @server.should_receive(:get)
       @data_store.get(:logs, '123abc-321def-576awe')
     end
   end
 
   describe "#get_range" do
+    before(:each) do
+      mock_server
+    end
+
     it "should delegate the method call to @server" do
-      @data_store.instance_variable_get("@server").should_receive(:get_range)
+      @server.should_receive(:get_range)
       @data_store.get_range(:logs)
     end
   end
