@@ -70,6 +70,13 @@ module Constellation
     end
 
     #
+    # Truncates all column families.
+    #
+    def clear
+      @server.clear_keyspace!
+    end
+
+    #
     # Inserts the given log entry into the database.
     #
     def insert(log_entry)

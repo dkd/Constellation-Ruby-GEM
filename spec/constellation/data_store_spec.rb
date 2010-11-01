@@ -79,6 +79,17 @@ describe Constellation::DataStore do
     end
   end
 
+  describe "#clear" do
+    before(:each) do
+      mock_server
+    end
+
+    it "should clear all keyspaces" do
+      @server.should_receive(:clear_keyspace!)
+      @data_store.clear
+    end
+  end
+
   describe "#insert" do
     before(:each) do
       mock_server
