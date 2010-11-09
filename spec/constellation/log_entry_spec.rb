@@ -77,5 +77,4 @@ describe Constellation::LogEntry do
       @log_entry.to_h.should be_an(Hash)
     end
   end
-
 end

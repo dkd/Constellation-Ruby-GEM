@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Constellation::Reader do
 
+  def stub_data_store
+    @config = Constellation::Config.instance
+    @config.data_store.stub!(:insert)
+  end
+
   before(:each) do
     Constellation::Config.reset_instance
     @reader = Constellation::Reader.new(Constellation::Config.instance)
@@ -51,6 +56,10 @@ describe Constellation::Reader do
     end
 
     context "given a valid log entry" do
+      before(:each) do
+        stub_data_store
+      end
+
       it "should create a new log entry" do
         Constellation::LogEntry.should_receive(:new)
         @log_message = "Sep 17 17:02:02 www1 php5: I failed."
@@ -61,6 +70,17 @@ describe Constellation::Reader do
         @config.data_store.should_receive(:insert)
         @log_message = "Sep 17 17:02:02 www1 php5: I failed."
       end
+
+      context "given @debug_mode is true" do
+        before(:each) do
+          @reader.instance_variable_set("@debug_mode", true)
+        end
+
+        it "should inform the user about new log entries" do
+          @log_message = "Sep 17 17:02:02 www1 php5: I failed."
+          Constellation::UserInterface.should_receive(:inform)
+        end
+      end
     end
 
     context "given an invalid log entry" do
@@ -69,13 +89,11 @@ describe Constellation::Reader do
         @log_message = "Sep 17 17:02:02"
       end
     end
-
   end
 
   describe "#new_system_error" do
     before(:each) do
-      @config = Constellation::Config.instance
-      @config.data_store.stub!(:insert)
+      stub_data_store
     end
 
     it "should log it as 'system' machine" do

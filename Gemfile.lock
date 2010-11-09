@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    constellation (0.0.3)
+    constellation (0.0.4)
       activemodel
       cassandra
       json

@@ -4,10 +4,13 @@ module Constellation
   # into the data store.
   #
   class Reader
+    attr_accessor :debug_mode
+
     def initialize(config)
-      @config   = config
-      @running  = true
-      @threads  = []
+      @config     = config
+      @debug_mode = false
+      @running    = true
+      @threads    = []
     end
 
     #
@@ -41,6 +44,7 @@ module Constellation
             log_entry = Constellation::LogEntry.new(line)
             begin
               @config.data_store.insert(log_entry)
+              Constellation::UserInterface.inform(log_entry.to_s) if @debug_mode
             rescue Constellation::InvalidLogFormatError => e
               new_system_error(e)
             end
@@ -63,6 +67,7 @@ module Constellation
       log_entry.time        = Time.now
       log_entry.message     = "A new exception got raised: #{error.inspect}"
       @config.data_store.insert(log_entry)
+      Constellation::UserInterface.error(log_entry.message) if @debug_mode
     end
 
     #

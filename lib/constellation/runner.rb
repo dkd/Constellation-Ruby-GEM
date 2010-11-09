@@ -24,8 +24,10 @@ module Constellation
     map %w(-i) => :start
 
     desc "start", "Starts watching for log entries"
+    method_option :debug, :type => :boolean, :aliases => "-d"
     def start
       raise Constellation::ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
+      @reader.debug_mode = true if options[:debug]
       begin
         @config.instance_eval(File.read("ConstellationFile"))
       rescue SyntaxError

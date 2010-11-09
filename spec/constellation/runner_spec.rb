@@ -42,6 +42,21 @@ describe Constellation::Runner do
       Thread.stub!(:new)
     end
 
+    context "given the --debug option" do
+      before(:each) do
+        @options = { :debug => true }
+        @runner.stub!(:options).and_return(@options)
+        @config = @runner.instance_variable_get("@config")
+        Constellation::DataStore.instance.stub!(:establish_connection)
+        File.stub!(:exists?).and_return(true)
+        File.stub!(:read).and_return("")
+      end
+      it "should active the reader's debug mode" do
+        @reader.should_receive(:debug_mode=).with(true)
+        @runner.start
+      end
+    end
+
     context "ConstellationFile does not exist" do
       it "should raise an ConstellationFileNotFoundError" do
         expect { @runner.start }.to raise_error(Constellation::ConstellationFileNotFoundError)

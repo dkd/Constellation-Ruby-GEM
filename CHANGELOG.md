@@ -1,3 +1,8 @@
+0.0.4
+======
+
+* Added --debug (or -d) option for the cli that can be used by "constellation start --debug" in order to put read log entries or raised exceptions
+
 0.0.3
 ======
 
