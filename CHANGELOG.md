@@ -1,3 +1,8 @@
+0.0.5
+======
+
+* Added support for querying log entries that have both a defined application and machine
+
 0.0.4
 ======
 

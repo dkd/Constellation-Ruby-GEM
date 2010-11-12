@@ -61,12 +61,13 @@ module Constellation
     end
 
     #
-    # Removes the given log entry from the database
+    # Removes the given log entry including its indexes from the database
     #
     def delete(log_entry)
       @server.remove(:logs, log_entry.key, log_entry.uuid.to_guid)
       @server.remove(:logs_by_application, log_entry.key, log_entry.application, log_entry.uuid.to_guid)
       @server.remove(:logs_by_machine,     log_entry.key, log_entry.machine,     log_entry.uuid.to_guid)
+      @server.remove(:logs_by_machine,     log_entry.key+"_"+log_entry.machine, log_entry.application, log_entry.uuid.to_guid)
     end
 
     #
@@ -77,13 +78,14 @@ module Constellation
     end
 
     #
-    # Inserts the given log entry into the database.
+    # Inserts the given log entry into the database and creates indexes.
     #
     def insert(log_entry)
       raise Constellation::InvalidLogFormatError unless log_entry.valid?
       @server.insert(:logs, log_entry.key, log_entry.to_h)
       @server.insert(:logs_by_application, log_entry.key, { log_entry.application => { log_entry.uuid => log_entry.key } })
       @server.insert(:logs_by_machine,     log_entry.key, { log_entry.machine     => { log_entry.uuid => log_entry.key } })
+      @server.insert(:logs_by_machine_and_application, log_entry.key+"_"+log_entry.machine, { log_entry.application => { log_entry.uuid => log_entry.key } })
     end
 
     #
@@ -141,6 +143,7 @@ module Constellation
       families                    << log_family
       families                    << create_sorting_column_family("application")
       families                    << create_sorting_column_family("machine")
+      families                    << create_sorting_column_family("machine_and_application")
       families
     end
 

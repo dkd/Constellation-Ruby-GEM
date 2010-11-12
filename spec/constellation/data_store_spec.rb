@@ -73,8 +73,8 @@ describe Constellation::DataStore do
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
     end
 
-    it "should delete the given log entry" do
-      @server.should_receive(:remove).exactly(3).times
+    it "should delete the given log entry including its indexes" do
+      @server.should_receive(:remove).exactly(4).times
       @data_store.delete(@log_entry)
     end
   end
@@ -100,8 +100,8 @@ describe Constellation::DataStore do
         @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
       end
 
-      it "should insert the log entry into the database" do
-        @data_store.instance_variable_get("@server").should_receive(:insert).exactly(3).times
+      it "should insert the log entry including its indexes into the database" do
+        @data_store.instance_variable_get("@server").should_receive(:insert).exactly(4).times
         @data_store.insert(@log_entry)
       end
     end
@@ -159,8 +159,8 @@ describe Constellation::DataStore do
       @data_store.create_column_families
     end
 
-    it "should call #create_sorting_column_family twice" do
-      @data_store.should_receive(:create_sorting_column_family).twice
+    it "should call #create_sorting_column_family three times" do
+      @data_store.should_receive(:create_sorting_column_family).exactly(3).times
       @data_store.create_column_families
     end
   end
