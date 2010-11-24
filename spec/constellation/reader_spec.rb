@@ -15,7 +15,7 @@ describe Constellation::Reader do
 
   describe "#start" do
     it "should inform about the starting process" do
-      Constellation::UserInterface.should_receive(:inform).twice
+      Constellation::UserInterface.should_receive(:inform).once
       @reader.stub!(:wait_for_interrupt)
       @reader.stub!(:read_log_entries)
       @reader.start
