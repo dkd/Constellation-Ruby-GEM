@@ -1,4 +1,5 @@
 require "thor"
+require "titan"
 
 module Constellation
   #
@@ -35,9 +36,25 @@ module Constellation
       end
       @config.data_store.establish_connection
       # start the log file watching threads in the background
-      @reader.start
+      thread = Titan::Thread.new(:id => "constellation") do
+        @reader.start
+      end
+      manager = Titan::Manager.new
+      manager.attach(thread)
     end
     map %w(-s) => :start
+
+    desc "stop", "Stops watching for log entries"
+    def stop
+      manager = Titan::Manager.new
+      thread  = manager.find("constellation")
+      if thread.nil?
+        Constellation::UserInterface.error("Constellation is not running..")
+      else
+        thread.kill
+        Constellation::UserInterface.confirm("Stopped constellation..")
+      end
+    end
 
     desc "version", "Shows the version of the currently installed Constellation gem"
     def version
@@ -50,6 +67,7 @@ module Constellation
       Constellation::UserInterface.inform("Available command line options:")
       Constellation::UserInterface.inform("constellation init        Generates a ConstellationFile containing initial configuration", :prepend_newline => true)
       Constellation::UserInterface.inform("constellation start       Starts watching for log entries")
+      Constellation::UserInterface.inform("constellation stop        Stops watching for log entries")
       Constellation::UserInterface.inform("constellation version     Shows the version of the currently installed Constellation gem")
       Constellation::UserInterface.inform("constellation help        Shows the example usage of all available command line options")
     end

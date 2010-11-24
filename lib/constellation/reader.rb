@@ -23,7 +23,6 @@ module Constellation
         @threads << Thread.new { read_log_entries(file) }
       }
 
-      Constellation::UserInterface.inform("Enter CTRL+c to quit Constellation", :prepend_newline => true)
       wait_for_interrupt
     end
 
@@ -78,10 +77,6 @@ module Constellation
       while(@running)
         sleep(100)
       end
-    rescue Interrupt
-      @running = false
-      # wait until all threads are terminated
-      quit_application
     end
 
     #
