@@ -44,7 +44,7 @@ module Constellation
             log_entry = Constellation::LogEntry.new(line)
             begin
               @config.data_store.insert(log_entry)
-              Constellation::UserInterface.inform(log_entry.to_s) if @debug_mode
+              Constellation::UserInterface.inform(Time.now.strftime("%m/%d/%Y %I:%M%p") + ":" + log_entry.inspect) if @debug_mode
             rescue Constellation::InvalidLogFormatError => e
               new_system_error(e)
             end
@@ -66,6 +66,7 @@ module Constellation
       log_entry.application = "Constellation"
       log_entry.time        = Time.now
       log_entry.message     = "A new exception got raised: #{error.inspect}"
+      log_entry.key         = "#{log_entry.time.year}/#{log_entry.time.month}/#{log_entry.time.day}/#{log_entry.time.hour}"
       @config.data_store.insert(log_entry)
       Constellation::UserInterface.error(log_entry.message) if @debug_mode
     end
