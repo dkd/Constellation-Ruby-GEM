@@ -8,6 +8,11 @@ PATH
       simple_uuid
       thor
 
+PATH
+  remote: ~/Codes/titan
+  specs:
+    titan (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -51,3 +56,4 @@ DEPENDENCIES
   rspec (>= 1.2.9)
   simple_uuid
   thor
+  titan!
