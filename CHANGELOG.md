@@ -1,3 +1,8 @@
+0.0.6
+======
+
+* The constellation runner starts now as a daemon using the Titan gem. It can be started via 'constellation stop' and stopped by using 'constellation stop'.
+
 0.0.5
 ======
 
