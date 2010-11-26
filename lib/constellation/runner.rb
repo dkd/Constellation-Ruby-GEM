@@ -39,15 +39,12 @@ module Constellation
       thread = Titan::Thread.new(:id => "constellation") do
         @reader.start
       end
-      manager = Titan::Manager.new
-      manager.attach(thread)
     end
     map %w(-s) => :start
 
     desc "stop", "Stops watching for log entries"
     def stop
-      manager = Titan::Manager.new
-      thread  = manager.find("constellation")
+      thread  = Titan::Thread.find("constellation")
       if thread.nil?
         Constellation::UserInterface.error("Constellation is not running..")
       else

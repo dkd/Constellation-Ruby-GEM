@@ -40,11 +40,11 @@ module Constellation
       while(@running)
         begin
           while(line = file.readline)
-            log_entry = Constellation::LogEntry.new(line)
             begin
+              log_entry = Constellation::LogEntry.new(line)
               @config.data_store.insert(log_entry)
               Constellation::UserInterface.inform(Time.now.strftime("%m/%d/%Y %I:%M%p") + ":" + log_entry.inspect) if @debug_mode
-            rescue Constellation::InvalidLogFormatError => e
+            rescue Exception => e
               new_system_error(e)
             end
           end

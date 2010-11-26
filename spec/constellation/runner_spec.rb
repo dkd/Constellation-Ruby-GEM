@@ -39,7 +39,7 @@ describe Constellation::Runner do
       @reader = @runner.instance_variable_get("@reader")
       @reader.stub!(:start)
       @reader.stub!(:wait_for_quit)
-      Thread.stub!(:new)
+      Titan::Thread.stub!(:new)
     end
 
     context "given the --debug option" do
@@ -76,9 +76,17 @@ describe Constellation::Runner do
       end
 
       context "valid ConstellationFile" do
+        before(:each) do
+          File.stub!(:read).and_return("")
+        end
 
         it "should load the config defined at the ConstellationFile" do
           File.should_receive(:read).and_return("watch 'logs.txt'")
+          @runner.start
+        end
+
+        it "should start a new Titan thread" do
+          Titan::Thread.should_receive(:new)
           @runner.start
         end
 
@@ -98,6 +106,13 @@ describe Constellation::Runner do
         end
       end
 
+    end
+  end
+
+  describe "#stop" do
+    it "should search for the Constellation process" do
+      Titan::Thread.should_receive(:find).and_return(nil)
+      @runner.stop
     end
   end
 

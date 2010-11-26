@@ -40,16 +40,14 @@ describe Constellation::DataStore do
         @data_store.host      = "127.0.0.1"
         @data_store.port      = 9160
         @data_store.keyspace  = @keyspace_name
-        CassandraHelpers::drop_keyspace(@keyspace_name)
-      end
-      after(:each) do
-        CassandraHelpers::drop_keyspace(@keyspace_name)
+        @server               = Cassandra.new("system", "127.0.0.1:9160")
+        Cassandra.stub!(:new).and_return(@server)
+        @server.stub!(:keyspace=).and_raise(Cassandra::AccessError)
+        @server.stub!(:add_keyspace)
       end
 
       it "should create a new keyspace" do
-        server = Cassandra.new("system", "#{@data_store.host}:#{@data_store.port}")
-        Cassandra.stub!(:new).and_return(server)
-        server.should_receive(:add_keyspace)
+        @server.should_receive(:add_keyspace)
         begin
           @data_store.establish_connection
         # There gets actually no keyspace created
@@ -62,7 +60,11 @@ describe Constellation::DataStore do
         column_family.keyspace  = @data_store.keyspace
         column_family.name      = "logs"
         @data_store.should_receive(:create_column_families).and_return([column_family])
-        @data_store.establish_connection
+        begin
+          @data_store.establish_connection
+        # There gets actually no keyspace created
+        rescue Cassandra::AccessError
+        end
       end
     end
   end
