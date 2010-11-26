@@ -3,8 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::DataStore do
 
   def mock_server
-    @server = mock(Cassandra)
-    @data_store.instance_variable_set("@server", @server)
+    @cassandra = mock(Cassandra)
+    @cassandra.stub!(:login!)
+    @cassandra.stub!(:keyspace)
+    @cassandra.stub!(:keyspace=)
+    @cassandra.stub!(:add_keyspace)
+    Cassandra.stub!(:new).and_return(@cassandra)
   end
 
   def mock_column_family
@@ -23,9 +27,17 @@ describe Constellation::DataStore do
   end
 
   describe "#establish_connection" do
+    before(:each) do
+      mock_server
+    end
+
+    it "should load the default configuration" do
+      @data_store.should_receive(:default_configuration)
+      @data_store.establish_connection
+    end
+
     it "should create a new Cassandra instance" do
-      @data_store.host    = "127.0.0.1"
-      @data_store.port    = 9160
+      Cassandra.should_receive(:new).and_return(@cassandra)
       @data_store.establish_connection
     end
 
@@ -36,18 +48,11 @@ describe Constellation::DataStore do
 
     context "given keyspace does not exist" do
       before(:each) do
-        @keyspace_name        = "TemporaryKeyspace"
-        @data_store.host      = "127.0.0.1"
-        @data_store.port      = 9160
-        @data_store.keyspace  = @keyspace_name
-        @server               = Cassandra.new("system", "127.0.0.1:9160")
-        Cassandra.stub!(:new).and_return(@server)
-        @server.stub!(:keyspace=).and_raise(Cassandra::AccessError)
-        @server.stub!(:add_keyspace)
+        @cassandra.stub!(:keyspace=).and_raise(Cassandra::AccessError)
       end
 
       it "should create a new keyspace" do
-        @server.should_receive(:add_keyspace)
+        @cassandra.should_receive(:add_keyspace)
         begin
           @data_store.establish_connection
         # There gets actually no keyspace created
@@ -72,11 +77,12 @@ describe Constellation::DataStore do
   describe "#delete" do
     before(:each) do
       mock_server
+      @data_store.instance_variable_set("@server", @cassandra)
       @log_entry = Constellation::LogEntry.new("Sep 17 17:02:02 www1 php5: I failed.")
     end
 
     it "should delete the given log entry including its indexes" do
-      @server.should_receive(:remove).exactly(4).times
+      @cassandra.should_receive(:remove).exactly(4).times
       @data_store.delete(@log_entry)
     end
   end
@@ -84,10 +90,11 @@ describe Constellation::DataStore do
   describe "#clear" do
     before(:each) do
       mock_server
+      @data_store.instance_variable_set("@server", @cassandra)
     end
 
     it "should clear all keyspaces" do
-      @server.should_receive(:clear_keyspace!)
+      @cassandra.should_receive(:clear_keyspace!)
       @data_store.clear
     end
   end
@@ -95,6 +102,7 @@ describe Constellation::DataStore do
   describe "#insert" do
     before(:each) do
       mock_server
+      @data_store.instance_variable_set("@server", @cassandra)
     end
 
     context "given log entry is valid" do
@@ -103,7 +111,7 @@ describe Constellation::DataStore do
       end
 
       it "should insert the log entry including its indexes into the database" do
-        @data_store.instance_variable_get("@server").should_receive(:insert).exactly(4).times
+        @cassandra.should_receive(:insert).exactly(4).times
         @data_store.insert(@log_entry)
       end
     end
@@ -122,10 +130,11 @@ describe Constellation::DataStore do
   describe "#get" do
     before(:each) do
       mock_server
+      @data_store.instance_variable_set("@server", @cassandra)
     end
 
     it "should delegate the method call to @server" do
-      @server.should_receive(:get)
+      @cassandra.should_receive(:get)
       @data_store.get(:logs, '123abc-321def-576awe')
     end
   end
@@ -133,10 +142,11 @@ describe Constellation::DataStore do
   describe "#get_range" do
     before(:each) do
       mock_server
+      @data_store.instance_variable_set("@server", @cassandra)
     end
 
     it "should delegate the method call to @server" do
-      @server.should_receive(:get_range)
+      @cassandra.should_receive(:get_range)
       @data_store.get_range(:logs)
     end
   end
