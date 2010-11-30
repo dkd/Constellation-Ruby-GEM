@@ -19,9 +19,9 @@ rdoc
 pkg
 doc
 .yardoc
-*.gem
 
 ## PROJECT::SPECIFIC
+constellation-*.gem
 .idea
 .document
 
