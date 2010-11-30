@@ -3,7 +3,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Constellation::Runner do
 
   before(:each) do
+    @data_store = mock(Constellation::DataStore)
+    @data_store.stub!(:establish_connection)
     @runner = Constellation::Runner.new
+    @runner.instance_variable_get("@config").stub!(:data_store).and_return(@data_store)
   end
 
   describe "#init" do
@@ -64,15 +67,8 @@ describe Constellation::Runner do
     end
 
     context "ConstellationFile does exist" do
-
       before(:each) do
-        FileHelpers::create_file("ConstellationFile","watch 'logs.txt'")
-        FileHelpers::create_file("logs.txt")
-      end
-
-      after(:each) do
-        FileHelpers::destroy_file("ConstellationFile")
-        FileHelpers::destroy_file("logs.txt")
+        File.stub(:exists?).and_return(true)
       end
 
       context "valid ConstellationFile" do
@@ -91,8 +87,11 @@ describe Constellation::Runner do
         end
 
         context "given a failed data store connection" do
+          before(:each) do
+            @data_store.stub!(:establish_connection).and_raise(Constellation::ConnectionFailedError)
+          end
+
           it "should throw an ConnectionFailedError" do
-            File.should_receive(:read).and_return("data_store.host = :localhost")
             expect { @runner.start }.to raise_error(Constellation::ConnectionFailedError)
           end
         end
