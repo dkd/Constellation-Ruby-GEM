@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency("json")
   s.add_dependency("simple_uuid")
   s.add_dependency("thor")
+  s.add_dependency("thrift_client")
   s.add_dependency("titan")
 
   if s.respond_to? :specification_version then
