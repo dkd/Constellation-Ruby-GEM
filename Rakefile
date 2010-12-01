@@ -23,7 +23,7 @@ task :build do
 end
 
 task :install => :build do
-  system "sudo gem install constellation-#{Constellation::VERSION}"
+  system "gem install constellation-#{Constellation::VERSION}"
 end
 
 require 'metric_fu'
