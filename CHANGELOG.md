@@ -1,3 +1,8 @@
+dev
+=====
+
+* Added compatibility to Titan 0.2.0
+
 0.0.6
 ======
 

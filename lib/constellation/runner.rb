@@ -38,7 +38,7 @@ module Constellation
       # start the log file watching threads in the background
       thread = Titan::Thread.new(:id => "constellation") do
         @reader.start
-      end
+      end.run
     end
     map %w(-s) => :start
 

@@ -48,8 +48,8 @@ module Constellation
 
       # connect to the system keyspace initially in order to establish a working connection
       @server = Cassandra.new("system", "#{@host}:#{@port.to_s}")
-      @server.login!(@username, @password) if @username && @password
       begin
+        @server.login!(@username, @password) if @username && @password
         @server.keyspace = @keyspace
       rescue Cassandra::AccessError
         @server.add_keyspace(create_keyspace)
