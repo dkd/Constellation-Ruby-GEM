@@ -64,7 +64,7 @@ module Constellation
       log_entry.machine     = "system"
       log_entry.application = "Constellation"
       log_entry.time        = Time.now
-      log_entry.message     = "A new exception got raised: #{error.inspect}"
+      log_entry.message     = "A new exception got raised: #{error.message}"
       log_entry.key         = "#{log_entry.time.year}/#{log_entry.time.month}/#{log_entry.time.day}/#{log_entry.time.hour}"
       @config.data_store.insert(log_entry)
       Constellation::UserInterface.error(log_entry.message) if @debug_mode
