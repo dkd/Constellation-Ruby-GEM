@@ -45,7 +45,7 @@ module Constellation
     desc "stop", "Stops watching for log entries"
     def stop
       thread  = Titan::Thread.find("constellation")
-      if thread.nil?
+      if thread.nil? || !thread.alive?
         Constellation::UserInterface.error("Constellation is not running..")
       else
         thread.kill

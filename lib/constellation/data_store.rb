@@ -57,7 +57,7 @@ module Constellation
       rescue CassandraThrift::Cassandra::Client::TransportException
         raise Constellation::ConnectionFailedError
       end
-      Constellation::UserInterface.confirm("Connection to the Cassandra store (#{@host}:#{@port.to_s}) got established.")
+      Constellation::UserInterface.confirm("Connection to the Cassandra store (#{@host}:#{@port.to_s}@#{@keyspace}) got established.")
     end
 
     #
