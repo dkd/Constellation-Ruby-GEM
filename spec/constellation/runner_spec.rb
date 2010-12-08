@@ -42,7 +42,9 @@ describe Constellation::Runner do
       @reader = @runner.instance_variable_get("@reader")
       @reader.stub!(:start)
       @reader.stub!(:wait_for_quit)
-      Titan::Thread.stub!(:new)
+      @thread = mock(Titan::Thread)
+      @thread.stub!(:run)
+      Titan::Thread.stub!(:new).and_return(@thread)
     end
 
     context "given the --debug option" do
@@ -82,7 +84,7 @@ describe Constellation::Runner do
         end
 
         it "should start a new Titan thread" do
-          Titan::Thread.should_receive(:new)
+          @thread.should_receive(:run)
           @runner.start
         end
 
