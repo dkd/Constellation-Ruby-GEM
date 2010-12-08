@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.email                     = %q{stefan.sprenger@dkd.de}
   s.executables               = ["constellation"]
   s.extra_rdoc_files          = ["LICENSE", "README.md"]
-  s.files                     = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md CHANGELOG.md Gemfile Gemfile.lock VERSION)
+  s.files                     = Dir.glob("{bin,lib}/**/*") + %w(LICENSE README.md CHANGELOG.md Gemfile Gemfile.lock)
   s.homepage                  = %q{http://github.com/dkd/constellation}
   s.rdoc_options              = ["--charset=UTF-8"]
   s.require_paths             = ["lib"]
