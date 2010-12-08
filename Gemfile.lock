@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    constellation (0.0.6)
+    constellation (0.0.7)
       activemodel
       cassandra
       json
@@ -41,7 +41,7 @@ GEM
     thrift (0.2.0.4)
     thrift_client (0.5.0)
       thrift (~> 0.2.0)
-    titan (0.1.1)
+    titan (0.2.1)
 
 PLATFORMS
   ruby

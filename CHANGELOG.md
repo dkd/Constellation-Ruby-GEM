@@ -1,6 +1,7 @@
-dev
+0.0.7
 =====
 
+* Show exception's messages inside of a system log entry
 * Added compatibility to Titan 0.2.0
 
 0.0.6
