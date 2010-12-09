@@ -6,7 +6,8 @@ dev
 0.0.8
 ======
 
-* Improved connecting to the Cassandra data store
+* Show the used keyspace at startup
+* Check, whether the constellation thread is alive or not before killing it
 
 0.0.7
 ======
