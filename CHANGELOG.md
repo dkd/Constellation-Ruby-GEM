@@ -1,5 +1,15 @@
+dev
+======
+
+* Improved log file parsing
+
+0.0.8
+======
+
+* Improved connecting to the Cassandra data store
+
 0.0.7
-=====
+======
 
 * Show exception's messages inside of a system log entry
 * Added compatibility to Titan 0.2.0

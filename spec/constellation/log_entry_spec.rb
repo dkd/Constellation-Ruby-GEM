@@ -26,6 +26,7 @@ describe Constellation::LogEntry do
       it "should parse the time correctly" do
         @log_entry.time.should eql(Time.parse(@time))
       end
+
       it "should parse the message correctly" do
         @log_entry.message.should eql(@message)
       end

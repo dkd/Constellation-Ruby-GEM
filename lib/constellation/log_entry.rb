@@ -35,14 +35,14 @@ module Constellation
       # The first 15 characters of a log entry describe the time.
       @time             = Time.parse(line_of_log_file[0..14])
       line_of_log_file  = slice_line_from(line_of_log_file, 16)
-      # The machine name can include a-z, A-Z and 0-9. Whitespaces are not allowed.
+      # The machine name can include anything but whitespaces
       unless line_of_log_file.nil?
-        @machine          = line_of_log_file.scan(/[a-zA-Z0-9\-\_]+/).first
+        @machine          = line_of_log_file.scan(/[^\s]+/).first
         line_of_log_file  = slice_line_from(line_of_log_file, @machine.length+1)
       end
-      # The application name can include a-z, A-Z, 0-9, [, ], - and _. Whitespaces are not allowed.
+      # The application name can include anything but whitespaces
       unless line_of_log_file.nil?
-        @application  = line_of_log_file.scan(/[a-zA-Z0-9\/\[\]\._-]+/).first
+        @application  = line_of_log_file.scan(/[^\s\:]+/).first
         # The rest of the log entry is the message itself.
         @message      = slice_line_from(line_of_log_file, @application.length+2)
         # remove the process id
