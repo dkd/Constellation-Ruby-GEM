@@ -24,6 +24,7 @@ doc
 constellation-*.gem
 .idea
 .document
+ConstellationFile
 
 ## metric_fu
 scratch_directory
