@@ -14,11 +14,14 @@ module Constellation
   #
   #
   #
-  # Constellation uses some keyspaces by default.
+  # Constellation uses some column families by default.
   #
-  # == Default keyspaces
+  # == Default column families
   #
-  #   logs
+  # * logs
+  # * logs_by_application
+  # * logs_by_machine
+  # * logs_by_machine_and_application
   #
   class DataStore
     include ::Singleton
@@ -67,7 +70,7 @@ module Constellation
       @server.remove(:logs, log_entry.key, log_entry.uuid.to_guid)
       @server.remove(:logs_by_application, log_entry.key, log_entry.application, log_entry.uuid.to_guid)
       @server.remove(:logs_by_machine,     log_entry.key, log_entry.machine,     log_entry.uuid.to_guid)
-      @server.remove(:logs_by_machine,     log_entry.key+"_"+log_entry.machine, log_entry.application, log_entry.uuid.to_guid)
+      @server.remove(:logs_by_machine_and_application, log_entry.key+"_"+log_entry.machine, log_entry.application, log_entry.uuid.to_guid)
     end
 
     #

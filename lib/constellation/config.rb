@@ -2,7 +2,7 @@ require "singleton"
 
 module Constellation
   #
-  # Constellation::Config is used for evaluating the ConstellationFile
+  # Constellation::Config is used for evaluating the ConstellationFile.
   #
   class Config
     include ::Singleton
