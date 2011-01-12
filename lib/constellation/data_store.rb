@@ -135,6 +135,7 @@ module Constellation
     # * logs
     # * logs_by_application
     # * logs_by_machine
+    # * logs_by_machine_and_application
     #
     def create_column_families
       families = []

@@ -30,6 +30,5 @@ ConstellationFile
 scratch_directory
 tmp
 
-# ignore 1.9.x gems since we aren't using RVM
-vendor/bundle/ruby/1.9.1
-vendor/bundle/ruby/1.9.2
+# ignore gems
+vendor/bundle/ruby
