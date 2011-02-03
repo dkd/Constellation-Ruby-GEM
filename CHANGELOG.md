@@ -1,6 +1,7 @@
-dev
+0.0.9
 ======
 
+* Added the possibility that a file can be passed to Runner#start (Usage: `constellation start file_name`)
 * Improved log file parsing
 
 0.0.8
