@@ -26,11 +26,12 @@ module Constellation
 
     desc "start", "Starts watching for log entries"
     method_option :debug, :type => :boolean, :aliases => "-d"
-    def start
-      raise Constellation::ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
+    def start(config_file=nil)
+			file_name = File.expand_path(config_file || "ConstellationFile")
+      raise Constellation::ConstellationFileNotFoundError unless File.exists?(file_name)
       @reader.debug_mode = true if options[:debug]
       begin
-        @config.instance_eval(File.read("ConstellationFile"))
+        @config.instance_eval(File.read(file_name))
       rescue SyntaxError
         raise Constellation::InvalidConstellationFileError
       end

@@ -47,12 +47,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activemodel
   cassandra (= 0.9.0)
   constellation!
-  json
   rspec (>= 2.0.0)
-  simple_uuid
-  thor
-  thrift_client
-  titan

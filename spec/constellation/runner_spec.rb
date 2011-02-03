@@ -45,7 +45,24 @@ describe Constellation::Runner do
       @thread = mock(Titan::Thread)
       @thread.stub!(:run)
       Titan::Thread.stub!(:new).and_return(@thread)
+      File.stub!(:read).and_return("")
+			File.stub!(:exists?).and_return(true)
     end
+
+		context "given a config file" do
+			it "should use it instead of the default file" do
+				file_name = "test.rb"
+				File.should_receive(:expand_path).with(file_name).and_return(file_name)
+				@runner.start(file_name)
+			end
+		end
+
+		context "given no config file" do
+			it "should use ConstellationFile" do
+				File.should_receive(:expand_path).with("ConstellationFile")
+				@runner.start
+			end
+		end
 
     context "given the --debug option" do
       before(:each) do
@@ -53,9 +70,8 @@ describe Constellation::Runner do
         @runner.stub!(:options).and_return(@options)
         @config = @runner.instance_variable_get("@config")
         Constellation::DataStore.instance.stub!(:establish_connection)
-        File.stub!(:exists?).and_return(true)
-        File.stub!(:read).and_return("")
       end
+
       it "should active the reader's debug mode" do
         @reader.should_receive(:debug_mode=).with(true)
         @runner.start
@@ -63,6 +79,10 @@ describe Constellation::Runner do
     end
 
     context "ConstellationFile does not exist" do
+			before(:each) do
+				File.stub!(:exists?).and_return(false)
+			end
+
       it "should raise an ConstellationFileNotFoundError" do
         expect { @runner.start }.to raise_error(Constellation::ConstellationFileNotFoundError)
       end
@@ -101,8 +121,11 @@ describe Constellation::Runner do
       end
 
       context "invalid ConstellationFile" do
+				before(:each) do
+					File.stub!(:read).and_return("watch 'logs.txt")
+				end
+
         it "should raise an InvalidConstellationFileError" do
-          FileHelpers::create_file("ConstellationFile","watch 'logs.txt")
           expect { @runner.start }.to raise_error(Constellation::InvalidConstellationFileError)
         end
       end
