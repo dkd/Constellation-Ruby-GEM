@@ -63,11 +63,12 @@ module Constellation
     desc "help", "Shows the example usage of all available command line options"
     def help
       Constellation::UserInterface.inform("Available command line options:")
-      Constellation::UserInterface.inform("constellation init        Generates a ConstellationFile containing initial configuration", :prepend_newline => true)
+      Constellation::UserInterface.inform("constellation init        Generates a ConstellationFile containing an initial configuration", :prepend_newline => true)
       Constellation::UserInterface.inform("constellation start       Starts watching for log entries")
       Constellation::UserInterface.inform("constellation stop        Stops watching for log entries")
       Constellation::UserInterface.inform("constellation version     Shows the version of the currently installed Constellation gem")
       Constellation::UserInterface.inform("constellation help        Shows the example usage of all available command line options")
+      Constellation::UserInterface.inform("")
     end
     map %w(--help) => :help
 
