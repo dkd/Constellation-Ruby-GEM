@@ -7,9 +7,6 @@ across several servers and by many users.
 It uses the well-known wide-column store Cassandra for saving log entries and provides an
 easy-to-use web application, written in Ruby on Rails, for monitoring and controlling.
 
-Usage
-======
-
 Note on Patches/Pull Requests
 ======
 
