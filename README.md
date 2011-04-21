@@ -1,4 +1,5 @@
-= Constellation
+Constellation
+======
 
 Constellation is a modern, scalable solution for managing your log files
 across several servers and by many users.
@@ -6,9 +7,11 @@ across several servers and by many users.
 It uses the well-known wide-column store Cassandra for saving log entries and provides an
 easy-to-use web application, written in Ruby on Rails, for monitoring and controlling.
 
-== Usage
+Usage
+======
 
-== Note on Patches/Pull Requests
+Note on Patches/Pull Requests
+======
 
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -18,6 +21,7 @@ easy-to-use web application, written in Ruby on Rails, for monitoring and contro
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+Copyright
+======
 
 Copyright (c) 2010 Stefan Sprenger. See LICENSE for details.
